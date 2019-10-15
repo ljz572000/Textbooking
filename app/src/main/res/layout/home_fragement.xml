@@ -1,15 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     >
-    <TextView
+
+    <RelativeLayout
+        android:id="@+id/bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/main_home"
-        android:textColor="#000"
-        />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="40dp"
+        android:background="@color/search"
+        android:paddingStart="10dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="10dp">
+
+        <TextView
+            android:id="@+id/bar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="left"
+            android:text="@string/project_name"
+            android:textColor="#000"
+            android:textSize="20sp" />
+        <EditText
+            android:layout_width="170dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/bar_title"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/edittext_border"
+            >
+
+        </EditText>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:background="@color/search"
+            android:src="@drawable/ic_search">
+        </ImageButton>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_below="@+id/bar"
+        android:background="@color/bluesky">
+    </RelativeLayout>
+</RelativeLayout>

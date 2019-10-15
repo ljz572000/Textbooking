@@ -1,4 +1,4 @@
-package com.example.textbookapplication;
+package com.example.textbookapplication.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
+import com.example.textbookapplication.R;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;

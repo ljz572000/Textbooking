@@ -1,9 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:background="@drawable/loginbg"
+    tools:context=".ui.login.MainActivity"
+    android:orientation="vertical"
+    android:paddingTop="100dp"
+    android:paddingStart="30dp"
+    android:paddingEnd="30dp"
+    >
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="教材管理系统"
+        android:textColor="@color/campus_launcher_background"
+        android:textSize="24sp"
+        />
+    <EditText
+        android:id="@+id/editId"
+        android:layout_width="349dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/edit_id"
+        android:inputType="textPersonName"
+        android:shadowColor="#FFFFFF"
+        android:textColor="@color/campus_launcher_background"
+        android:textColorHighlight="@android:color/background_light"
+        android:textColorHint="@color/campus_launcher_background"
+        android:textColorLink="@android:color/background_light"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"
+        />
+    <EditText
+        android:id="@+id/editPwd"
+        android:layout_width="349dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/edit_Pwd"
+        android:inputType="textPassword"
+        android:shadowColor="#FFFFFF"
+        android:textColor="@color/campus_launcher_background"
+        android:textColorHighlight="@android:color/background_light"
+        android:textColorHint="@color/campus_launcher_background"
+        android:textColorLink="@android:color/background_light"
+        android:textSize="18sp"
+        />
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/sign_in_btn"
+        android:text="@string/sign_in"
+        android:textColor="@android:color/background_light"
+        android:textCursorDrawable="@android:color/background_light" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="忘记密码?"
+            android:textColor="@color/bluesky">
+        </TextView>
+    </RelativeLayout>
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="64dp"
+        android:visibility="visible"
+        app:layout_constraintVertical_bias="0.3" />
+</LinearLayout>
