@@ -67,15 +67,23 @@
             android:textSize="@dimen/bar_text"></RadioButton>
     </RadioGroup>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_content"
+
+    <com.example.textbookapplication.widget.NoScrollViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHeight_percent="0.9"
         android:layout_above="@+id/radioGroup"
-        android:layout_alignParentLeft="true"
-        >
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_alignParentLeft="true" />
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/cl_content"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintHeight_percent="0.9"-->
+<!--        android:layout_above="@+id/radioGroup"-->
+<!--        android:layout_alignParentLeft="true"-->
+<!--        >-->
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 </RelativeLayout>
