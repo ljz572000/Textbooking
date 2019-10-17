@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -108,19 +107,15 @@ public class MainActivity extends AppCompatActivity {
                 switch (position){
                     case 0:
                         home_radio.setChecked(true);
-                        Log.i("radio", "home_radio");
                         break;
                     case 1:
                         message_radio.setChecked(true);
-                        Log.i("radio", "message_radio");
                         break;
                     case 2:
                         shoppingCart_radio.setChecked(true);
-                        Log.i("radio", "shoppingCart_radio");
                         break;
                     case 3:
                         me_radio.setChecked(true);
-                        Log.i("radio", "me_radio");
                         break;
                         default:
                             break;
@@ -129,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
     }

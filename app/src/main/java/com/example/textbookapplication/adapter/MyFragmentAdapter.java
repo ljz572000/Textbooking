@@ -22,7 +22,7 @@ public class MyFragmentAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return fs.size();
-    }
+    } //返回要展示的页面数量
 
     @Override
     public int getItemPosition(@NonNull Object object) {
