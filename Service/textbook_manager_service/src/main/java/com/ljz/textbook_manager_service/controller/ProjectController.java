@@ -1,6 +1,8 @@
 package com.ljz.textbook_manager_service.controller;
 
+import com.ljz.textbook_manager_service.entity.TextBook;
 import com.ljz.textbook_manager_service.entity.User;
+import com.ljz.textbook_manager_service.repository.TextBookRepo;
 import com.ljz.textbook_manager_service.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,9 @@ import java.util.List;
 public class ProjectController {
     @Autowired
     UserRepo userRepository;
+    @Autowired
+    TextBookRepo textBookRepo;
+
     @GetMapping("/allUsers")
     @ResponseBody
     private List<User> allUsers(){
@@ -25,4 +30,8 @@ public class ProjectController {
     private User login(@RequestParam(value = "userId",required = false) String userId,@RequestParam(value = "userPassword",required = false) String userPassword){
         return userRepository.findByUserIdAndUserPassword(userId,userPassword);
     }
+
+    @GetMapping("/allTextbooks")
+    @ResponseBody
+    private List<TextBook> allTextbooks(){return textBookRepo.findAll();}
 }

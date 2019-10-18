@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -15,17 +16,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.example.textbookapplication.Network.Service;
 import com.example.textbookapplication.R;
-
+import com.example.textbookapplication.entity.LoginUser;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
@@ -41,11 +40,15 @@ public class LoginActivity extends AppCompatActivity {
     @ViewInject(R.id.loading)
     private ProgressDialog dialog;
 
+    private Context context = this;
     public static final String EXTRA_MESSAGE = "LoginMessage";
+    private static final String TAG = "LoginActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        context = this;
         //获取控件
         x.view().inject(this);
 //        检测网络
@@ -72,41 +75,36 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login(String userId, String userPassword){
-        String postUrl= "https://www.lijinzhou.top:2020/login";
-        OkHttpClient client = new OkHttpClient();
-        FormBody formBody = new FormBody.Builder().add("userId",userId).add("userPassword",userPassword).build();
 
-        Request request = new Request.Builder()
-                .url(postUrl)
-                .post(formBody)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
+        Call call = Service.loginSerive(userId,userPassword);
+        call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
                 call.cancel();
-                runOnUiThread(() -> Toast.makeText(LoginActivity.this,"网络连接错误，请检查网络设置后重试。", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast.makeText(LoginActivity.this, "网络连接错误，请检查网络设置后重试。", Toast.LENGTH_SHORT).show());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String info = response.body().string();
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     //此处，先将响应体保存到内存中
-                    if (!info.equals("")){
-                            Log.i("onResponse", info);
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra(EXTRA_MESSAGE,info);
-                            startActivity(intent);
-                            finish();
-                    }else {
-                        runOnUiThread(() -> Toast.makeText(LoginActivity.this,"登录失败", Toast.LENGTH_SHORT).show());
+                    if (!info.equals("")) {
+
+                        LoginUser user = new LoginUser(info, context);
+                        Log.i(TAG, user.getUserId() + "  " + user.getUserPassword());
+
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.putExtra(EXTRA_MESSAGE, info);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        runOnUiThread(() -> Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show());
                     }
                 }
-
             }
         });
-    }
 
+    }
 }

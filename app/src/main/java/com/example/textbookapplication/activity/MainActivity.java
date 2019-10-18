@@ -7,27 +7,38 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.example.textbookapplication.Fragment.BaseFragment;
 import com.example.textbookapplication.Fragment.HomeFragment;
 import com.example.textbookapplication.Fragment.MeFragment;
 import com.example.textbookapplication.Fragment.MessageFragment;
 import com.example.textbookapplication.Fragment.ShoppingCartFragment;
+import com.example.textbookapplication.Network.Service;
 import com.example.textbookapplication.R;
 import com.example.textbookapplication.adapter.MyFragmentAdapter;
+import com.example.textbookapplication.entity.LoginUser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,21 +57,78 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
 
     private boolean isExit=false;
+    private Context context = this;
 
+    private static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         x.view().inject(this);
+
+        isLocalUser();
+
         home_radio.setOnClickListener(changeFragment());
         message_radio.setOnClickListener(changeFragment());
         shoppingCart_radio.setOnClickListener(changeFragment());
         me_radio.setOnClickListener(changeFragment());
         setupFragment();
+
 //        Intent intent = getIntent();
 //        String message = intent.getStringExtra(LoginActivity.EXTRA_MESSAGE);
 //        textView.setText(message);
     }
+
+    private void isLocalUser(){
+        SharedPreferences sharedPreferences = getSharedPreferences("User", Context.MODE_PRIVATE);
+        final String userinfo = sharedPreferences.getString("User","");
+        if (userinfo.equals("")){
+            Log.i(TAG, "isLocalUser false");
+            //前往登录页面
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }else {
+            Log.i(TAG, "isLocalUser true");
+            //使用本地信息登录
+            try {
+                JSONObject jsonObject = new JSONObject(userinfo);
+                String userId = jsonObject.getString("userId");
+
+                String userPassword = jsonObject.getString("userPassword");
+
+                Log.i(TAG, userId + " " +userPassword);
+                Call call = Service.loginSerive(userId,userPassword);
+
+                call.enqueue(new Callback(){
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        call.cancel();
+                        runOnUiThread(() -> Toast.makeText(MainActivity.this, "网络连接错误", Toast.LENGTH_SHORT).show());
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        final String info = response.body().string();
+                        if (response.isSuccessful()) {
+                            //此处，先将响应体保存到内存中
+                            if (!info.equals("")) {
+                                LoginUser user = new LoginUser(info,context);
+                            } else {
+                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 
     private View.OnClickListener changeFragment(){
         return view -> {
