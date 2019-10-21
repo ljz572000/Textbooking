@@ -3,8 +3,6 @@ package com.example.textbookapplication.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
@@ -27,6 +25,7 @@ import com.example.textbookapplication.entity.LoginUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -39,7 +38,7 @@ import java.util.TimerTask;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-
+@ContentView(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
 
     //底部导航栏
@@ -51,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton shoppingCart_radio;
     @ViewInject(R.id.radio3)
     private RadioButton me_radio;
-
-
     @ViewInject(R.id.viewPager)
     private ViewPager viewPager;
 
@@ -63,17 +60,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         x.view().inject(this);
 
         isLocalUser();
-
         home_radio.setOnClickListener(changeFragment());
         message_radio.setOnClickListener(changeFragment());
         shoppingCart_radio.setOnClickListener(changeFragment());
         me_radio.setOnClickListener(changeFragment());
         setupFragment();
 
+
+//        getTextBookData();
 //        Intent intent = getIntent();
 //        String message = intent.getStringExtra(LoginActivity.EXTRA_MESSAGE);
 //        textView.setText(message);
@@ -150,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
     }
+
     private void setupFragment(){
         //
         FragmentManager fm = getSupportFragmentManager();
@@ -213,4 +211,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "再点击一次退出程序", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }

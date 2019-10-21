@@ -23,15 +23,15 @@
             android:text="@string/project_name"
             android:textColor="#000"
             android:textSize="20sp" />
-        <EditText
-            android:layout_width="170dp"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/bar_title"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/edittext_border"
-            >
+<!--        <EditText-->
+<!--            android:layout_width="170dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_toRightOf="@+id/bar_title"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:background="@drawable/edittext_border"-->
+<!--            >-->
 
-        </EditText>
+<!--        </EditText>-->
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -41,13 +41,24 @@
             android:background="@color/search"
             android:src="@drawable/ic_search">
         </ImageButton>
+
     </RelativeLayout>
 
-
-<!--    <RelativeLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="500dp"-->
-<!--        android:layout_below="@+id/bar"-->
-<!--        android:background="@color/bluesky">-->
-<!--    </RelativeLayout>-->
+<com.example.textbookapplication.widget.pullToRefresh.PullToRefreshLayout
+    android:id="@+id/refresh_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="6.5dp"
+    android:layout_below="@+id/bar"
+    >
+    <include layout="@layout/refresh_head" />
+    <com.example.textbookapplication.widget.pullToRefresh.PullableListView
+        android:id="@+id/content_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="3.5dp"
+        android:divider="@null"
+        />
+    <include layout="@layout/load_more" />
+</com.example.textbookapplication.widget.pullToRefresh.PullToRefreshLayout>
 </RelativeLayout>

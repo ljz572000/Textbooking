@@ -1,21 +1,16 @@
 package com.example.textbookapplication.Fragment;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.example.textbookapplication.R;
 
-public class MessageFragment extends Fragment {
-    @Nullable
+import org.xutils.view.annotation.ContentView;
+
+@ContentView(R.layout.message_fragment)
+public class MessageFragment extends BaseFragment {
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.message_fragment,container,false);
-        return view;
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 }

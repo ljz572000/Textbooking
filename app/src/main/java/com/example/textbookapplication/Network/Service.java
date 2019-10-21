@@ -2,6 +2,8 @@ package com.example.textbookapplication.Network;
 
 import android.content.Context;
 
+import org.xutils.http.RequestParams;
+
 import okhttp3.Call;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -18,6 +20,13 @@ public class Service {
                    .post(formBody)
                    .build();
 
+           return client.newCall(request);
+       }
+
+       public static Call textbookList(Integer pagecount,Integer size){
+           String getUrl = "https://www.lijinzhou.top:2020/Textbooks?pagecount="+pagecount+"&size="+size;
+           OkHttpClient client = new OkHttpClient();
+           Request request = new Request.Builder().url(getUrl).build();
            return client.newCall(request);
        }
 }

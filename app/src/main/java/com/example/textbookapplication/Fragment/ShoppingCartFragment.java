@@ -1,21 +1,19 @@
 package com.example.textbookapplication.Fragment;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.view.View;
+
 import androidx.fragment.app.Fragment;
 
 import com.example.textbookapplication.R;
 
-public class ShoppingCartFragment extends Fragment {
-    @Nullable
+import org.xutils.view.annotation.ContentView;
+
+@ContentView(R.layout.shopping_cart_fragment)
+public class ShoppingCartFragment extends BaseFragment {
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.shopping_cart_fragment,container,false);
-        return view;
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 }
