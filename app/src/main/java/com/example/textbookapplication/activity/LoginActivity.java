@@ -47,7 +47,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this;
+        setContentView(R.layout.activity_login);
+        context = getApplicationContext();
         //获取控件
         x.view().inject(this);
 //        检测网络

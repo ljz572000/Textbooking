@@ -20,7 +20,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:src="@drawable/textbook">
+            android:src="#000000">
         </ImageView>
 
         <RelativeLayout
@@ -58,7 +58,7 @@
                 android:layout_below="@+id/textbook_author"
                 android:layout_marginTop="10dp"
                 android:text="@string/textbook_price"
-                android:textColor="#FF0000" />
+                android:textColor="@color/text_price_color" />
 
             <ImageView
                 android:id="@+id/buy"

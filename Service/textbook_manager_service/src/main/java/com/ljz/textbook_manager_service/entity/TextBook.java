@@ -16,4 +16,5 @@ public class TextBook {
     private String bookPic;
     private String author;
     private Double bookPrice;
+    private Integer totalnum;
 }

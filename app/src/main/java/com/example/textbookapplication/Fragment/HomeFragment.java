@@ -1,17 +1,21 @@
 package com.example.textbookapplication.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.textbookapplication.R;
+import com.example.textbookapplication.activity.DetailActivity;
 import com.example.textbookapplication.adapter.TextbookAdapter;
 import com.example.textbookapplication.entity.TextBook;
 import com.example.textbookapplication.widget.pullToRefresh.PullToRefreshLayout;
@@ -22,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.xutils.common.Callback;
+import org.xutils.common.util.DensityUtil;
 import org.xutils.http.RequestParams;
 import org.xutils.image.ImageOptions;
 import org.xutils.view.annotation.ContentView;
@@ -40,7 +45,7 @@ public class HomeFragment extends BaseFragment {
 
     private List<TextBook> textBooks;
     private Context context;
-    private int size;
+    private int size =10;
     private int page_count;
     private TextbookAdapter adapter;
     private static final String TAG = "HomeFragment";
@@ -48,34 +53,49 @@ public class HomeFragment extends BaseFragment {
     private boolean isloadmore;
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        context = getContext();
+        Log.i(TAG, "onCreate: ");
+    }
+
+    private void Init(){
+
+        refresh_view.setOnRefreshListener(new MyListener());
         getFirst();
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "onViewCreated: ");
+        super.onViewCreated(view, savedInstanceState);
+        Init();
+    }
     private void getFirst(){
+        /*
+        设置懒加载，
+         */
+        textBooks = new ArrayList<>();
         imageOptions = new ImageOptions.Builder()
                 .setLoadingDrawableId(R.mipmap.ic_launcher)
                 .setFailureDrawableId(R.mipmap.ic_launcher).build();
         page_count = 0;
-        size = 10;
-        textBooks = new ArrayList<>();
+
         isloadmore = false;
-        context = getContext();
         refresh_view.setOnRefreshListener(new MyListener());
         adapter = new TextbookAdapter(context,textBooks,imageOptions);
         content_view.setAdapter(adapter);
         textBooks.clear();
         textbookdata();
-        
         content_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.i(TAG, "onItemClick: 弹出对话框或新的界面");
+                Intent intent = new Intent(context, DetailActivity.class);
                 TextBook textBook = textBooks.get(i);
-                Log.i(TAG, "onItemClick: 点击了 "+textBook.getBookName());
+                intent.putExtra("textbook_item",textBook.toString());
+                startActivity(intent);
             }
         });
-        
     }
     private void getNext(){
         isloadmore=true;
@@ -109,7 +129,8 @@ private void textbookdata(){
                     String bookPic = jsonObject.getString("bookPic");
                     String author = jsonObject.getString("author");
                     Double bookPrice= jsonObject.getDouble("bookPrice");
-                    TextBook textBook = new TextBook(bookNo,bookName,bookPic,author,bookPrice);
+                    Integer totalnum = jsonObject.getInt("totalnum");
+                    TextBook textBook = new TextBook(bookNo,bookName,bookPic,author,bookPrice,totalnum);
                     textBooks.add(textBook);
                 }
                 page_count +=1;

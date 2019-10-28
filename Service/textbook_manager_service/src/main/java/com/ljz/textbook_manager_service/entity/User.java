@@ -18,4 +18,5 @@ public class User {
     private String userPassword;
     private String userIconPath;
     private String userName;
+
 }

@@ -26,5 +26,8 @@
     <string name="textbook_author">作者名称</string>
     <string name="textbook_name">书名</string>
 
+    <string name="add_to_Shopping_Cart">加入购物车</string>
+    <string name="Buy_now">立即购买</string>
+
 
 </resources>

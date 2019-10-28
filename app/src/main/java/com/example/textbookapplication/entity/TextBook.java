@@ -41,12 +41,33 @@ public class TextBook {
         this.bookPrice = bookPrice;
     }
 
-    public TextBook(Integer bookNo, String bookName, String bookPic, String author, Double bookPrice) {
+    public Integer getTotalnum() {
+        return totalnum;
+    }
+
+    public void setTotalnum(Integer totalnum) {
+        this.totalnum = totalnum;
+    }
+
+    public TextBook(Integer bookNo, String bookName, String bookPic, String author, Double bookPrice, Integer totalnum) {
         this.bookNo = bookNo;
         this.bookName = bookName;
         this.bookPic = bookPic;
         this.author = author;
         this.bookPrice = bookPrice;
+        this.totalnum = totalnum;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "bookNo=" + bookNo +
+                ", bookName='" + bookName + '\'' +
+                ", bookPic='" + bookPic + '\'' +
+                ", author='" + author + '\'' +
+                ", bookPrice=" + bookPrice +
+                ", totalnum=" + totalnum +
+                '}';
     }
 
     private Integer bookNo;
@@ -54,4 +75,5 @@ public class TextBook {
     private String bookPic;
     private String author;
     private Double bookPrice;
+    private Integer totalnum;
 }

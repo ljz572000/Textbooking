@@ -39,20 +39,12 @@ public class TextbookAdapter extends BaseAdapter {
     private final LayoutInflater mInflater;
     ImageOptions imageOptions;
     private static final String TAG = "TextbookAdapter";
-    public List<TextBook> getTextBooks() {
-        return textBooks;
-    }
 
-    public void setTextBooks(List<TextBook> textBooks) {
-        this.textBooks = textBooks;
-        Log.i(TAG, "setTextBooks: ");
-    }
     public TextbookAdapter(Context context,List<TextBook> list, ImageOptions imageOptions) {
         super();
         mInflater = LayoutInflater.from(context);
         this.textBooks = list;
         this.imageOptions = imageOptions;
-        Log.i(TAG, "TextbookAdapter: ");
     }
 
     @Override
@@ -87,6 +79,12 @@ public class TextbookAdapter extends BaseAdapter {
         holder.bookName.setText(textBook.getBookName());
         holder.bookAuthor.setText(textBook.getAuthor());
         holder.bookPrice.setText("定价："+textBook.getBookPrice()+"元");
+        holder.buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "onClick: "+holder.bookName.getText());
+            }
+        });
         return view;
     }
 
