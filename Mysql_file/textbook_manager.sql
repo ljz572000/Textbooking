@@ -22,6 +22,14 @@ values(1,'20160750',false,'1234','my_avator.png','李金洲'),
 (5,'20160754',false,'1234','my_avator.png','杨壹麟'),
 (6,'20160755',false,'1234','my_avator.png','杨永旭');
 
+-- 添加管理员用户
+insert into `user`
+values(7,'20190001',true,'1234','my_avator.png','李老师'),
+(8,'20190002',true,'1234','my_avator.png','王老师'),
+(9,'20190003',true,'1234','my_avator.png','张老师'),
+(10,'20190004',true,'1234','my_avator.png','韩老师'),
+(11,'20190005',true,'1234','my_avator.png','杨老师'),
+(12,'20190006',true,'1234','my_avator.png','谢老师');
 
 create table `text_book`
 (
@@ -135,3 +143,67 @@ insert into `text_book` values
 (98,'张学昌、裴磊，陆俊杰、张炜、施岳定','AutoCAD机械图样典型范例与实训教程（第3版）','http://www.tup.tsinghua.edu.cn/upload/bigbookimg/083125-01.jpg',39.0,100),
 (99,'贾立新、倪洪杰、王辛刚','电子系统设计与实践（第4版）','http://www.tup.tsinghua.edu.cn/upload/bigbookimg/084436-01.jpg',59.0,100),
 (100,'朱桂明 任丽 杨文 闵悦昕 胡燕玲 胡竟男 何亚雯 李莉 王善德','基础会计（第二版）','http://www.tup.tsinghua.edu.cn/upload/bigbookimg/085109-01.jpg',49.8,100);
+
+
+-- 消息表
+
+create table `message`
+ (`mess_no` integer not null,
+ `content` varchar(255),
+ `start_time` timestamp default now(),
+ `user_no` integer,
+ primary key (`mess_no`))
+ engine=InnoDB;
+ 
+ insert into `message` values
+ (1,'新消息','2002-11-14 09:40:09',20160750),
+  (2,'新消息','2002-11-14 09:40:09',20160750),
+   (3,'新消息','2002-11-14 09:40:09',20160750),
+    (4,'新消息','2002-11-14 09:40:09',20160750),
+     (5,'新消息','2002-11-14 09:40:09',20160750),
+      (6,'新消息','2002-11-14 09:40:09',20160750),
+       (7,'新消息','2002-11-14 09:40:09',20160750),
+        (8,'新消息','2002-11-14 09:40:09',20160750),
+         (9,'新消息','2002-11-14 09:40:09',20160750),
+          (10,'新消息','2002-11-14 09:40:09',20160750),
+           (11,'新消息','2002-11-14 09:40:09',20160750),
+            (12,'新消息','2002-11-14 09:40:09',20160750),
+             (13,'新消息','2002-11-14 09:40:09',20160750),
+              (14,'新消息','2002-11-14 09:40:09',20160750),
+               (15,'新消息','2002-11-14 09:40:09',20160750),
+                (16,'新消息','2002-11-14 09:40:09',20160750),
+                 (17,'新消息','2002-11-14 09:40:09',20160750);
+				
+ create table `shopping_cart`
+ (`shopping_cart_no` integer not null,
+ `book_no` integer,
+ `book_num` integer,
+ `book_values` double precision,
+ `start_time` datetime default now(),
+ `user_no` integer,
+ primary key (`shopping_cart_no`)) engine=InnoDB;
+
+  insert into `shopping_cart` values
+ (1,1,1,100.0,'2002-11-14 09:40:09',20160750);
+ 
+ create table `history`
+ (`history_no` integer not null,
+ `order_no` integer,
+ `start_time` datetime default now(),
+ primary key (`history_no`))
+ engine=InnoDB;
+ 
+ insert into `history`(`history_no`,`order_no`) values
+(1,1);
+ 
+ create table `order`
+ (`order_no` integer not null,
+ `book_no` integer,
+ `book_num` integer,
+ `book_values` double precision,
+`start_time` datetime default now(),
+`user_no` integer,
+ primary key (`order_no`)) engine=InnoDB;
+ 
+insert into `order`(`order_no`,`book_no`,`book_num`,`book_values`,`user_no`) values
+(1,1,1,100.0,20160750);

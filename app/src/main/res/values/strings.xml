@@ -25,9 +25,19 @@
     <string name="textbook_price">定价：xxx 元</string>
     <string name="textbook_author">作者名称</string>
     <string name="textbook_name">书名</string>
+    <string name="textbook_num">数量</string>
+    <string name="book_values">￥：xxx 元</string>
 
     <string name="add_to_Shopping_Cart">加入购物车</string>
     <string name="Buy_now">立即购买</string>
+    <string name="detail_buy">订购数量</string>
+    <string name="detail_total">剩余数量</string>
+    <string name="user_name">李玮光</string>
+    <string name="user_id">20160751</string>
+    <string name="user_repair">修改个人信息</string>
+    <string name="user_history">历史账单</string>
+    <string name="user_money">余额查询</string>
+    <string name="user_setting">设置</string>
 
 
 </resources>

@@ -15,4 +15,8 @@
     <color name="light_blue">#6593cb</color>
     <color name="textbook_item_bg">#f0f0f2</color>
     <color name="text_price_color">#FF0000</color>
+    <color name="light_gray">#F2F2F2</color>
+    <color name="light_skygray">#CED8F6</color>
+    <color name="red">#F00</color>
+
 </resources>
