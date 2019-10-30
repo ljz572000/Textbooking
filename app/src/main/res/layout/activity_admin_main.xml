@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.AdminMainActivity">
+
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bar_height"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:paddingTop="6dp"
+        android:paddingBottom="7dp">
+
+        <RadioButton
+            android:id="@+id/manage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/main_manage"
+            android:gravity="center"
+            android:text="@string/main_manage"
+            android:textColor="@drawable/main_textcolor"
+            android:textSize="@dimen/bar_text"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/admin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/main_me"
+            android:gravity="center"
+            android:text="@string/main_admin"
+            android:textColor="@drawable/main_textcolor"
+            android:textSize="@dimen/bar_text"></RadioButton>
+    </RadioGroup>
+    <com.example.textbookapplication.widget.NoScrollViewPager
+        android:id="@+id/adminViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/radioGroup"
+        android:layout_alignParentLeft="true" />
+</RelativeLayout>

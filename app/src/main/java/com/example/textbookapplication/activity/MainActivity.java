@@ -61,19 +61,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-
         isLocalUser();
         home_radio.setOnClickListener(changeFragment());
         message_radio.setOnClickListener(changeFragment());
         shoppingCart_radio.setOnClickListener(changeFragment());
         me_radio.setOnClickListener(changeFragment());
         setupFragment();
-
-
-//        getTextBookData();
-//        Intent intent = getIntent();
-//        String message = intent.getStringExtra(LoginActivity.EXTRA_MESSAGE);
-//        textView.setText(message);
     }
 
     private void isLocalUser(){
@@ -91,19 +84,15 @@ public class MainActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(userinfo);
                 String userId = jsonObject.getString("userId");
-
                 String userPassword = jsonObject.getString("userPassword");
-
                 Log.i(TAG, userId + " " +userPassword);
                 Call call = Service.loginSerive(userId,userPassword);
-
                 call.enqueue(new Callback(){
                     @Override
                     public void onFailure(Call call, IOException e) {
                         call.cancel();
                         runOnUiThread(() -> Toast.makeText(MainActivity.this, "网络连接错误", Toast.LENGTH_SHORT).show());
                     }
-
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         final String info = response.body().string();
@@ -111,6 +100,12 @@ public class MainActivity extends AppCompatActivity {
                             //此处，先将响应体保存到内存中
                             if (!info.equals("")) {
                                 LoginUser user = new LoginUser(info,context);
+                                //如果是管理员前往管理员界面
+                                if (user.getAdmin()){
+                                    Intent intent = new Intent(MainActivity.this, AdminMainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
                             } else {
                                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                                 startActivity(intent);
@@ -149,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupFragment(){
-        //
         FragmentManager fm = getSupportFragmentManager();
         List<Fragment> fs = new ArrayList<>();
         fs.add(new HomeFragment());

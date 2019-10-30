@@ -7,6 +7,8 @@
     <string name="invalid_username">非法的工号或学号</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="main_home">首页</string>
+    <string name="main_manage">管理</string>
+    <string name="main_admin">管理员</string>
     <string name="main_message">消息</string>
     <string name="main_shoppingCart">购物车</string>
     <string name="main_me">我</string>
@@ -38,6 +40,9 @@
     <string name="user_history">历史账单</string>
     <string name="user_money">余额查询</string>
     <string name="user_setting">设置</string>
+    <string name="logout">注销账号</string>
+    <string name="about">关于app</string>
 
+    <string name="statement">此项目为2019年大四android 应用开发 大作业  由上海电力大学李金洲、李玮光共同开发</string>
 
 </resources>

@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+//        setContentView(R.layout.activity_login);
         context = getApplicationContext();
         //获取控件
         x.view().inject(this);
@@ -91,11 +91,16 @@ public class LoginActivity extends AppCompatActivity {
                     if (!info.equals("")) {
                         LoginUser user = new LoginUser(info, context);
                         Log.i(TAG, user.getUserId() + "  " + user.getUserPassword());
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra(EXTRA_MESSAGE, info);
-                        startActivity(intent);
-                        finish();
-
+                        if (user.getAdmin()){
+                            Intent intent = new Intent(LoginActivity.this, AdminMainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.putExtra(EXTRA_MESSAGE, info);
+                            startActivity(intent);
+                            finish();
+                        }
                     } else {
                         runOnUiThread(() -> Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show());
                     }
