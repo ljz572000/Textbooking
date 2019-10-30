@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
-import com.example.textbookapplication.AboutActivity;
 import com.example.textbookapplication.R;
 
 import org.xutils.view.annotation.ContentView;

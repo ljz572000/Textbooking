@@ -1,10 +1,11 @@
 -- ip 139.155.16.227  账号 root 密码qqq123
 create database `textbook_manager`;
+
 use `textbook_manager`;
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `user_no` bigint(20) NOT NULL,
+  `user_no` bigint(20) NOT NULL auto_increment,
   `user_id` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `is_admin` boolean default false,
   `user_password` varchar(255) COLLATE utf8_bin DEFAULT NULL,
@@ -31,6 +32,9 @@ values(7,'20190001',true,'1234','my_avator.png','李老师'),
 (11,'20190005',true,'1234','my_avator.png','杨老师'),
 (12,'20190006',true,'1234','my_avator.png','谢老师');
 
+insert into `user`(`user_id`,`is_admin`,`user_password`,`user_icon_path`,`user_name`)
+values('20190007',true,'1234','my_avator.png','李老师');
+
 create table `text_book`
 (
 `book_no` integer not null,
@@ -39,8 +43,10 @@ create table `text_book`
 `book_pic` varchar(255),
 `book_price` double precision,
 `totalnum` integer default 0,
-primary key (`book_no`)
+primary key (`book_nso`)
 ) engine=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+update `text_book` set `text_book`.`totalnum` = 100 where `text_book`.`book_no`=1;
 
 insert into `text_book` values
 (1,'王学惠','国际结算教程','http://www.tup.tsinghua.edu.cn/upload/bigbookimg/077447-01.jpg',39.0,100),
@@ -148,12 +154,17 @@ insert into `text_book` values
 -- 消息表
 
 create table `message`
- (`mess_no` integer not null,
+ (`mess_no` integer not null auto_increment,
  `content` varchar(255),
  `start_time` timestamp default now(),
  `user_no` integer,
  primary key (`mess_no`))
  engine=InnoDB;
+ 
+ insert into `message`(`content`,`user_no`) values ('新消息',20160751); 
+ 
+DELETE FROM `message`
+WHERE `mess_no`=1;
  
  insert into `message` values
  (1,'新消息','2002-11-14 09:40:09',20160750),
@@ -175,7 +186,7 @@ create table `message`
                  (17,'新消息','2002-11-14 09:40:09',20160750);
 				
  create table `shopping_cart`
- (`shopping_cart_no` integer not null,
+ (`shopping_cart_no` integer not null auto_increment,
  `book_no` integer,
  `book_num` integer,
  `book_values` double precision,
@@ -183,21 +194,25 @@ create table `message`
  `user_no` integer,
  primary key (`shopping_cart_no`)) engine=InnoDB;
 
-  insert into `shopping_cart` values
- (1,1,1,100.0,'2002-11-14 09:40:09',20160750);
+SET time_zone = '+8:00';
+
+  insert into `shopping_cart`(`book_no`,`book_num`,`book_values`,`user_no`) values
+ (1,1,100.0,20160750);
  
  create table `history`
- (`history_no` integer not null,
+ (`history_no` integer not null auto_increment,
  `order_no` integer,
  `start_time` datetime default now(),
  primary key (`history_no`))
  engine=InnoDB;
  
- insert into `history`(`history_no`,`order_no`) values
-(1,1);
+ set global time_zone = '+8:00';
+ 
+ insert into `history`(`order_no`) values
+(1);
  
  create table `order`
- (`order_no` integer not null,
+ (`order_no` integer not null auto_increment,
  `book_no` integer,
  `book_num` integer,
  `book_values` double precision,
@@ -205,5 +220,5 @@ create table `message`
 `user_no` integer,
  primary key (`order_no`)) engine=InnoDB;
  
-insert into `order`(`order_no`,`book_no`,`book_num`,`book_values`,`user_no`) values
-(1,1,1,100.0,20160750);
+insert into `order`(`book_no`,`book_num`,`book_values`,`user_no`) values
+(1,1,100.0,20160750);

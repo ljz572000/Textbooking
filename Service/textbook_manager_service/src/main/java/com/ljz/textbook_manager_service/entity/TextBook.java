@@ -1,10 +1,9 @@
 package com.ljz.textbook_manager_service.entity;
 
+
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -16,5 +15,14 @@ public class TextBook {
     private String bookPic;
     private String author;
     private Double bookPrice;
+
+    public Integer getTotalnum() {
+        return totalnum;
+    }
+
+    public void setTotalnum(Integer totalnum) {
+        this.totalnum = totalnum;
+    }
+
     private Integer totalnum;
 }

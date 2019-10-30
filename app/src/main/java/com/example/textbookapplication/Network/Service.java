@@ -14,12 +14,10 @@ public class Service {
            String postUrl = "https://www.lijinzhou.top:2020/login";
            OkHttpClient client = new OkHttpClient();
            FormBody formBody = new FormBody.Builder().add("userId", userId).add("userPassword", userPassword).build();
-
            Request request = new Request.Builder()
                    .url(postUrl)
                    .post(formBody)
                    .build();
-
            return client.newCall(request);
        }
 

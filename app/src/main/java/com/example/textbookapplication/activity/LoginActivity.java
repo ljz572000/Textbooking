@@ -10,19 +10,25 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.example.textbookapplication.Network.Service;
 import com.example.textbookapplication.R;
+import com.example.textbookapplication.RegisteredActivity;
 import com.example.textbookapplication.entity.LoginUser;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -37,9 +43,13 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editId;
     @ViewInject(R.id.editPwd)
     private EditText editPwd;
+    @ViewInject(R.id.forgot_pwd)
+    private Button forgot_pwd;
+    @ViewInject(R.id.registered)
+    private Button registered;
     // 创建等待框
     @ViewInject(R.id.loading)
-    private ProgressDialog dialog;
+    private ProgressBar loadingProgressBar;
 
     private Context context = this;
     public static final String EXTRA_MESSAGE = "LoginMessage";
@@ -57,14 +67,29 @@ public class LoginActivity extends AppCompatActivity {
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
-
+        loadingProgressBar.setVisibility(View.GONE);
         btnLogin.setOnClickListener(v -> {
+            loadingProgressBar.setVisibility(View.VISIBLE);
             btnLogin.setEnabled(false);//点了登录后不可以再点，避免用户乱点
             login(editId.getText().toString(),editPwd.getText().toString());
         });
 
+        forgot_pwd.setOnClickListener(goToForgotPwd());
+        registered.setOnClickListener(goRegistered());
     }
 
+    private View.OnClickListener goRegistered(){
+        return view ->{
+            Intent intent = new Intent(LoginActivity.this, RegisteredActivity.class);
+            startActivity(intent);
+        };
+    }
+    private View.OnClickListener goToForgotPwd(){
+        return view ->{
+            Intent intent = new Intent(LoginActivity.this,ForgetActivity.class);
+            startActivity(intent);
+        };
+    }
     private boolean checkNetwork(){
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
@@ -82,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
                 call.cancel();
                 runOnUiThread(() -> Toast.makeText(LoginActivity.this, "网络连接错误，请检查网络设置后重试。", Toast.LENGTH_SHORT).show());
             }
-
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String info = response.body().string();
@@ -108,5 +132,24 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private boolean isExit=false;
+    //退出方法
+    @Override
+    public void onBackPressed() {
+        if (isExit){
+            super.onBackPressed();
+            finish();
+        }else {
+            isExit = true;
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isExit = false;
+                }
+            },2000);
+            Toast.makeText(getApplicationContext(), "再点击一次退出程序", Toast.LENGTH_SHORT).show();
+        }
     }
 }

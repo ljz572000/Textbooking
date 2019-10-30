@@ -7,7 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginUser {
-
+    public static LoginUser loginUser;
     public Integer getUserNo() {
         return userNo;
     }
@@ -69,7 +69,7 @@ public class LoginUser {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        loginUser = new LoginUser(this.userNo,this.userId,this.isAdmin,this.userPassword,this.userIconPath,this.userName);
         //SharePreferences
         saveUser(context,usermessage);
     }

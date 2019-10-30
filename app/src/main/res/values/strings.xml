@@ -3,6 +3,8 @@
     <string name="edit_id">工号或学号</string>
     <string name="edit_Pwd">密码</string>
     <string name="sign_in">登录</string>
+    <string name="forgot_pwd">忘记密码?</string>
+    <string name="registered">注册账户</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">非法的工号或学号</string>
     <string name="invalid_password">Password must be >5 characters</string>
@@ -44,5 +46,6 @@
     <string name="about">关于app</string>
 
     <string name="statement">此项目为2019年大四android 应用开发 大作业  由上海电力大学李金洲、李玮光共同开发</string>
+    <string name="code">源码地址： https://github.com/ljz572000/Textbooking</string>
 
 </resources>

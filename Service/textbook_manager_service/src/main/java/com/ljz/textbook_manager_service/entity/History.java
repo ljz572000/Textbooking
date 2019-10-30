@@ -2,9 +2,7 @@ package com.ljz.textbook_manager_service.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Data
@@ -12,6 +10,7 @@ import java.sql.Timestamp;
 @Table
 public class History {
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer historyNo;
     private Integer orderNo;
     private Timestamp startTime;
