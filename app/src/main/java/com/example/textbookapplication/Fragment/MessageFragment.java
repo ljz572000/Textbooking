@@ -46,6 +46,7 @@ public class MessageFragment extends BaseFragment {
         messListAdapter = new MessListAdapter(arrayList,context);
         listView.setAdapter(messListAdapter);
         getMessData();
+        messListAdapter.notifyDataSetChanged();
     }
 
     private void getMessData(){
@@ -62,15 +63,22 @@ public class MessageFragment extends BaseFragment {
                 try {
                     jsonObject = new JSONObject(result);
                     String content = jsonObject.getString("content");
-
                     JSONArray jsonArray = new JSONArray(content);
                     for (int i = 0;i<jsonArray.length();i++){
                         jsonObject = jsonArray.getJSONObject(i);
                         Integer messNo = jsonObject.getInt("messNo");
-                        Integer userNo = jsonObject.getInt("userNo");
+
+                        JSONObject userJson = jsonObject.getJSONObject("user");
+                        Integer userId = userJson.getInt("userId");
+                        Log.i(TAG, "onSuccess: "+userId);
+                        Boolean isAdmin = userJson.getBoolean("isAdmin");
+                        String userPassword = userJson.getString("userPassword");
+                        String userIconPath = userJson.getString("userIconPath");
+                        String userName = userJson.getString("userName");
+                        LoginUser user = new LoginUser(userId,isAdmin,userPassword,userIconPath,userName);
                         String startTime =  jsonObject.getString("startTime");
                         String Messcontent = jsonObject.getString("content");
-                        Message message = new Message(messNo,userNo,startTime,Messcontent);
+                        Message message = new Message(messNo,user,startTime,Messcontent);
                         arrayList.add(message);
                     }
                     messListAdapter.notifyDataSetChanged();

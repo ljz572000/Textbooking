@@ -3,11 +3,13 @@ package com.example.textbookapplication.entity;
 import java.sql.Timestamp;
 
 public class Message {
-    public Message(Integer messNo, Integer userNo, String startTime, String content) {
-        this.messNo = messNo;
-        this.userNo = userNo;
-        this.startTime = startTime;
-        this.content = content;
+
+    public LoginUser getUser() {
+        return user;
+    }
+
+    public void setUser(LoginUser user) {
+        this.user = user;
     }
 
     public Integer getMessNo() {
@@ -16,14 +18,6 @@ public class Message {
 
     public void setMessNo(Integer messNo) {
         this.messNo = messNo;
-    }
-
-    public Integer getUserNo() {
-        return userNo;
-    }
-
-    public void setUserNo(Integer userNo) {
-        this.userNo = userNo;
     }
 
     public String getStartTime() {
@@ -42,8 +36,15 @@ public class Message {
         this.content = content;
     }
 
+    public Message(Integer messNo, LoginUser user, String startTime, String content) {
+        this.messNo = messNo;
+        this.user = user;
+        this.startTime = startTime;
+        this.content = content;
+    }
+
     private Integer messNo;
-    private Integer userNo;
+    private LoginUser user;
     private String startTime;
     private String content;
 }

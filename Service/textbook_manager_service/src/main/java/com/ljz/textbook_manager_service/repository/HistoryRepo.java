@@ -2,6 +2,7 @@ package com.ljz.textbook_manager_service.repository;
 
 import com.ljz.textbook_manager_service.entity.History;
 import com.ljz.textbook_manager_service.entity.Message;
+import com.ljz.textbook_manager_service.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,8 +13,8 @@ import javax.transaction.Transactional;
 
 public interface HistoryRepo extends JpaRepository<History,Integer> {
     @Query(
-            value = "select * from textbook_manager.history",
-            countQuery = "select count(*) from textbook_manager.history",
+            value = "select * from history",
+            countQuery = "select count(*) from history",
             nativeQuery = true
     )
     Page<History> findHistories(Pageable pageable);

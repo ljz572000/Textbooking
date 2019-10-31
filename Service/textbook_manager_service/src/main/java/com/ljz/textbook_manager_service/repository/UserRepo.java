@@ -8,13 +8,13 @@ import org.springframework.data.jpa.repository.Query;
 import javax.transaction.Transactional;
 
 public interface UserRepo extends JpaRepository<User,Integer> {
-    User findByUserIdAndUserPassword(String userId,String userPassword);
+    User findByUserIdAndUserPassword(Integer userId,String userPassword);
     @Transactional
     @Modifying
     @Query(
-            value = "insert into `textbook_manager`.`user`(`user_id`,`is_admin`,`user_password`,`user_icon_path`,`user_name`)"+
-                    " values(?1,?2,?3,?4,?5);",
+            value = "insert into `user`(`user_id`,`is_admin`,`user_password`,`user_icon_path`,`user_name`)" +
+                    "values(?1,?2,?3,?4,?5);",
             nativeQuery = true
     )
-    void insertNewUser(String user_id,Boolean isAdmin,String pwd,String user_icon,String user_name);
+    void insertNewUser(Integer user_id,Boolean isAdmin,String pwd,String user_icon,String user_name);
 }

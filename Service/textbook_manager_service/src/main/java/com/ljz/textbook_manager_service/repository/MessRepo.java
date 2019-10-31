@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 
 public interface MessRepo extends JpaRepository<Message,Integer> {
     @Query(
-            value = "select * from textbook_manager.message where user_no = ?1",
+            value = "select * from message where user_id = ?1",
             countQuery = "select count(*) from textbook_manager.message",
             nativeQuery = true
     )
@@ -19,9 +19,9 @@ public interface MessRepo extends JpaRepository<Message,Integer> {
     @Transactional
     @Modifying
     @Query(
-            value = "insert into `message`(`content`,`user_no`) values (?1,?2); ",nativeQuery = true
+            value = "insert into `message`(`content`,`user_id`) values (?1,?2); ",nativeQuery = true
     )
-    void newMessage(String content,Integer user_no);
+    void newMessage(String content,Integer user_id);
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM `message` WHERE `mess_no`=?1",nativeQuery = true)

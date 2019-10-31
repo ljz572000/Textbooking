@@ -1,52 +1,88 @@
 -- ip 139.155.16.227  账号 root 密码qqq123
 create database `textbook_manager`;
-
 use `textbook_manager`;
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-  `user_no` bigint(20) NOT NULL auto_increment,
-  `user_id` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `is_admin` boolean default false,
-  `user_password` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `user_icon_path` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `user_name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`user_no`),
-  UNIQUE KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+create table `history`
+(`history_no` integer not null auto_increment,
+`start_time` datetime default now(),
+`order_no` integer,
+primary key (`history_no`)) engine=InnoDB;
 
-insert into `user`
-values(1,'20160750',false,'1234','my_avator.png','李金洲'),
-(2,'20160751',false,'1234','my_avator.png','李玮光'),
-(3,'20160752',false,'1234','my_avator.png','韩青杨'),
-(4,'20160753',false,'1234','my_avator.png','吴仁珑'),
-(5,'20160754',false,'1234','my_avator.png','杨壹麟'),
-(6,'20160755',false,'1234','my_avator.png','杨永旭');
+create table `message`
+(`mess_no` integer not null auto_increment,
+`content` varchar(255),
+`start_time` datetime default now(),
+`user_id` integer,
+primary key (`mess_no`)) engine=InnoDB;
 
--- 添加管理员用户
-insert into `user`
-values(7,'20190001',true,'1234','my_avator.png','李老师'),
-(8,'20190002',true,'1234','my_avator.png','王老师'),
-(9,'20190003',true,'1234','my_avator.png','张老师'),
-(10,'20190004',true,'1234','my_avator.png','韩老师'),
-(11,'20190005',true,'1234','my_avator.png','杨老师'),
-(12,'20190006',true,'1234','my_avator.png','谢老师');
+create table `order` (`order_no` integer not null auto_increment,
+`book_num` integer,
+`book_values` double precision,
+`start_time` datetime default now(),
+`book_no` integer, `user_id` integer,
+primary key (`order_no`)) engine=InnoDB;
 
-insert into `user`(`user_id`,`is_admin`,`user_password`,`user_icon_path`,`user_name`)
-values('20190007',true,'1234','my_avator.png','李老师');
+create table `shopping_cart`
+(`shopping_cart_no` integer not null auto_increment,
+`book_num` integer,
+`book_values` double precision,
+`start_time` datetime default now(),
+`book_no` integer,
+`user_id` integer,
+primary key (`shopping_cart_no`)) engine=InnoDB;
 
 create table `text_book`
-(
-`book_no` integer not null,
+(`book_no` integer not null auto_increment,
 `author` varchar(255),
 `book_name` varchar(255),
 `book_pic` varchar(255),
 `book_price` double precision,
-`totalnum` integer default 0,
-primary key (`book_nso`)
-) engine=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+`totalnum` integer,
+primary key (`book_no`)) engine=InnoDB;
 
-update `text_book` set `text_book`.`totalnum` = 100 where `text_book`.`book_no`=1;
+create table `user`
+(`user_id` integer not null auto_increment,
+`is_admin` bit,
+`user_icon_path` varchar(255),
+`user_name` varchar(255),
+`user_password` varchar(255),
+primary key (`user_id`)) engine=InnoDB;
+
+insert into `user`
+(`is_admin`,`user_icon_path`,`user_id`,`user_name`,`user_password`)values
+(false,'my_avator.png',20160750,'李金洲','1234'),
+(false,'my_avator.png',20160751,'李玮光','1234'),
+(false,'my_avator.png',20160752,'韩青杨','1234'),
+(false,'my_avator.png',20160753,'吴仁珑','1234'),
+(false,'my_avator.png',20160754,'杨壹麟','1234'),
+(false,'my_avator.png',20160755,'杨永旭','1234');
+
+-- 添加管理员用户
+insert into `user`
+(`is_admin`,`user_icon_path`,`user_id`,`user_name`,`user_password`)values
+(true,'my_avator.png',20190001,'李老师','1234'),
+(true,'my_avator.png',20190002,'王老师','1234'),
+(true,'my_avator.png',20190003,'张老师','1234'),
+(true,'my_avator.png',20190004,'韩老师','1234'),
+(true,'my_avator.png',20190005,'杨老师','1234'),
+(true,'my_avator.png',20190006,'谢老师','1234');
+
+alter table `history`
+add constraint FKavet78bxwd5k9q7vb668x96co foreign key (`order_no`) references `order` (`order_no`);
+
+alter table `message` add constraint FKnebwitbhvl9nq6mqsdlmb0v75 foreign key (`user_id`) references `user` (`user_id`);
+
+alter table `order` add constraint FK2c189aci3ol5nt90ae9cl1yjp foreign key (`book_no`) references `text_book` (`book_no`);
+
+alter table `order` add constraint FKrcaf946w0bh6qj0ljiw3pwpnu foreign key (`user_id`) references `user` (`user_id`);
+
+alter table `shopping_cart` add constraint FK92wnnk8b8blrpwwiacxcqls40 foreign key (`book_no`) references `text_book` (`book_no`);
+
+alter table `shopping_cart` add constraint FKlf4gsfxg2in4u7qyx285s45y5 foreign key (`user_id`) references `user` (`user_id`);
+
+DROP TABLE IF EXISTS `user`;
+
+
 
 insert into `text_book` values
 (1,'王学惠','国际结算教程','http://www.tup.tsinghua.edu.cn/upload/bigbookimg/077447-01.jpg',39.0,100),
@@ -149,76 +185,3 @@ insert into `text_book` values
 (98,'张学昌、裴磊，陆俊杰、张炜、施岳定','AutoCAD机械图样典型范例与实训教程（第3版）','http://www.tup.tsinghua.edu.cn/upload/bigbookimg/083125-01.jpg',39.0,100),
 (99,'贾立新、倪洪杰、王辛刚','电子系统设计与实践（第4版）','http://www.tup.tsinghua.edu.cn/upload/bigbookimg/084436-01.jpg',59.0,100),
 (100,'朱桂明 任丽 杨文 闵悦昕 胡燕玲 胡竟男 何亚雯 李莉 王善德','基础会计（第二版）','http://www.tup.tsinghua.edu.cn/upload/bigbookimg/085109-01.jpg',49.8,100);
-
-
--- 消息表
-
-create table `message`
- (`mess_no` integer not null auto_increment,
- `content` varchar(255),
- `start_time` timestamp default now(),
- `user_no` integer,
- primary key (`mess_no`))
- engine=InnoDB;
- 
- insert into `message`(`content`,`user_no`) values ('新消息',20160751); 
- 
-DELETE FROM `message`
-WHERE `mess_no`=1;
- 
- insert into `message` values
- (1,'新消息','2002-11-14 09:40:09',20160750),
-  (2,'新消息','2002-11-14 09:40:09',20160750),
-   (3,'新消息','2002-11-14 09:40:09',20160750),
-    (4,'新消息','2002-11-14 09:40:09',20160750),
-     (5,'新消息','2002-11-14 09:40:09',20160750),
-      (6,'新消息','2002-11-14 09:40:09',20160750),
-       (7,'新消息','2002-11-14 09:40:09',20160750),
-        (8,'新消息','2002-11-14 09:40:09',20160750),
-         (9,'新消息','2002-11-14 09:40:09',20160750),
-          (10,'新消息','2002-11-14 09:40:09',20160750),
-           (11,'新消息','2002-11-14 09:40:09',20160750),
-            (12,'新消息','2002-11-14 09:40:09',20160750),
-             (13,'新消息','2002-11-14 09:40:09',20160750),
-              (14,'新消息','2002-11-14 09:40:09',20160750),
-               (15,'新消息','2002-11-14 09:40:09',20160750),
-                (16,'新消息','2002-11-14 09:40:09',20160750),
-                 (17,'新消息','2002-11-14 09:40:09',20160750);
-				
- create table `shopping_cart`
- (`shopping_cart_no` integer not null auto_increment,
- `book_no` integer,
- `book_num` integer,
- `book_values` double precision,
- `start_time` datetime default now(),
- `user_no` integer,
- primary key (`shopping_cart_no`)) engine=InnoDB;
-
-SET time_zone = '+8:00';
-
-  insert into `shopping_cart`(`book_no`,`book_num`,`book_values`,`user_no`) values
- (1,1,100.0,20160750);
- 
- create table `history`
- (`history_no` integer not null auto_increment,
- `order_no` integer,
- `start_time` datetime default now(),
- primary key (`history_no`))
- engine=InnoDB;
- 
- set global time_zone = '+8:00';
- 
- insert into `history`(`order_no`) values
-(1);
- 
- create table `order`
- (`order_no` integer not null auto_increment,
- `book_no` integer,
- `book_num` integer,
- `book_values` double precision,
-`start_time` datetime default now(),
-`user_no` integer,
- primary key (`order_no`)) engine=InnoDB;
- 
-insert into `order`(`book_no`,`book_num`,`book_values`,`user_no`) values
-(1,1,100.0,20160750);

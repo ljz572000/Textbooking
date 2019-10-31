@@ -12,8 +12,12 @@ public class ShoppingCart {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer shoppingCartNo;
-    private Integer userNo;
-    private Integer bookNo;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId")
+    private User user;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bookNo")
+    private TextBook book;
     private Integer bookNum;
     private Double bookValues;
     private Timestamp startTime;

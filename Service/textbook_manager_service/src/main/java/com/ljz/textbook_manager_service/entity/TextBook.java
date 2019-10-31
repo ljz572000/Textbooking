@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Table
 public class TextBook {
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer bookNo;
     private String bookName;
     private String bookPic;

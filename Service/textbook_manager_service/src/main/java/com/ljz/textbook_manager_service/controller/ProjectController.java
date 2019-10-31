@@ -28,14 +28,14 @@ public class ProjectController {
 
     @PostMapping("/login")
     @ResponseBody
-    private User login(@RequestParam(value = "userId",required = false) String userId,@RequestParam(value = "userPassword",required = false) String userPassword){
+    private User login(@RequestParam(value = "userId",required = false) Integer userId,@RequestParam(value = "userPassword",required = false) String userPassword){
         return userRepository.findByUserIdAndUserPassword(userId,userPassword);
     }
 
     @PostMapping("/insertAUser")
     @ResponseBody
     private String registered(
-            @RequestParam(value = "userId") String userId,
+            @RequestParam(value = "userId") Integer userId,
             @RequestParam(value = "isAdmin") Boolean isAdmin,
             @RequestParam(value = "userPassword") String userPassword,
             @RequestParam(value = "userIconPath") String userIconPath,
@@ -145,9 +145,9 @@ public class ProjectController {
     private Page<Order> orders(
             @RequestParam(value = "pagecount") Integer pagecount,
             @RequestParam(value = "size") Integer size,
-            @RequestParam(value = "user_no") Integer user_no
+            @RequestParam(value = "user_no") String user_id
     ) {
-        return orderRepo.findOrders(PageRequest.of(pagecount, size),user_no);
+        return orderRepo.findOrders(PageRequest.of(pagecount, size),user_id);
     }
 
     @GetMapping("/AddOrders")

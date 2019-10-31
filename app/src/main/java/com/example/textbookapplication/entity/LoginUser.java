@@ -8,21 +8,6 @@ import org.json.JSONObject;
 
 public class LoginUser {
     public static LoginUser loginUser;
-    public Integer getUserNo() {
-        return userNo;
-    }
-
-    public void setUserNo(Integer userNo) {
-        this.userNo = userNo;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public Boolean getAdmin() {
         return isAdmin;
@@ -60,8 +45,7 @@ public class LoginUser {
 
         try {
             JSONObject jsonObject = new JSONObject(usermessage);
-            this.userNo = jsonObject.getInt("userNo");
-            this.userId = jsonObject.getString("userId");
+            this.userId = jsonObject.getInt("userId");
             this.isAdmin = jsonObject.getBoolean("isAdmin");
             this.userPassword = jsonObject.getString("userPassword");
             this.userIconPath = jsonObject.getString("userIconPath");
@@ -69,7 +53,7 @@ public class LoginUser {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        loginUser = new LoginUser(this.userNo,this.userId,this.isAdmin,this.userPassword,this.userIconPath,this.userName);
+        loginUser = new LoginUser(this.userId,this.isAdmin,this.userPassword,this.userIconPath,this.userName);
         //SharePreferences
         saveUser(context,usermessage);
     }
@@ -81,8 +65,7 @@ public class LoginUser {
         editor.commit();
     }
 
-    public LoginUser(Integer userNo, String userId, Boolean isAdmin, String userPassword, String userIconPath, String userName) {
-        this.userNo = userNo;
+    public LoginUser(Integer userId, Boolean isAdmin, String userPassword, String userIconPath, String userName) {
         this.userId = userId;
         this.isAdmin = isAdmin;
         this.userPassword = userPassword;
@@ -90,8 +73,15 @@ public class LoginUser {
         this.userName = userName;
     }
 
-    private Integer userNo;
-    private String userId;
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    private Integer userId;
     private Boolean isAdmin;
     private String userPassword;
     private String userIconPath;

@@ -7,11 +7,13 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
-@Table
+@Table(name = "`history`")
 public class History {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer historyNo;
-    private Integer orderNo;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "orderNo")
+    private Order orderNo;
     private Timestamp startTime;
 }
