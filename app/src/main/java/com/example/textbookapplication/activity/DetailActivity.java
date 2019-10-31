@@ -3,9 +3,12 @@ package com.example.textbookapplication.activity;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -52,6 +55,7 @@ public class DetailActivity extends AppCompatActivity {
     @ViewInject(R.id.num)
     private TextView num;
     private static final String TAG = "DetailActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,19 +80,21 @@ public class DetailActivity extends AppCompatActivity {
 
         x.image().bind(pic, textBook.getBookPic(), imageOptions);
 
-        add.setOnClickListener(order(textBook.getBookNo(), textBook.getBookName(),num.getText().toString(),textBook.getBookPrice()));
-        buy.setOnClickListener(order(textBook.getBookNo(), textBook.getBookName(),num.getText().toString(),textBook.getBookPrice()));
-
         add_num.setOnClickListener(changNum(textBook.getTotalnum()));
         sub_num.setOnClickListener(changNum(textBook.getTotalnum()));
 
-
+        add.setOnClickListener(order(textBook.getBookNo(), textBook.getBookName(), textBook.getBookPrice()));
+        buy.setOnClickListener(order(textBook.getBookNo(), textBook.getBookName(), textBook.getBookPrice()));
+        Log.i(TAG, "onCreate: ");
     }
 
-    private View.OnClickListener order(Integer bookNo,String bookName,String num,Double bookPrice) {
+    private View.OnClickListener order(Integer bookNo, String bookName, Double bookPrice) {
+
         final AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(DetailActivity.this);
+
         return view -> {
+            int textNum =Integer.parseInt(num.getText().toString());
             switch (view.getId()) {
                 case R.id.buy:
                     normalDialog.setTitle("立即购买");
@@ -97,8 +103,10 @@ public class DetailActivity extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    String content ="已购买" + num + "本" + bookName + "加入购物车";
+                                    String content = "已购买" + textNum + "本" + bookName + "加入购物车";
                                     sendMessage(content);
+                                    buytextbook(bookNo, bookPrice, textNum);
+                                    updateTextBookNum(bookNo, textNum);
                                 }
                             });
                     normalDialog.setNegativeButton("关闭",
@@ -116,9 +124,9 @@ public class DetailActivity extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    String content = "已将" + num + "本" + bookName + "加入购物车";
+                                    String content = "已将" + textNum + "本" + bookName + "加入购物车";
                                     sendMessage(content);
-                                    addShoppingCart(bookNo,bookPrice,Integer.parseInt(num));
+                                    addShoppingCart(bookNo, bookPrice, textNum);
                                 }
                             });
                     normalDialog.setNegativeButton("关闭",
@@ -129,31 +137,32 @@ public class DetailActivity extends AppCompatActivity {
                             });
                     normalDialog.show();
                     break;
-                    default:
-                        break;
+                default:
+                    break;
             }
         };
     }
 
+
     private View.OnClickListener changNum(Integer totalnum) {
         return view -> {
-            int textbookNum = Integer.parseInt(num.getText().toString());
+            int textbook_num = Integer.parseInt(num.getText().toString());
             switch (view.getId()) {
                 case R.id.add_num:
-                    textbookNum++;
-                    if (textbookNum > totalnum) {
+                    textbook_num++;
+                    if (textbook_num > totalnum) {
                         Toast.makeText(getApplicationContext(), "sorry, 超过了剩余数量", Toast.LENGTH_SHORT).show();
-                        textbookNum--;
+                        textbook_num--;
                     }
-                    num.setText("" + textbookNum);
+                    num.setText("" + textbook_num);
                     break;
                 case R.id.sub_num:
-                    textbookNum--;
-                    if (textbookNum < 1) {
+                    textbook_num--;
+                    if (textbook_num < 1) {
                         Toast.makeText(getApplicationContext(), "sorry, 最小的订购数量为1", Toast.LENGTH_SHORT).show();
-                        textbookNum++;
+                        textbook_num++;
                     }
-                    num.setText("" + textbookNum);
+                    num.setText("" + textbook_num);
                     break;
                 default:
                     break;
@@ -185,7 +194,7 @@ public class DetailActivity extends AppCompatActivity {
         return textBook;
     }
 
-    private void addShoppingCart(Integer book_no,Double book_price,Integer num) {
+    private void addShoppingCart(Integer book_no, Double book_price, Integer num) {
         //https://www.lijinzhou.top:2020/addShoppingCart?book_no=1&book_num=1&book_values=100.0&user_no=20160751
         Double book_values = book_price * num;
         RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/addShoppingCart");
@@ -193,41 +202,99 @@ public class DetailActivity extends AppCompatActivity {
         params.addQueryStringParameter("book_num", num);
         params.addQueryStringParameter("book_values", book_values);
         params.addQueryStringParameter("user_no", LoginUser.loginUser.getUserId());
-        x.http().get(params, new Callback.CommonCallback<String>(){
+        x.http().get(params, new Callback.CommonCallback<String>() {
 
             @Override
-            public void onSuccess(String result) {}
+            public void onSuccess(String result) {
+            }
+
             @Override
-            public void onError(Throwable ex, boolean isOnCallback) {}
+            public void onError(Throwable ex, boolean isOnCallback) {
+            }
+
             @Override
-            public void onCancelled(CancelledException cex) {}
+            public void onCancelled(CancelledException cex) {
+            }
+
             @Override
-            public void onFinished() {}
+            public void onFinished() {
+            }
         });
     }
 
-    private void buytextbook(String bookNo, String bookName, String num) {
-        final AlertDialog.Builder normalDialog =
-                new AlertDialog.Builder(DetailActivity.this);
+    private void buytextbook(Integer book_no, Double book_price, Integer num) {
+        //https://www.lijinzhou.top:2020/AddOrders?book_no=1&book_num=1&book_values=100&user_no=20160750
+        Double book_values = book_price * num;
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/AddOrders");
+        params.addQueryStringParameter("book_no", book_no);
+        params.addQueryStringParameter("book_num", num);
+        params.addQueryStringParameter("book_values", book_values);
+        params.addQueryStringParameter("user_no", LoginUser.loginUser.getUserId());
+        x.http().get(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+            }
 
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+            }
+
+            @Override
+            public void onFinished() {
+            }
+        });
     }
 
 
-    private void sendMessage(String content){
+    private void sendMessage(String content) {
         RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/NewMessage");
         params.addQueryStringParameter("content", content);
         params.addQueryStringParameter("user_no", LoginUser.loginUser.getUserId());
-        x.http().get(params, new Callback.CommonCallback<String>(){
+        x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                runOnUiThread( ()->Toast.makeText(getApplicationContext(), content, Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), content, Toast.LENGTH_SHORT).show());
             }
+
             @Override
-            public void onError(Throwable ex, boolean isOnCallback) {}
+            public void onError(Throwable ex, boolean isOnCallback) {
+            }
+
             @Override
-            public void onCancelled(CancelledException cex) {}
+            public void onCancelled(CancelledException cex) {
+            }
+
             @Override
-            public void onFinished() {}
+            public void onFinished() {
+            }
+        });
+    }
+
+    private void updateTextBookNum(Integer book_no, Integer num) {
+        //https://localhost:8080/UpdateTextBookNum?buyNum=10&bookNo=1
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/UpdateTextBookNum");
+        params.addQueryStringParameter("buyNum", num);
+        params.addQueryStringParameter("bookNo", book_no);
+        x.http().get(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+            }
+
+            @Override
+            public void onFinished() {
+            }
         });
     }
 

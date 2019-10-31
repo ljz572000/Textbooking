@@ -11,11 +11,11 @@ import javax.transaction.Transactional;
 
 public interface MessRepo extends JpaRepository<Message,Integer> {
     @Query(
-            value = "select * from textbook_manager.message ",
+            value = "select * from textbook_manager.message where user_no = ?1",
             countQuery = "select count(*) from textbook_manager.message",
             nativeQuery = true
     )
-    Page<Message> findMessages(Pageable pageable);
+    Page<Message> findMessages(Pageable pageable,Integer user_no);
     @Transactional
     @Modifying
     @Query(

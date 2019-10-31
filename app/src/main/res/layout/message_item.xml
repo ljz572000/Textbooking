@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"  android:background="@color/white">
-    <ImageView
-        android:id="@+id/mess_pic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_shopping_car"
-        />
+<!--    <ImageView-->
+<!--        android:id="@+id/mess_pic"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@drawable/ic_shopping_car"-->
+<!--        />-->
     <TextView
         android:id="@+id/mess_title"
-        android:layout_toRightOf="@+id/mess_pic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:text="购买消息"
+        android:textColor="@color/black"
         />
+<!--    android:layout_toRightOf="@+id/mess_pic"-->
     <TextView
         android:id="@+id/mess_content"
         android:layout_below="@+id/mess_title"
-        android:layout_toRightOf="@+id/mess_pic"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="你已购买了5本图书"/>
+<!--    android:layout_toRightOf="@+id/mess_pic"-->
 </RelativeLayout>

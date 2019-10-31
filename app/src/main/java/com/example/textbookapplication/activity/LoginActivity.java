@@ -2,7 +2,6 @@ package com.example.textbookapplication.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -14,13 +13,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.example.textbookapplication.Network.Service;
 import com.example.textbookapplication.R;
-import com.example.textbookapplication.RegisteredActivity;
 import com.example.textbookapplication.entity.LoginUser;
 
 import org.xutils.view.annotation.ContentView;

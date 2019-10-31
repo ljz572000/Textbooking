@@ -2,6 +2,7 @@ package com.example.textbookapplication.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.textbookapplication.R;
+import com.example.textbookapplication.entity.LoginUser;
+import com.example.textbookapplication.entity.Message;
+import com.example.textbookapplication.entity.TextBook;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,45 +36,80 @@ public class MessageFragment extends BaseFragment {
 
     private Context context;
     private MessListAdapter messListAdapter;
-
+    private ArrayList<Message> arrayList;
+    private static final String TAG = "MessageFragment";
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
-        ArrayList<String> arrayList = new ArrayList<>();
-        for (int i=0;i<100;i++){
-            arrayList.add("1");
-        }
-
+        arrayList = new ArrayList<>();
         messListAdapter = new MessListAdapter(arrayList,context);
         listView.setAdapter(messListAdapter);
+        getMessData();
+    }
+
+    private void getMessData(){
+        //https://www.lijinzhou.top:2020/Messages?pagecount=0&size=30&user_no=20160750
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/Messages");
+        params.addQueryStringParameter("pagecount", 0);
+        params.addQueryStringParameter("size", 30);
+        params.addQueryStringParameter("user_no",20160750);
+        x.http().get(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(result);
+                    String content = jsonObject.getString("content");
+
+                    JSONArray jsonArray = new JSONArray(content);
+                    for (int i = 0;i<jsonArray.length();i++){
+                        jsonObject = jsonArray.getJSONObject(i);
+                        Integer messNo = jsonObject.getInt("messNo");
+                        Integer userNo = jsonObject.getInt("userNo");
+                        String startTime =  jsonObject.getString("startTime");
+                        String Messcontent = jsonObject.getString("content");
+                        Message message = new Message(messNo,userNo,startTime,Messcontent);
+                        arrayList.add(message);
+                    }
+                    messListAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+            }
+            @Override
+            public void onCancelled(CancelledException cex) {
+            }
+            @Override
+            public void onFinished() {}
+        });
     }
 }
 
 class MessListAdapter extends BaseAdapter {
     private final LayoutInflater mInflater;
-    private List<String> fruitList;
+    private List<Message> MessList;
 
-    public MessListAdapter(ArrayList arrayList,Context context) {
+    public MessListAdapter(ArrayList<Message> arrayList,Context context) {
         this.mInflater = LayoutInflater.from(context);
-        this.fruitList = arrayList;
+        this.MessList = arrayList;
     }
-
     @Override
     public int getCount() {
-        return fruitList.size();
+        return MessList.size();
     }
-
     @Override
-    public Object getItem(int i) {
-        return fruitList.get(i);
+    public Message getItem(int i) {
+        return MessList.get(i);
     }
-
     @Override
     public long getItemId(int i) {
         return i;
     }
-
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         MessItemHolder messItemHolder;
@@ -76,14 +121,14 @@ class MessListAdapter extends BaseAdapter {
         }else {
             messItemHolder =(MessItemHolder) view.getTag();
         }
-        //...
-        //...
+        Message newMess = getItem(i);
+        messItemHolder.messContent.setText(newMess.getContent());
         return view;
     }
     @ContentView(R.layout.message_item)
     private class MessItemHolder{
-        @ViewInject(R.id.mess_pic)
-        private ImageView messPic;
+//        @ViewInject(R.id.mess_pic)
+//        private ImageView messPic;
         @ViewInject(R.id.mess_title)
         private TextView messTitle;
         @ViewInject(R.id.mess_content)

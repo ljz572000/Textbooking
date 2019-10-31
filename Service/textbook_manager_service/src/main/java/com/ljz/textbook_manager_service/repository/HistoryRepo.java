@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 
 public interface HistoryRepo extends JpaRepository<History,Integer> {
     @Query(
-            value = "select * from textbook_manager.history ",
+            value = "select * from textbook_manager.history",
             countQuery = "select count(*) from textbook_manager.history",
             nativeQuery = true
     )

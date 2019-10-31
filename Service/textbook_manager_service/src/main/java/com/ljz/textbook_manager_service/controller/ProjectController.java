@@ -85,8 +85,11 @@ public class ProjectController {
     @ResponseBody
     private Page<Message> messages(
             @RequestParam(value = "pagecount") Integer pagecount,
-            @RequestParam(value = "size") Integer size){
-        return messRepo.findMessages(PageRequest.of(pagecount,size));
+            @RequestParam(value = "size") Integer size,
+            @RequestParam(value = "user_no") Integer user_no
+
+    ){
+        return messRepo.findMessages(PageRequest.of(pagecount,size),user_no);
     }
 
     @GetMapping("/NewMessage")
@@ -141,9 +144,10 @@ public class ProjectController {
     @ResponseBody
     private Page<Order> orders(
             @RequestParam(value = "pagecount") Integer pagecount,
-            @RequestParam(value = "size") Integer size
+            @RequestParam(value = "size") Integer size,
+            @RequestParam(value = "user_no") Integer user_no
     ) {
-        return orderRepo.findOrders(PageRequest.of(pagecount, size));
+        return orderRepo.findOrders(PageRequest.of(pagecount, size),user_no);
     }
 
     @GetMapping("/AddOrders")
