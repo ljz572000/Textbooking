@@ -13,11 +13,11 @@ import javax.transaction.Transactional;
 
 public interface ShoppingRepo extends JpaRepository<ShoppingCart,Integer> {
     @Query(
-            value = "select * from shopping_cart ",
+            value = "select * from shopping_cart where user_id=?1",
             countQuery = "select count(*) from shopping_cart",
             nativeQuery = true
     )
-    Page<ShoppingCart> findShoppingCarts(Pageable pageable);
+    Page<ShoppingCart> findShoppingCarts(Pageable pageable,Integer userNo);
 
     @Transactional
     @Modifying

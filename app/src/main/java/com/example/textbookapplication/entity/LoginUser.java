@@ -2,12 +2,14 @@ package com.example.textbookapplication.entity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginUser {
     public static LoginUser loginUser;
+    private static final String TAG = "LoginUser";
 
     public Boolean getAdmin() {
         return isAdmin;
@@ -53,6 +55,7 @@ public class LoginUser {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Log.i(TAG, "LoginUser: "+this.userId);
         loginUser = new LoginUser(this.userId,this.isAdmin,this.userPassword,this.userIconPath,this.userName);
         //SharePreferences
         saveUser(context,usermessage);

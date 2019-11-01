@@ -54,15 +54,17 @@
                 android:text="@string/book_values"
                 android:textColor="@color/text_price_color"
                 android:textSize="24sp"/>
-            <TextView
+            <Button
                 android:id="@+id/buy_now"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Buy_now"
+                android:background="#00000000"
                 android:textColor="@color/red"
                 android:layout_below="@+id/book_values"
                 android:layout_alignRight="@+id/book_values"
                 android:layout_marginEnd="15dp"
+
                 />
 
         </RelativeLayout>

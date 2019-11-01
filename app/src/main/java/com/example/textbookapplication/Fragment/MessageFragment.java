@@ -1,6 +1,7 @@
 package com.example.textbookapplication.Fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,13 +49,27 @@ public class MessageFragment extends BaseFragment {
         getMessData();
         messListAdapter.notifyDataSetChanged();
     }
+    private Integer getLoginUser(){
+        SharedPreferences sharedPreferences = context.getSharedPreferences("User", Context.MODE_PRIVATE);
+        final String userinfo = sharedPreferences.getString("User","");
+        JSONObject jsonObject = null;
+        Integer userId = null;
+        try {
+            jsonObject = new JSONObject(userinfo);
+            userId = jsonObject.getInt("userId");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return userId;
+    }
 
     private void getMessData(){
         //https://www.lijinzhou.top:2020/Messages?pagecount=0&size=30&user_no=20160750
         RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/Messages");
         params.addQueryStringParameter("pagecount", 0);
         params.addQueryStringParameter("size", 30);
-        params.addQueryStringParameter("user_no",20160750);
+        params.addQueryStringParameter("user_no",getLoginUser());
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -70,7 +85,6 @@ public class MessageFragment extends BaseFragment {
 
                         JSONObject userJson = jsonObject.getJSONObject("user");
                         Integer userId = userJson.getInt("userId");
-                        Log.i(TAG, "onSuccess: "+userId);
                         Boolean isAdmin = userJson.getBoolean("isAdmin");
                         String userPassword = userJson.getString("userPassword");
                         String userIconPath = userJson.getString("userIconPath");

@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                     //此处，先将响应体保存到内存中
                     if (!info.equals("")) {
                         LoginUser user = new LoginUser(info, context);
-                        Log.i(TAG, user.getUserId() + "  " + user.getUserPassword());
+//                        Log.i(TAG, user.getUserId() + "  " + user.getUserPassword());
                         if (user.getAdmin()){
                             Intent intent = new Intent(LoginActivity.this, AdminMainActivity.class);
                             startActivity(intent);

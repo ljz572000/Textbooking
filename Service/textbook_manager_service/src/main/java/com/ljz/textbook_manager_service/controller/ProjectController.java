@@ -121,9 +121,10 @@ public class ProjectController {
     @ResponseBody
     private Page<ShoppingCart> shoppingCarts(
             @RequestParam(value = "pagecount") Integer pagecount,
-            @RequestParam(value = "size") Integer size
+            @RequestParam(value = "size") Integer size,
+            @RequestParam(value = "userNo") Integer userNo
     ){
-        return shoppingRepo.findShoppingCarts(PageRequest.of(pagecount,size));
+        return shoppingRepo.findShoppingCarts(PageRequest.of(pagecount,size),userNo);
     }
 
     @GetMapping("/addShoppingCart")

@@ -83,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
             //使用本地信息登录
             try {
                 JSONObject jsonObject = new JSONObject(userinfo);
-                String userId = jsonObject.getString("userId");
+                Integer userId = jsonObject.getInt("userId");
                 String userPassword = jsonObject.getString("userPassword");
                 Log.i(TAG, userId + " " +userPassword);
-                Call call = Service.loginSerive(userId,userPassword);
+                Call call = Service.loginSerive(""+userId,userPassword);
                 call.enqueue(new Callback(){
                     @Override
                     public void onFailure(Call call, IOException e) {
