@@ -21,6 +21,7 @@ import com.example.textbookapplication.Fragment.ShoppingCartFragment;
 import com.example.textbookapplication.Network.Service;
 import com.example.textbookapplication.R;
 import com.example.textbookapplication.adapter.MyFragmentAdapter;
+import com.example.textbookapplication.encryption.BCrypt;
 import com.example.textbookapplication.entity.LoginUser;
 
 import org.json.JSONException;
@@ -83,10 +84,9 @@ public class MainActivity extends AppCompatActivity {
             //使用本地信息登录
             try {
                 JSONObject jsonObject = new JSONObject(userinfo);
-                Integer userId = jsonObject.getInt("userId");
+                String userId = jsonObject.getString("userId");
                 String userPassword = jsonObject.getString("userPassword");
-                Log.i(TAG, userId + " " +userPassword);
-                Call call = Service.loginSerive(""+userId,userPassword);
+                Call call = Service.loginSerive(userId);
                 call.enqueue(new Callback(){
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -100,16 +100,18 @@ public class MainActivity extends AppCompatActivity {
                             //此处，先将响应体保存到内存中
                             if (!info.equals("")) {
                                 LoginUser user = new LoginUser(info,context);
-                                //如果是管理员前往管理员界面
-                                if (user.getAdmin()){
-                                    Intent intent = new Intent(MainActivity.this, AdminMainActivity.class);
+                                if (BCrypt.checkpw(userPassword,user.getUserPassword())){
+                                    //如果是管理员前往管理员界面
+                                    if (user.getAdmin()){
+                                        Intent intent = new Intent(MainActivity.this, AdminMainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                                     startActivity(intent);
                                     finish();
+                                    }
                                 }
-                            } else {
-                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                                startActivity(intent);
-                                finish();
                             }
                         }
                     }

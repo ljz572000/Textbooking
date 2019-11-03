@@ -10,7 +10,8 @@ import javax.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer userId;
+    private Integer userNo;
+    private String userId;
     private Boolean isAdmin;
     private String userPassword;
     private String userIconPath;

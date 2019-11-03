@@ -18,7 +18,7 @@ public class Order {
     @JoinColumn(name = "bookNo")
     private TextBook TextBook;
     @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "userNo")
     private User user;
     private Integer bookNum;
     private Double bookValues;

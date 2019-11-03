@@ -26,7 +26,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.xutils.common.Callback;
-import org.xutils.common.util.DensityUtil;
 import org.xutils.http.RequestParams;
 import org.xutils.image.ImageOptions;
 import org.xutils.view.annotation.ContentView;
@@ -87,6 +86,7 @@ public class HomeFragment extends BaseFragment {
         content_view.setAdapter(adapter);
         textBooks.clear();
         textbookdata();
+
         content_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

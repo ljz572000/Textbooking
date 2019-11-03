@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".activity.RegisteredActivity">
+    tools:context=".activity.RepairActivity">
 
     <RelativeLayout
         android:id="@+id/bar"
@@ -12,58 +13,57 @@
         android:layout_height="wrap_content">
 
         <ImageButton
-            android:id="@+id/back_to_login"
+            android:id="@+id/back_to_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:src="@drawable/ic_back" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/back_to_login"
-            android:text="@string/registered"
+            android:layout_toRightOf="@id/back_to_me"
+            android:text="@string/user_repair"
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <EditText
-        android:id="@+id/register_id"
+        android:id="@+id/oldPwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/bar"
         android:layout_marginTop="20dp"
-        android:hint="@string/register_id"
-        android:textSize="24sp" />
+        android:hint="@string/oldPwd" />
 
     <EditText
-        android:id="@+id/register_pwd"
+        android:id="@+id/newPwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/register_id"
+        android:layout_below="@id/oldPwd"
         android:layout_marginTop="10dp"
-        android:hint="@string/register_pwd"
-        android:textSize="24sp" />
+        android:hint="@string/newPwd" />
 
     <EditText
-        android:id="@+id/register_username"
+        android:id="@+id/newPwd2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/register_pwd"
+        android:layout_below="@id/newPwd"
         android:layout_marginTop="10dp"
-        android:hint="@string/register_username"
-        android:textSize="24sp" />
+        android:hint="@string/newPwd2" />
+
     <Button
-        android:id="@+id/submit_register"
+        android:id="@+id/submit_pwd"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/register_username"
+        android:layout_below="@id/newPwd2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:background="@color/bluesky"
         android:text="@string/submit"
         android:textColor="@color/white"
         android:textSize="18sp" />
+
 </RelativeLayout>

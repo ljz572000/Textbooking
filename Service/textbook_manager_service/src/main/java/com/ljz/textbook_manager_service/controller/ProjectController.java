@@ -28,29 +28,38 @@ public class ProjectController {
 
     @PostMapping("/login")
     @ResponseBody
-    private User login(@RequestParam(value = "userId",required = false) Integer userId,@RequestParam(value = "userPassword",required = false) String userPassword){
-        return userRepository.findByUserIdAndUserPassword(userId,userPassword);
+    private User login(@RequestParam(value = "userId",required = false) String userId){
+        return userRepository.findByUserId(userId);
     }
 
     @PostMapping("/insertAUser")
     @ResponseBody
     private String registered(
-            @RequestParam(value = "userId") Integer userId,
+            @RequestParam(value = "userId") String userId,
             @RequestParam(value = "isAdmin") Boolean isAdmin,
             @RequestParam(value = "userPassword") String userPassword,
             @RequestParam(value = "userIconPath") String userIconPath,
             @RequestParam(value = "userName") String userName
     ){
-        if (userRepository.findByUserIdAndUserPassword(userId, userPassword) == null){
+        if (userRepository.findByUserId(userId) == null){
             userRepository.insertNewUser(
                     userId,isAdmin,userPassword,userIconPath,userName
             );
-            return userRepository.findByUserIdAndUserPassword(userId,userPassword).toString();
+            return userRepository.findByUserId(userId).toString();
         }else {
             return "学号已经有人使用";
         }
     }
 
+
+    @PostMapping("/repairPwd")
+    @ResponseBody
+    private String repairPwd(@RequestParam(value = "user_no") Integer user_no,
+                             @RequestParam(value = "user_pwd") String user_pwd)
+    {
+        userRepository.repairPwd(user_pwd,user_no);
+        return "success";
+    }
     @Autowired
     TextBookRepo textBookRepo;
 
@@ -122,9 +131,9 @@ public class ProjectController {
     private Page<ShoppingCart> shoppingCarts(
             @RequestParam(value = "pagecount") Integer pagecount,
             @RequestParam(value = "size") Integer size,
-            @RequestParam(value = "userNo") Integer userNo
+            @RequestParam(value = "user_no") Integer user_no
     ){
-        return shoppingRepo.findShoppingCarts(PageRequest.of(pagecount,size),userNo);
+        return shoppingRepo.findShoppingCarts(PageRequest.of(pagecount,size),user_no);
     }
 
     @GetMapping("/addShoppingCart")
@@ -146,9 +155,9 @@ public class ProjectController {
     private Page<Order> orders(
             @RequestParam(value = "pagecount") Integer pagecount,
             @RequestParam(value = "size") Integer size,
-            @RequestParam(value = "user_no") String user_id
+            @RequestParam(value = "user_no") Integer user_no
     ) {
-        return orderRepo.findOrders(PageRequest.of(pagecount, size),user_id);
+        return orderRepo.findOrders(user_no,PageRequest.of(pagecount, size));
     }
 
     @GetMapping("/AddOrders")

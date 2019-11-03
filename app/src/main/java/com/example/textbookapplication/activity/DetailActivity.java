@@ -54,6 +54,8 @@ public class DetailActivity extends AppCompatActivity {
     private ImageButton sub_num;
     @ViewInject(R.id.num)
     private TextView num;
+
+    private Context context;
     private static final String TAG = "DetailActivity";
 
     @Override
@@ -61,7 +63,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         x.view().inject(this);
-
+        context = getApplicationContext();
         ImageOptions imageOptions = new ImageOptions.Builder()
                 .setSize(DensityUtil.dip2px(-1000), DensityUtil.dip2px(-3000))
                 .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
@@ -201,7 +203,7 @@ public class DetailActivity extends AppCompatActivity {
         params.addQueryStringParameter("book_no", book_no);
         params.addQueryStringParameter("book_num", num);
         params.addQueryStringParameter("book_values", book_values);
-        params.addQueryStringParameter("user_no", LoginUser.loginUser.getUserId());
+        params.addQueryStringParameter("user_no", LoginUser.getLoginUser(context).getUserNo());
         x.http().get(params, new Callback.CommonCallback<String>() {
 
             @Override
@@ -229,7 +231,7 @@ public class DetailActivity extends AppCompatActivity {
         params.addQueryStringParameter("book_no", book_no);
         params.addQueryStringParameter("book_num", num);
         params.addQueryStringParameter("book_values", book_values);
-        params.addQueryStringParameter("user_no", LoginUser.loginUser.getUserId());
+        params.addQueryStringParameter("user_no", LoginUser.getLoginUser(context).getUserNo());
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -253,7 +255,7 @@ public class DetailActivity extends AppCompatActivity {
     private void sendMessage(String content) {
         RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/NewMessage");
         params.addQueryStringParameter("content", content);
-        params.addQueryStringParameter("user_no", LoginUser.loginUser.getUserId());
+        params.addQueryStringParameter("user_no", LoginUser.getLoginUser(context).getUserNo());
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -261,16 +263,13 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-            }
+            public void onError(Throwable ex, boolean isOnCallback) {}
 
             @Override
-            public void onCancelled(CancelledException cex) {
-            }
+            public void onCancelled(CancelledException cex) {}
 
             @Override
-            public void onFinished() {
-            }
+            public void onFinished() {}
         });
     }
 
@@ -281,20 +280,13 @@ public class DetailActivity extends AppCompatActivity {
         params.addQueryStringParameter("bookNo", book_no);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
-            public void onSuccess(String result) {
-            }
-
+            public void onSuccess(String result) {}
             @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-            }
-
+            public void onError(Throwable ex, boolean isOnCallback) {}
             @Override
-            public void onCancelled(CancelledException cex) {
-            }
-
+            public void onCancelled(CancelledException cex) {}
             @Override
-            public void onFinished() {
-            }
+            public void onFinished() {}
         });
     }
 

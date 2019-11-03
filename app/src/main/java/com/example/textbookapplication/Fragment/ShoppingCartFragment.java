@@ -41,6 +41,7 @@ public class ShoppingCartFragment extends BaseFragment {
     private Context context;
     private  ArrayList<ShoppingCart> shoppingCarts;
     private ShoppingListAdapter shoppingListAdapter;
+    private static final String TAG = "ShoppingCartFragment";
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -51,26 +52,14 @@ public class ShoppingCartFragment extends BaseFragment {
         getShoppingCart();
     }
 
-    private Integer getLoginUser(){
-        SharedPreferences sharedPreferences = context.getSharedPreferences("User", Context.MODE_PRIVATE);
-        final String userinfo = sharedPreferences.getString("User","");
-        JSONObject jsonObject = null;
-        Integer userId = null;
-        try {
-            jsonObject = new JSONObject(userinfo);
-            userId = jsonObject.getInt("userId");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        return userId;
-    }
+
     private void getShoppingCart(){
         //https://www.lijinzhou.top:2020/ShoppingCarts?pagecount=0&size=5&userNo=20160750
         RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/ShoppingCarts");
         params.addQueryStringParameter("pagecount", 0);
         params.addQueryStringParameter("size", 30);
-        params.addQueryStringParameter("userNo", getLoginUser());
+        params.addQueryStringParameter("user_no", LoginUser.getLoginUser(context).getUserNo());
         x.http().get(params, new Callback.CommonCallback<String>(){
             @Override
             public void onSuccess(String result) {
@@ -82,14 +71,14 @@ public class ShoppingCartFragment extends BaseFragment {
                     for (int i = 0;i<jsonArray.length();i++){
                         jsonObject = jsonArray.getJSONObject(i);
                         Integer shoppingCartNo = jsonObject.getInt("shoppingCartNo");
-
                         JSONObject userJson = jsonObject.getJSONObject("user");
-                        Integer userId = userJson.getInt("userId");
+                        Integer userNo = userJson.getInt("userNo");
+                        String userId = userJson.getString("userId");
                         Boolean isAdmin = userJson.getBoolean("isAdmin");
                         String userPassword = userJson.getString("userPassword");
                         String userIconPath = userJson.getString("userIconPath");
                         String userName = userJson.getString("userName");
-                        LoginUser user = new LoginUser(userId,isAdmin,userPassword,userIconPath,userName);
+                        LoginUser user = new LoginUser(userNo,userId,isAdmin,userPassword,userIconPath,userName);
 
                         JSONObject bookJson = jsonObject.getJSONObject("book");
                         Integer bookNo = bookJson.getInt("bookNo");
@@ -105,7 +94,6 @@ public class ShoppingCartFragment extends BaseFragment {
                         String startTime = jsonObject.getString("startTime");
 
                         ShoppingCart shoppingCart = new ShoppingCart(shoppingCartNo,user,textBook,bookNum,bookValues,startTime);
-
                         shoppingCarts.add(shoppingCart);
                     }
                     shoppingListAdapter.notifyDataSetChanged();

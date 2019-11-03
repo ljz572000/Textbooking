@@ -1,16 +1,17 @@
 package com.example.textbookapplication;
 
-import com.example.textbookapplication.Network.Service;
+import android.util.Log;
+
+import com.example.textbookapplication.encryption.BCrypt;
+import com.example.textbookapplication.entity.LoginUser;
 
 import org.junit.Test;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-
-import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -19,18 +20,5 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
     @Test
-    public void addition_isCorrect() {
-        Service.textbookList(0,5).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                call.cancel();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                System.out.println(response.body().string());
-                System.out.println("done");
-            }
-        });
-    }
+    public void insertNewUser() {}
 }

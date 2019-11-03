@@ -49,27 +49,13 @@ public class MessageFragment extends BaseFragment {
         getMessData();
         messListAdapter.notifyDataSetChanged();
     }
-    private Integer getLoginUser(){
-        SharedPreferences sharedPreferences = context.getSharedPreferences("User", Context.MODE_PRIVATE);
-        final String userinfo = sharedPreferences.getString("User","");
-        JSONObject jsonObject = null;
-        Integer userId = null;
-        try {
-            jsonObject = new JSONObject(userinfo);
-            userId = jsonObject.getInt("userId");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return userId;
-    }
 
     private void getMessData(){
         //https://www.lijinzhou.top:2020/Messages?pagecount=0&size=30&user_no=20160750
         RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/Messages");
         params.addQueryStringParameter("pagecount", 0);
         params.addQueryStringParameter("size", 30);
-        params.addQueryStringParameter("user_no",getLoginUser());
+        params.addQueryStringParameter("user_no",LoginUser.getLoginUser(context).getUserNo());
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -82,14 +68,14 @@ public class MessageFragment extends BaseFragment {
                     for (int i = 0;i<jsonArray.length();i++){
                         jsonObject = jsonArray.getJSONObject(i);
                         Integer messNo = jsonObject.getInt("messNo");
-
                         JSONObject userJson = jsonObject.getJSONObject("user");
-                        Integer userId = userJson.getInt("userId");
+                        Integer userNo = userJson.getInt("userNo");
+                        String userId = userJson.getString("userId");
                         Boolean isAdmin = userJson.getBoolean("isAdmin");
                         String userPassword = userJson.getString("userPassword");
                         String userIconPath = userJson.getString("userIconPath");
                         String userName = userJson.getString("userName");
-                        LoginUser user = new LoginUser(userId,isAdmin,userPassword,userIconPath,userName);
+                        LoginUser user = new LoginUser(userNo,userId,isAdmin,userPassword,userIconPath,userName);
                         String startTime =  jsonObject.getString("startTime");
                         String Messcontent = jsonObject.getString("content");
                         Message message = new Message(messNo,user,startTime,Messcontent);
@@ -101,11 +87,9 @@ public class MessageFragment extends BaseFragment {
                 }
             }
             @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-            }
+            public void onError(Throwable ex, boolean isOnCallback) {}
             @Override
-            public void onCancelled(CancelledException cex) {
-            }
+            public void onCancelled(CancelledException cex) {}
             @Override
             public void onFinished() {}
         });

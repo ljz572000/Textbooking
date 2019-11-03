@@ -1,25 +1,26 @@
 -- ip 139.155.16.227  账号 root 密码qqq123
-create database `textbook_manager`;
+-- create database `textbook_manager`;
 use `textbook_manager`;
 
 create table `history`
 (`history_no` integer not null auto_increment,
 `start_time` datetime default now(),
-`order_no` integer,
+`order_no`integer,
 primary key (`history_no`)) engine=InnoDB;
 
-create table `message`
-(`mess_no` integer not null auto_increment,
+create table `message` (`mess_no` integer not null auto_increment,
 `content` varchar(255),
 `start_time` datetime default now(),
-`user_id` integer,
+`user_no` integer,
 primary key (`mess_no`)) engine=InnoDB;
 
-create table `order` (`order_no` integer not null auto_increment,
+create table `order` (
+`order_no` integer not null auto_increment,
 `book_num` integer,
 `book_values` double precision,
 `start_time` datetime default now(),
-`book_no` integer, `user_id` integer,
+`book_no` integer,
+`user_no` integer,
 primary key (`order_no`)) engine=InnoDB;
 
 create table `shopping_cart`
@@ -28,61 +29,52 @@ create table `shopping_cart`
 `book_values` double precision,
 `start_time` datetime default now(),
 `book_no` integer,
-`user_id` integer,
+`user_no` integer,
 primary key (`shopping_cart_no`)) engine=InnoDB;
 
 create table `text_book`
 (`book_no` integer not null auto_increment,
-`author` varchar(255),
-`book_name` varchar(255),
-`book_pic` varchar(255),
-`book_price` double precision,
-`totalnum` integer,
-primary key (`book_no`)) engine=InnoDB;
-
+ `author` varchar(255),
+ `book_name` varchar(255),
+ `book_pic` varchar(255),
+ `book_price` double precision,
+ `totalnum` integer,
+ primary key (`book_no`)) engine=InnoDB;
+ 
 create table `user`
-(`user_id` integer not null auto_increment,
-`is_admin` bit,
-`user_icon_path` varchar(255),
-`user_name` varchar(255),
-`user_password` varchar(255),
-primary key (`user_id`)) engine=InnoDB;
+(`user_no` integer not null auto_increment,
+`is_admin` bit, `user_icon_path` varchar(255),
+`user_id` varchar(255),`user_name` varchar(255),
+`user_password` varchar(255), primary key (`user_no`)) engine=InnoDB;
+
+alter table `history` add constraint FKavet78bxwd5k9q7vb668x96co foreign key (`order_no`) references `order` (`order_no`);
+alter table `message` add constraint FKap8t31wkwmh25ocr7q0fdqxy6 foreign key (`user_no`) references `user` (`user_no`);
+alter table `order` add constraint FK2c189aci3ol5nt90ae9cl1yjp foreign key (`book_no`) references `text_book` (`book_no`);
+alter table `order` add constraint FKmdbl0y5sp7hkyfogqepclky6o foreign key (`user_no`) references `user` (`user_no`);
+alter table `shopping_cart` add constraint FK92wnnk8b8blrpwwiacxcqls40 foreign key (`book_no`) references `text_book` (`book_no`);
+alter table `shopping_cart` add constraint FK8gjcw4vtx1lrlkljx0scas4q4 foreign key (`user_no`) references `user` (`user_no`);
 
 insert into `user`
 (`is_admin`,`user_icon_path`,`user_id`,`user_name`,`user_password`)values
-(false,'my_avator.png',20160750,'李金洲','1234'),
-(false,'my_avator.png',20160751,'李玮光','1234'),
-(false,'my_avator.png',20160752,'韩青杨','1234'),
-(false,'my_avator.png',20160753,'吴仁珑','1234'),
-(false,'my_avator.png',20160754,'杨壹麟','1234'),
-(false,'my_avator.png',20160755,'杨永旭','1234');
+(false,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572716673727&di=b245301eaef365c8623ce611c26b44b0&imgtype=0&src=http%3A%2F%2Fwww.itmop.com%2Fupload%2F2017-9%2F15046867122689390.jpeg','20160750','李金洲','1234'),
+(false,'http://ww1.sinaimg.cn/bmiddle/9150e4e5gy1g8iw02jn2ij206r08c3yl.jpg','20160751','李玮光','$2a$10$BL0C6B9QGR6rdQdFn8/Ui.V9SVfAmJCIqaS2tDzmj9fJweE6HseOG'),
+(false,'http://ww1.sinaimg.cn/bmiddle/9150e4e5gy1g8iw02jn2ij206r08c3yl.jpg','20160752','韩青杨','$2a$10$BL0C6B9QGR6rdQdFn8/Ui.V9SVfAmJCIqaS2tDzmj9fJweE6HseOG'),
+(false,'http://ww1.sinaimg.cn/bmiddle/9150e4e5gy1g8iw02jn2ij206r08c3yl.jpg','20160753','吴仁珑','$2a$10$BL0C6B9QGR6rdQdFn8/Ui.V9SVfAmJCIqaS2tDzmj9fJweE6HseOG'),
+(false,'http://ww1.sinaimg.cn/bmiddle/9150e4e5gy1g8iw02jn2ij206r08c3yl.jpg','20160754','杨壹麟','$2a$10$BL0C6B9QGR6rdQdFn8/Ui.V9SVfAmJCIqaS2tDzmj9fJweE6HseOG'),
+(false,'http://ww1.sinaimg.cn/bmiddle/9150e4e5gy1g8iw02jn2ij206r08c3yl.jpg','20160755','杨永旭','$2a$10$BL0C6B9QGR6rdQdFn8/Ui.V9SVfAmJCIqaS2tDzmj9fJweE6HseOG');
+use `textbook_manager`;
+
+
 
 -- 添加管理员用户
 insert into `user`
 (`is_admin`,`user_icon_path`,`user_id`,`user_name`,`user_password`)values
-(true,'my_avator.png',20190001,'李老师','1234'),
-(true,'my_avator.png',20190002,'王老师','1234'),
-(true,'my_avator.png',20190003,'张老师','1234'),
-(true,'my_avator.png',20190004,'韩老师','1234'),
-(true,'my_avator.png',20190005,'杨老师','1234'),
-(true,'my_avator.png',20190006,'谢老师','1234');
-
-alter table `history`
-add constraint FKavet78bxwd5k9q7vb668x96co foreign key (`order_no`) references `order` (`order_no`);
-
-alter table `message` add constraint FKnebwitbhvl9nq6mqsdlmb0v75 foreign key (`user_id`) references `user` (`user_id`);
-
-alter table `order` add constraint FK2c189aci3ol5nt90ae9cl1yjp foreign key (`book_no`) references `text_book` (`book_no`);
-
-alter table `order` add constraint FKrcaf946w0bh6qj0ljiw3pwpnu foreign key (`user_id`) references `user` (`user_id`);
-
-alter table `shopping_cart` add constraint FK92wnnk8b8blrpwwiacxcqls40 foreign key (`book_no`) references `text_book` (`book_no`);
-
-alter table `shopping_cart` add constraint FKlf4gsfxg2in4u7qyx285s45y5 foreign key (`user_id`) references `user` (`user_id`);
-
-DROP TABLE IF EXISTS `user`;
-
-
+(true,'http://ww1.sinaimg.cn/bmiddle/9150e4e5gy1g8iw02jn2ij206r08c3yl.jpg','20190001','李老师','$2a$10$BL0C6B9QGR6rdQdFn8/Ui.V9SVfAmJCIqaS2tDzmj9fJweE6HseOG'),
+(true,'http://ww1.sinaimg.cn/bmiddle/9150e4e5gy1g8iw02jn2ij206r08c3yl.jpg','20190002','王老师','$2a$10$BL0C6B9QGR6rdQdFn8/Ui.V9SVfAmJCIqaS2tDzmj9fJweE6HseOG'),
+(true,'http://ww1.sinaimg.cn/bmiddle/9150e4e5gy1g8iw02jn2ij206r08c3yl.jpg','20190003','张老师','$2a$10$BL0C6B9QGR6rdQdFn8/Ui.V9SVfAmJCIqaS2tDzmj9fJweE6HseOG'),
+(true,'http://ww1.sinaimg.cn/bmiddle/9150e4e5gy1g8iw02jn2ij206r08c3yl.jpg','20190004','韩老师','$2a$10$BL0C6B9QGR6rdQdFn8/Ui.V9SVfAmJCIqaS2tDzmj9fJweE6HseOG'),
+(true,'http://ww1.sinaimg.cn/bmiddle/9150e4e5gy1g8iw02jn2ij206r08c3yl.jpg','20190005','杨老师','$2a$10$BL0C6B9QGR6rdQdFn8/Ui.V9SVfAmJCIqaS2tDzmj9fJweE6HseOG'),
+(true,'http://ww1.sinaimg.cn/bmiddle/9150e4e5gy1g8iw02jn2ij206r08c3yl.jpg','20190006','谢老师','$2a$10$BL0C6B9QGR6rdQdFn8/Ui.V9SVfAmJCIqaS2tDzmj9fJweE6HseOG');
 
 insert into `text_book` values
 (1,'王学惠','国际结算教程','http://www.tup.tsinghua.edu.cn/upload/bigbookimg/077447-01.jpg',39.0,100),

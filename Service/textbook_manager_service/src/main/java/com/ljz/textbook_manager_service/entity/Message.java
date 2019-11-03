@@ -14,7 +14,7 @@ public class Message {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer messNo;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "userNo")
     private User user;
     private Timestamp startTime;
     private String content;

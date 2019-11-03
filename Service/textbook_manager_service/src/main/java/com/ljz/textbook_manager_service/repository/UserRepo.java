@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import javax.transaction.Transactional;
 
 public interface UserRepo extends JpaRepository<User,Integer> {
-    User findByUserIdAndUserPassword(Integer userId,String userPassword);
+    User findByUserId(String userId);
     @Transactional
     @Modifying
     @Query(
@@ -16,5 +16,13 @@ public interface UserRepo extends JpaRepository<User,Integer> {
                     "values(?1,?2,?3,?4,?5);",
             nativeQuery = true
     )
-    void insertNewUser(Integer user_id,Boolean isAdmin,String pwd,String user_icon,String user_name);
+    void insertNewUser(String user_id,Boolean isAdmin,String pwd,String user_icon,String user_name);
+    @Transactional
+    @Modifying
+    @Query(
+            value = "update `user` set `user_password` = ?1 where `user_no` = ?2",
+            nativeQuery = true
+    )
+    void repairPwd(String user_pwd,Integer user_no);
+    //update `user` set `user_password` = '5678' where `user_no` = 1;
 }

@@ -13,7 +13,7 @@ public class ShoppingCart {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer shoppingCartNo;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "userNo")
     private User user;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bookNo")

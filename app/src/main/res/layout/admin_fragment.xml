@@ -36,7 +36,6 @@
             android:id="@+id/admin_avator"
             android:layout_width="70dp"
             android:layout_height="70dp"
-
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
@@ -54,6 +53,7 @@
             android:textSize="24sp" />
 
         <TextView
+            android:id="@+id/admin_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/admin_name"
@@ -64,10 +64,38 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/setting"
+        android:id="@+id/repair"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_below="@+id/admin_content"
+        android:layout_marginBottom="10dp"
+        android:background="@color/light_skygray"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <ImageView
+            android:id="@+id/ic_repair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_repair" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/ic_repair"
+            android:text="@string/user_repair"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setting"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/repair"
         android:layout_marginBottom="10dp"
         android:background="@color/light_skygray"
         android:paddingLeft="15dp"
@@ -90,4 +118,6 @@
             android:textColor="@color/black"
             android:textSize="24sp" />
     </RelativeLayout>
+
+
 </RelativeLayout>

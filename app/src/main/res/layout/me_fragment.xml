@@ -36,7 +36,6 @@
             android:id="@+id/user_avator"
             android:layout_width="70dp"
             android:layout_height="70dp"
-
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
@@ -54,6 +53,7 @@
             android:textSize="24sp" />
 
         <TextView
+            android:id="@+id/user_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/user_name"

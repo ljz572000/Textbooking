@@ -12,13 +12,13 @@ import javax.transaction.Transactional;
 
 public interface OrderRepo extends JpaRepository<Order,Integer> {
     @Query(
-            value = "select * from `order` where user_id = ?1",
+            value = "select * from `order` where `order`.user_no = ?1",
             countQuery = "select count(*) from `order`",
             nativeQuery = true
     )
-    Page<Order> findOrders(Pageable pageable,String user_no);
+    Page<Order> findOrders(Integer user_no,Pageable pageable);
     @Transactional
     @Modifying
-    @Query(value = "insert into `order`(`book_no`,`book_num`,`book_values`,`user_id`) values(?1,?2,?3,?4);",nativeQuery = true)
+    @Query(value = "insert into `order`(`book_no`,`book_num`,`book_values`,`user_no`) values(?1,?2,?3,?4);",nativeQuery = true)
     void addNewOrder(Integer book_no,Integer book_num,Double book_values,Integer user_no);
 }

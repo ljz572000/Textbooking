@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.textbookapplication.Network.Service;
 import com.example.textbookapplication.R;
+import com.example.textbookapplication.encryption.BCrypt;
 import com.example.textbookapplication.entity.LoginUser;
 
 import org.xutils.view.annotation.ContentView;
@@ -97,7 +98,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login(String userId, String userPassword){
-        Call call = Service.loginSerive(userId,userPassword);
+//        BCrypt.checkpw(password,admin.getPassword())
+        Call call = Service.loginSerive(userId);
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -111,19 +113,32 @@ public class LoginActivity extends AppCompatActivity {
                     //此处，先将响应体保存到内存中
                     if (!info.equals("")) {
                         LoginUser user = new LoginUser(info, context);
-//                        Log.i(TAG, user.getUserId() + "  " + user.getUserPassword());
-                        if (user.getAdmin()){
-                            Intent intent = new Intent(LoginActivity.this, AdminMainActivity.class);
-                            startActivity(intent);
-                            finish();
+                        Log.i(TAG, "onResponse: "+BCrypt.checkpw(userPassword,user.getUserPassword()));
+                        if (BCrypt.checkpw(userPassword,user.getUserPassword())){
+                            if (user.getAdmin()){
+                                Intent intent = new Intent(LoginActivity.this, AdminMainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }else {
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.putExtra(EXTRA_MESSAGE, info);
+                                startActivity(intent);
+                                finish();
+                            }
                         }else {
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra(EXTRA_MESSAGE, info);
-                            startActivity(intent);
-                            finish();
+                            runOnUiThread(() -> {
+                                loadingProgressBar.setVisibility(View.GONE);
+                                btnLogin.setEnabled(true);
+                                Toast.makeText(LoginActivity.this, "密码有误", Toast.LENGTH_SHORT).show();
+                            });
                         }
                     } else {
-                        runOnUiThread(() -> Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show());
+                        runOnUiThread(() -> {
+                            loadingProgressBar.setVisibility(View.GONE);
+                            btnLogin.setEnabled(true);
+                            Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+
+                        });
                     }
                 }
             }

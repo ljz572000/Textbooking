@@ -13,16 +13,16 @@ import javax.transaction.Transactional;
 
 public interface ShoppingRepo extends JpaRepository<ShoppingCart,Integer> {
     @Query(
-            value = "select * from shopping_cart where user_id=?1",
+            value = "select * from shopping_cart where user_no=?1",
             countQuery = "select count(*) from shopping_cart",
             nativeQuery = true
     )
-    Page<ShoppingCart> findShoppingCarts(Pageable pageable,Integer userNo);
+    Page<ShoppingCart> findShoppingCarts(Pageable pageable,Integer user_no);
 
     @Transactional
     @Modifying
     @Query(
-            value = "insert into `shopping_cart`(`book_no`,`book_num`,`book_values`,`user_id`) values\n" +
+            value = "insert into `shopping_cart`(`book_no`,`book_num`,`book_values`,`user_no`) values\n" +
                     " (?1,?2,?3,?4);",
             nativeQuery = true
     )
