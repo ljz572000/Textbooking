@@ -56,7 +56,6 @@ public class DetailActivity extends AppCompatActivity {
     private TextView num;
 
     private Context context;
-    private static final String TAG = "DetailActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +86,6 @@ public class DetailActivity extends AppCompatActivity {
 
         add.setOnClickListener(order(textBook.getBookNo(), textBook.getBookName(), textBook.getBookPrice()));
         buy.setOnClickListener(order(textBook.getBookNo(), textBook.getBookName(), textBook.getBookPrice()));
-        Log.i(TAG, "onCreate: ");
     }
 
     private View.OnClickListener order(Integer bookNo, String bookName, Double bookPrice) {

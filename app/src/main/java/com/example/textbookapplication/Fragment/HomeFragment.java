@@ -47,7 +47,6 @@ public class HomeFragment extends BaseFragment {
     private int size =10;
     private int page_count;
     private TextbookAdapter adapter;
-    private static final String TAG = "HomeFragment";
     ImageOptions imageOptions;
     private boolean isloadmore;
 
@@ -55,7 +54,6 @@ public class HomeFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getContext();
-        Log.i(TAG, "onCreate: ");
     }
 
     private void Init(){
@@ -66,7 +64,6 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onViewCreated: ");
         super.onViewCreated(view, savedInstanceState);
         Init();
     }
@@ -113,7 +110,6 @@ private void textbookdata(){
                 JSONObject jsonObject = new JSONObject(result);
                 String content = jsonObject.getString("content");
                 if (content.equals("[]")){
-                    Log.i(TAG, "到底了");
                     if(isloadmore){
                         refresh_view.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                     }else{

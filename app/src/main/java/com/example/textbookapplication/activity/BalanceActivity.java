@@ -12,15 +12,16 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-@ContentView(R.layout.activity_repair)
-public class RepairActivity extends AppCompatActivity {
-    @ViewInject(R.id.repairBack)
-    private ImageButton repairBack;
+@ContentView(R.layout.activity_balance)
+public class BalanceActivity extends AppCompatActivity {
+    @ViewInject(R.id.balanceBack)
+    private ImageButton balanceBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-        repairBack.setOnClickListener(goback());
+        balanceBack.setOnClickListener(goback());
+//        setContentView(R.layout.activity_balance);
     }
     private View.OnClickListener goback() {
         return view -> finish();

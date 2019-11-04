@@ -39,7 +39,6 @@ public class AdminMainActivity extends AppCompatActivity {
     @ViewInject(R.id.adminViewPager)
     private ViewPager viewPager;
 
-    private static final String TAG = "AdminMainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

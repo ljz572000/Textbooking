@@ -32,7 +32,6 @@ public class RegisteredActivity extends AppCompatActivity {
     private EditText register_username;
     @ViewInject(R.id.submit_register)
     private Button submit_register;
-    private static final String TAG = "RegisteredActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +54,6 @@ public class RegisteredActivity extends AppCompatActivity {
             x.http().post(params, new Callback.CommonCallback<String>(){
                 @Override
                 public void onSuccess(String result) {
-                    Log.i(TAG, "onSuccess: "+result);
                     finish();
                 }
                 @Override

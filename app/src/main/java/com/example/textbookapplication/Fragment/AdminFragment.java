@@ -7,10 +7,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.textbookapplication.R;
-import com.example.textbookapplication.activity.RepairActivity;
+import com.example.textbookapplication.activity.RepairPwdActivity;
 import com.example.textbookapplication.activity.SettingActivity;
 import com.example.textbookapplication.entity.LoginUser;
 
@@ -51,7 +50,7 @@ public class AdminFragment extends BaseFragment {
     }
     private View.OnClickListener goRepair(){
         return view -> {
-            Intent intent = new Intent(context, RepairActivity.class);
+            Intent intent = new Intent(context, RepairPwdActivity.class);
             startActivity(intent);
         };
     }

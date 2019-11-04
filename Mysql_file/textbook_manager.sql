@@ -40,12 +40,17 @@ create table `text_book`
  `book_price` double precision,
  `totalnum` integer,
  primary key (`book_no`)) engine=InnoDB;
- 
+
 create table `user`
 (`user_no` integer not null auto_increment,
-`is_admin` bit, `user_icon_path` varchar(255),
-`user_id` varchar(255),`user_name` varchar(255),
-`user_password` varchar(255), primary key (`user_no`)) engine=InnoDB;
+`is_admin` bit,
+`money` double precision default 0.0,
+`user_icon_path` varchar(255),
+`user_id` varchar(255),
+`user_name` varchar(255),
+`user_password` varchar(255),
+primary key (`user_no`)) engine=InnoDB;
+
 
 alter table `history` add constraint FKavet78bxwd5k9q7vb668x96co foreign key (`order_no`) references `order` (`order_no`);
 alter table `message` add constraint FKap8t31wkwmh25ocr7q0fdqxy6 foreign key (`user_no`) references `user` (`user_no`);

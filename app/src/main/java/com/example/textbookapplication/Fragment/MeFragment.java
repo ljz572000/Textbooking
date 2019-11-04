@@ -7,9 +7,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.textbookapplication.activity.OrderActivity;
 import com.example.textbookapplication.R;
+import com.example.textbookapplication.activity.BalanceActivity;
 import com.example.textbookapplication.activity.RepairActivity;
 import com.example.textbookapplication.activity.SettingActivity;
 import com.example.textbookapplication.entity.LoginUser;
@@ -23,8 +24,8 @@ import org.xutils.x;
 public class MeFragment extends BaseFragment {
     @ViewInject(R.id.setting)
     private RelativeLayout setting;
-    @ViewInject(R.id.history)
-    private RelativeLayout history;
+    @ViewInject(R.id.order)
+    private RelativeLayout order;
     @ViewInject(R.id.money)
     private RelativeLayout money;
     @ViewInject(R.id.repair)
@@ -49,12 +50,21 @@ public class MeFragment extends BaseFragment {
         user_id.setText(user.getUserId());
         x.image().bind(user_avator, user.getUserIconPath(), imageOptions);
         setting.setOnClickListener(goSetting());
-        history.setOnClickListener(showsomething());
-        money.setOnClickListener(showsomething());
+        order.setOnClickListener(goOrder());
+        money.setOnClickListener(goBalance());
         repair.setOnClickListener(goRepair());
     }
-    private View.OnClickListener showsomething() {
-        return view -> Toast.makeText(getContext(), "点击xxx", Toast.LENGTH_SHORT).show();
+    private View.OnClickListener goBalance(){
+        return v-> {
+            Intent intent = new Intent(context, BalanceActivity.class);
+            startActivity(intent);
+        };
+    }
+    private View.OnClickListener goOrder() {
+        return v-> {
+            Intent intent = new Intent(context, OrderActivity.class);
+            startActivity(intent);
+        };
     }
     private View.OnClickListener goSetting() {
         return view -> {

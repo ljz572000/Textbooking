@@ -1,21 +1,17 @@
 package com.example.textbookapplication.Fragment;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.textbookapplication.R;
 import com.example.textbookapplication.entity.LoginUser;
 import com.example.textbookapplication.entity.Message;
-import com.example.textbookapplication.entity.TextBook;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,8 +22,10 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @ContentView(R.layout.message_fragment)
@@ -38,7 +36,6 @@ public class MessageFragment extends BaseFragment {
     private Context context;
     private MessListAdapter messListAdapter;
     private ArrayList<Message> arrayList;
-    private static final String TAG = "MessageFragment";
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -69,13 +66,24 @@ public class MessageFragment extends BaseFragment {
                         jsonObject = jsonArray.getJSONObject(i);
                         Integer messNo = jsonObject.getInt("messNo");
                         JSONObject userJson = jsonObject.getJSONObject("user");
+
                         Integer userNo = userJson.getInt("userNo");
                         String userId = userJson.getString("userId");
                         Boolean isAdmin = userJson.getBoolean("isAdmin");
                         String userPassword = userJson.getString("userPassword");
                         String userIconPath = userJson.getString("userIconPath");
                         String userName = userJson.getString("userName");
-                        LoginUser user = new LoginUser(userNo,userId,isAdmin,userPassword,userIconPath,userName);
+
+                        Double money = userJson.getDouble("money");
+                        String address = userJson.getString("address");
+                        String major = userJson.getString("major");
+                        String mail = userJson.getString("mail");
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date user_startTime = sdf.parse(userJson.getString("startTime"));
+                        Date birth = sdf.parse(userJson.getString("birth"));
+                        Boolean isFemale = userJson.getBoolean("isFemale");
+                        LoginUser user = new LoginUser(userNo,userId,isAdmin,userPassword,userIconPath,userName,money,address,major,mail,user_startTime,birth,isFemale);
+
                         String startTime =  jsonObject.getString("startTime");
                         String Messcontent = jsonObject.getString("content");
                         Message message = new Message(messNo,user,startTime,Messcontent);
@@ -83,6 +91,8 @@ public class MessageFragment extends BaseFragment {
                     }
                     messListAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }

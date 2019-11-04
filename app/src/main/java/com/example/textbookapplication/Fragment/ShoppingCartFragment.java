@@ -30,7 +30,10 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @ContentView(R.layout.shopping_cart_fragment)
@@ -41,7 +44,6 @@ public class ShoppingCartFragment extends BaseFragment {
     private Context context;
     private  ArrayList<ShoppingCart> shoppingCarts;
     private ShoppingListAdapter shoppingListAdapter;
-    private static final String TAG = "ShoppingCartFragment";
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -51,9 +53,6 @@ public class ShoppingCartFragment extends BaseFragment {
         listView.setAdapter(shoppingListAdapter);
         getShoppingCart();
     }
-
-
-
     private void getShoppingCart(){
         //https://www.lijinzhou.top:2020/ShoppingCarts?pagecount=0&size=5&userNo=20160750
         RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/ShoppingCarts");
@@ -78,7 +77,17 @@ public class ShoppingCartFragment extends BaseFragment {
                         String userPassword = userJson.getString("userPassword");
                         String userIconPath = userJson.getString("userIconPath");
                         String userName = userJson.getString("userName");
-                        LoginUser user = new LoginUser(userNo,userId,isAdmin,userPassword,userIconPath,userName);
+
+                        Double money = userJson.getDouble("money");
+                        String address = userJson.getString("address");
+                        String major = userJson.getString("major");
+                        String mail = userJson.getString("mail");
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date user_startTime = sdf.parse(userJson.getString("startTime"));
+                        Date birth = sdf.parse(userJson.getString("birth"));
+                        Boolean isFemale = userJson.getBoolean("isFemale");
+                        LoginUser user = new LoginUser(userNo,userId,isAdmin,userPassword,userIconPath,userName,money,address,major,mail,user_startTime,birth,isFemale);
+
 
                         JSONObject bookJson = jsonObject.getJSONObject("book");
                         Integer bookNo = bookJson.getInt("bookNo");
@@ -99,8 +108,9 @@ public class ShoppingCartFragment extends BaseFragment {
                     shoppingListAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-
             }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {}

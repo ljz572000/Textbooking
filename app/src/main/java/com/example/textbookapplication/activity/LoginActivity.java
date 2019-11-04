@@ -51,7 +51,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private Context context = this;
     public static final String EXTRA_MESSAGE = "LoginMessage";
-    private static final String TAG = "LoginActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,7 +112,6 @@ public class LoginActivity extends AppCompatActivity {
                     //此处，先将响应体保存到内存中
                     if (!info.equals("")) {
                         LoginUser user = new LoginUser(info, context);
-                        Log.i(TAG, "onResponse: "+BCrypt.checkpw(userPassword,user.getUserPassword()));
                         if (BCrypt.checkpw(userPassword,user.getUserPassword())){
                             if (user.getAdmin()){
                                 Intent intent = new Intent(LoginActivity.this, AdminMainActivity.class);

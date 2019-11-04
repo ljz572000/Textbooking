@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Textbooking</string>
+    <string name="appName">教材管理系统</string>
     <string name="edit_id">工号或学号</string>
     <string name="edit_Pwd">密码</string>
     <string name="sign_in">登录</string>
@@ -39,11 +40,11 @@
     <string name="detail_total">剩余数量</string>
     <string name="user_name">李玮光</string>
     <string name="user_id">20160751</string>
-    <string name="user_repair">修改密码</string>
-    <string name="user_history">历史账单</string>
+    <string name="user_repair">修改个人资料</string>
+    <string name="user_order">订单</string>
     <string name="user_money">余额查询</string>
     <string name="user_setting">设置</string>
-    <string name="logout">注销账号</string>
+    <string name="logout">登出</string>
     <string name="about">关于app</string>
     <string name="oldPwd">请输入旧密码</string>
     <string name="newPwd">请输入新密码</string>
@@ -52,7 +53,13 @@
     <string name="register_id">请输入注册账号</string>
     <string name="register_pwd">请输入注册密码</string>
     <string name="register_username">请输入注册用户名</string>
-
+    <string name="repair_pwd">修改密码</string>
+    <string name="address">输入地址</string>
+    <string name="major">输入专业</string>
+    <string name="mail">输入个人邮箱</string>
+    <string name="birth">输入生日</string>
+    <string name="balance">余额</string>
+    <string name="order">订单列表</string>
 
     <string name="statement">此项目为2019年大四android 应用开发 大作业  由上海电力大学李金洲、李玮光共同开发</string>
     <string name="code">源码地址： https://github.com/ljz572000/Textbooking</string>

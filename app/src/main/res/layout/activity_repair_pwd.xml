@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".activity.RepairActivity">
+    tools:context=".activity.RepairPwdActivity">
+
     <RelativeLayout
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageButton
-            android:id="@+id/repairBack"
+            android:id="@+id/repair_pwd_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -23,49 +24,41 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/repairBack"
-            android:text="@string/user_repair"
+            android:layout_toRightOf="@id/repair_pwd_back"
+            android:text="@string/repair_pwd"
             android:textColor="@color/black"
             android:textSize="18sp" />
     </RelativeLayout>
 
     <EditText
-        android:id="@+id/address"
+        android:id="@+id/oldPwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/bar"
         android:layout_marginTop="20dp"
-        android:hint="@string/address" />
+        android:hint="@string/oldPwd" />
 
     <EditText
-        android:id="@+id/major"
+        android:id="@+id/newPwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/address"
+        android:layout_below="@id/oldPwd"
         android:layout_marginTop="10dp"
-        android:hint="@string/major" />
+        android:hint="@string/newPwd" />
 
     <EditText
-        android:id="@+id/mail"
+        android:id="@+id/newPwd2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/major"
+        android:layout_below="@id/newPwd"
         android:layout_marginTop="10dp"
-        android:hint="@string/mail" />
-
-    <EditText
-        android:id="@+id/birth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/mail"
-        android:layout_marginTop="10dp"
-        android:hint="@string/birth" />
+        android:hint="@string/newPwd2" />
 
     <Button
-        android:id="@+id/submit"
+        android:id="@+id/submit_pwd"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/birth"
+        android:layout_below="@id/newPwd2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:background="@color/bluesky"

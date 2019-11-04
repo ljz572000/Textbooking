@@ -120,7 +120,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/history"
+        android:id="@+id/order"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_below="@+id/money"
@@ -130,19 +130,19 @@
         android:paddingRight="15dp">
 
         <ImageView
-            android:id="@+id/ic_history"
+            android:id="@+id/ic_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:src="@drawable/ic_history" />
+            android:src="@drawable/ic_order" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:layout_toRightOf="@id/ic_history"
-            android:text="@string/user_history"
+            android:layout_toRightOf="@id/ic_order"
+            android:text="@string/user_order"
             android:textColor="@color/black"
             android:textSize="24sp" />
     </RelativeLayout>
@@ -151,7 +151,7 @@
         android:id="@+id/setting"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_below="@+id/history"
+        android:layout_below="@+id/order"
         android:layout_marginBottom="10dp"
         android:background="@color/light_skygray"
         android:paddingLeft="15dp"

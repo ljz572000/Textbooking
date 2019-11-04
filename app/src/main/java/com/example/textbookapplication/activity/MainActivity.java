@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean isExit=false;
     private Context context = this;
 
-    private static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,13 +73,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("User", Context.MODE_PRIVATE);
         final String userinfo = sharedPreferences.getString("User","");
         if (userinfo.equals("")){
-            Log.i(TAG, "isLocalUser false");
             //前往登录页面
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
         }else {
-            Log.i(TAG, "isLocalUser true");
             //使用本地信息登录
             try {
                 JSONObject jsonObject = new JSONObject(userinfo);

@@ -6,6 +6,10 @@ import android.content.SharedPreferences;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class LoginUser {
     public Boolean getAdmin() {
         return isAdmin;
@@ -39,8 +43,21 @@ public class LoginUser {
         this.userName = userName;
     }
 
-    public LoginUser(String usermessage, Context context) {
+    public String getUserId() {
+        return userId;
+    }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Integer getUserNo() { return userNo; }
+
+    public void setUserNo(Integer userNo) {
+        this.userNo = userNo;
+    }
+
+    public LoginUser(String usermessage, Context context) {
         try {
             JSONObject jsonObject = new JSONObject(usermessage);
             this.userNo = jsonObject.getInt("userNo");
@@ -49,12 +66,19 @@ public class LoginUser {
             this.userPassword = jsonObject.getString("userPassword");
             this.userIconPath = jsonObject.getString("userIconPath");
             this.userName = jsonObject.getString("userName");
+            this.money = jsonObject.getDouble("money");
+            this.address = jsonObject.getString("address");
+            this.major = jsonObject.getString("major");
+            this.mail = jsonObject.getString("mail");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            this.startTime = sdf.parse(jsonObject.getString("startTime"));
+            this.birth = sdf.parse(jsonObject.getString("birth"));
+            this.isFemale = jsonObject.getBoolean("isFemale");
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-//        Log.i(TAG, "LoginUser: "+this.userId);
-//        loginUser = new LoginUser(this.userId,this.isAdmin,this.userPassword,this.userIconPath,this.userName);
-        //SharePreferences
         saveUser(context,usermessage);
     }
 
@@ -65,14 +89,7 @@ public class LoginUser {
         editor.commit();
     }
 
-    public LoginUser(Integer userNo, String userId, Boolean isAdmin, String userPassword, String userIconPath, String userName) {
-        this.userNo = userNo;
-        this.userId = userId;
-        this.isAdmin = isAdmin;
-        this.userPassword = userPassword;
-        this.userIconPath = userIconPath;
-        this.userName = userName;
-    }
+
 
     public static LoginUser getLoginUser(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences("User", Context.MODE_PRIVATE);
@@ -87,36 +104,79 @@ public class LoginUser {
             String userPassword = jsonObject.getString("userPassword");
             String userIconPath = jsonObject.getString("userIconPath");
             String userName = jsonObject.getString("userName");
-            user = new LoginUser(userNo,userId,isAdmin,userPassword,userIconPath,userName);
+
+            Double money = jsonObject.getDouble("money");
+            String address = jsonObject.getString("address");
+            String major = jsonObject.getString("major");
+            String mail = jsonObject.getString("mail");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date startTime = sdf.parse(jsonObject.getString("startTime"));
+            Date birth = sdf.parse(jsonObject.getString("birth"));
+            Boolean isFemale = jsonObject.getBoolean("isFemale");
+            user = new LoginUser(userNo,userId,isAdmin,userPassword,userIconPath,userName,money,address,major,mail,startTime,birth,isFemale);
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-
         return user;
     }
 
-    public Integer getUserNo() {
-
-        return userNo;
-    }
-
-    public void setUserNo(Integer userNo) {
+    public LoginUser(Integer userNo, String userId, Boolean isAdmin, String userPassword, String userIconPath, String userName, Double money, String address, String major, String mail, Date startTime, Date birth, Boolean isFemale) {
         this.userNo = userNo;
+        this.userId = userId;
+        this.isAdmin = isAdmin;
+        this.userPassword = userPassword;
+        this.userIconPath = userIconPath;
+        this.userName = userName;
+        this.money = money;
+        this.address = address;
+        this.major = major;
+        this.mail = mail;
+        this.startTime = startTime;
+        this.birth = birth;
+        this.isFemale = isFemale;
     }
 
     private Integer userNo;
     private String userId;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     private Boolean isAdmin;
     private String userPassword;
     private String userIconPath;
     private String userName;
+    private Double money;
+    private String address;
+    private String major;
+    private String mail;
+    private Date startTime;
+    private Date birth;
+    private Boolean isFemale;
+
+    public Double getMoney() {
+        return money;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public Date getBirth() {
+        return birth;
+    }
+
+    public Boolean getFemale() {
+        return isFemale;
+    }
 }

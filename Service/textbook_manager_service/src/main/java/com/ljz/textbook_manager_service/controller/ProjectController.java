@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.Date;
 import java.util.List;
 
 @Controller
@@ -39,11 +40,22 @@ public class ProjectController {
             @RequestParam(value = "isAdmin") Boolean isAdmin,
             @RequestParam(value = "userPassword") String userPassword,
             @RequestParam(value = "userIconPath") String userIconPath,
-            @RequestParam(value = "userName") String userName
+            @RequestParam(value = "userName") String userName,
+            @RequestParam(value = "money") Double money,
+            @RequestParam(value = "major") String major,
+            @RequestParam(value = "address") String address,
+            @RequestParam(value = "mail") String mail,
+            @RequestParam(value = "birth") String birth,
+            @RequestParam(value = "isFemale") Boolean isFemale
     ){
         if (userRepository.findByUserId(userId) == null){
             userRepository.insertNewUser(
-                    userId,isAdmin,userPassword,userIconPath,userName
+                    userId,
+                    isAdmin,
+                    userPassword,
+                    userIconPath,
+                    userName,
+                    money,major,address,mail, birth,isFemale
             );
             return userRepository.findByUserId(userId).toString();
         }else {

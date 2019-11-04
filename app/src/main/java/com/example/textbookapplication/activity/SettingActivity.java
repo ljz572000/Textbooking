@@ -18,21 +18,23 @@ import org.xutils.x;
 
 @ContentView(R.layout.activity_setting)
 public class SettingActivity extends AppCompatActivity {
-    @ViewInject(R.id.back_to_me)
-    private ImageButton backToMe;
+    @ViewInject(R.id.settingBack)
+    private ImageButton settingBack;
     @ViewInject(R.id.quit)
     private RelativeLayout quit;
     @ViewInject(R.id.about)
     private RelativeLayout about;
+    @ViewInject(R.id.repairPwd)
+    private RelativeLayout repairPwd;
     private Context context;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-        backToMe.setOnClickListener(goback());
+        settingBack.setOnClickListener(goback());
         quit.setOnClickListener(logout());
         about.setOnClickListener(appContext());
+        repairPwd.setOnClickListener(goToRepairPwd());
         context = getApplicationContext();
     }
 
@@ -46,7 +48,13 @@ public class SettingActivity extends AppCompatActivity {
     private View.OnClickListener goback() {
         return view -> finish();
     }
-
+    private View.OnClickListener goToRepairPwd() {
+        return view -> {
+            Intent intent = new Intent(SettingActivity.this, RepairPwdActivity.class);
+            startActivity(intent);
+            finish();
+        };
+    }
     private View.OnClickListener logout() {
         return view -> {
             //清楚数据
