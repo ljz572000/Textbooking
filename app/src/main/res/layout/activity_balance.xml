@@ -28,4 +28,52 @@
             android:textColor="@color/black"
             android:textSize="18sp" />
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/money"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/AliceBlue">
+        <TextView
+            android:id="@+id/money_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/money"
+            android:layout_centerInParent="true"
+            android:textColor="@color/MediumBlue"
+            android:textSize="24sp"
+            />
+    </RelativeLayout>
+<RelativeLayout
+    android:id="@+id/charge"
+    android:layout_marginTop="20dp"
+    android:layout_below="@+id/money"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@color/lavender"
+    >
+    <EditText
+        android:id="@+id/charge_values"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/charge_value"
+        android:textSize="24sp"
+        android:textColor="@color/Aquamarine3"
+       />
+</RelativeLayout>
+    <Button
+        android:id="@+id/submit_charge"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/charge"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="@color/bluesky"
+        android:text="@string/submit"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        />
 </RelativeLayout>

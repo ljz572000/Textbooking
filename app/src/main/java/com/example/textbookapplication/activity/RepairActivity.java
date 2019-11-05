@@ -20,9 +20,6 @@ public class RepairActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-        repairBack.setOnClickListener(goback());
-    }
-    private View.OnClickListener goback() {
-        return view -> finish();
+        repairBack.setOnClickListener(view->finish());
     }
 }

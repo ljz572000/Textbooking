@@ -20,10 +20,6 @@ public class OrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-        orderBack.setOnClickListener(goback());
-    }
-
-    private View.OnClickListener goback() {
-        return view -> finish();
+        orderBack.setOnClickListener(view -> finish());
     }
 }

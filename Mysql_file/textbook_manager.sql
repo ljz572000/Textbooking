@@ -51,6 +51,8 @@ create table `user`
 `user_password` varchar(255),
 primary key (`user_no`)) engine=InnoDB;
 
+create table `reset_code`
+(`user_no` integer not null, `code` varchar(255), primary key (`user_no`)) engine=InnoDB;
 
 alter table `history` add constraint FKavet78bxwd5k9q7vb668x96co foreign key (`order_no`) references `order` (`order_no`);
 alter table `message` add constraint FKap8t31wkwmh25ocr7q0fdqxy6 foreign key (`user_no`) references `user` (`user_no`);
@@ -68,7 +70,6 @@ insert into `user`
 (false,'http://ww1.sinaimg.cn/bmiddle/9150e4e5gy1g8iw02jn2ij206r08c3yl.jpg','20160754','杨壹麟','$2a$10$BL0C6B9QGR6rdQdFn8/Ui.V9SVfAmJCIqaS2tDzmj9fJweE6HseOG'),
 (false,'http://ww1.sinaimg.cn/bmiddle/9150e4e5gy1g8iw02jn2ij206r08c3yl.jpg','20160755','杨永旭','$2a$10$BL0C6B9QGR6rdQdFn8/Ui.V9SVfAmJCIqaS2tDzmj9fJweE6HseOG');
 use `textbook_manager`;
-
 
 
 -- 添加管理员用户

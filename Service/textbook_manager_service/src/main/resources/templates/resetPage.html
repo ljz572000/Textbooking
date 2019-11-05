@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>教材管理系统</title>
+</head>
+<body>
+<form th:action="@{/resetPwd}" method="post" role="form">
+    <input type="password" placeholder="请输入密码" class="form-control" name="password" required/>
+    <input type="submit" value="重置"/>
+</form>
+</body>
+</html>

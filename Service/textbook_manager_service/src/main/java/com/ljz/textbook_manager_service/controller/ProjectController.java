@@ -1,5 +1,7 @@
 package com.ljz.textbook_manager_service.controller;
 
+import com.ljz.textbook_manager_service.BCrypt;
+import com.ljz.textbook_manager_service.Mail.Mail;
 import com.ljz.textbook_manager_service.entity.*;
 import com.ljz.textbook_manager_service.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class ProjectController {
@@ -20,6 +24,8 @@ public class ProjectController {
 
     @Autowired
     UserRepo userRepository;
+
+
     @GetMapping("/allUsers")
     @ResponseBody
     private List<User> allUsers()
@@ -29,8 +35,69 @@ public class ProjectController {
 
     @PostMapping("/login")
     @ResponseBody
-    private User login(@RequestParam(value = "userId",required = false) String userId){
+    protected User login(@RequestParam(value = "userId",required = false) String userId){
         return userRepository.findByUserId(userId);
+    }
+
+//        private String to = "2373861592@qq.com";
+//    private String subject = "修改密码";
+//    private String content = "您的密码已修改为xxxx";
+    Mail mail = new Mail();
+    @GetMapping("/sendMail")
+    @ResponseBody
+    protected String sendMail(
+            @RequestParam(value = "to") String to,
+            @RequestParam(value = "subject") String subject,
+            @RequestParam(value = "content") String content
+    ){
+        mail.sendMail(to,subject,content);
+        return "success";
+    }
+
+@Autowired
+ResetCodeRepo resetCodeRepo;
+    @PostMapping("/goToResetPage")
+    @ResponseBody
+    private String goToResetPage(
+            @RequestParam(value = "userId") String userId
+    ){
+        User user = login(userId);
+        if (user == null){
+            return "您输入的账号不存在";
+        }
+        String code = "";
+        Random ran1 = new Random(10000);
+        for (int i = 0; i < 10; i++) { code += ran1.nextInt(10) + ""; }
+        String link = "https://www.lijinzhou.top:2020/ResetPage?rest_code="+code+"&userNo="+user.getUserNo();
+
+        if (resetCodeRepo.findByUserNo(user.getUserNo())!= null){
+            resetCodeRepo.deleteNewCode(user.getUserNo());
+        }
+        resetCodeRepo.insertNewCode(user.getUserNo(),code);
+        sendMail(user.getMail(),"教材管理系统重置密码","请点击链接跳转到重置页面："+link);
+        return "success";
+    }
+
+    @GetMapping("/ResetPage")
+    protected String toResetPage(
+            @RequestParam(value = "rest_code") String rest_code,
+            @RequestParam(value = "userNo") Integer userNo,
+            HttpSession session
+    ){
+        ResetCode resetCode = resetCodeRepo.findByUserNo(userNo);
+        if (rest_code.equals(resetCode.getCode())) {
+            session.setAttribute("userNo",userNo);
+            return "resetPage";
+        }else {
+            return "error";
+        }
+    }
+
+    @PostMapping("/resetPwd")
+    private String resetPwd(@RequestParam(value = "password") String pwd,HttpSession session){
+        Integer no = (Integer)session.getAttribute("userNo");
+        repairPwd(no,BCrypt.hashpw(pwd, BCrypt.gensalt()));
+        return "success";
     }
 
     @PostMapping("/insertAUser")
@@ -63,10 +130,19 @@ public class ProjectController {
         }
     }
 
+    @PostMapping("/chargeMoney")
+    @ResponseBody
+    private String chargeMoney(
+            @RequestParam(value = "user_no") Integer user_no,
+            @RequestParam(value = "money") Double money
+    ){
+        userRepository.chargeMoney(user_no,money);
+        return "success";
+    }
 
     @PostMapping("/repairPwd")
     @ResponseBody
-    private String repairPwd(@RequestParam(value = "user_no") Integer user_no,
+    protected String repairPwd(@RequestParam(value = "user_no") Integer user_no,
                              @RequestParam(value = "user_pwd") String user_pwd)
     {
         userRepository.repairPwd(user_pwd,user_no);

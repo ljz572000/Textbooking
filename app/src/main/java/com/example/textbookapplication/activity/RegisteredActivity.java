@@ -36,11 +36,8 @@ public class RegisteredActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-        back_to_login.setOnClickListener(backToLogin());
+        back_to_login.setOnClickListener(v->finish());
         submit_register.setOnClickListener(register());
-    }
-    private View.OnClickListener backToLogin(){
-        return view -> finish();
     }
     private View.OnClickListener register(){
         return v->{

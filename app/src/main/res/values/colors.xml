@@ -18,5 +18,10 @@
     <color name="light_gray">#F2F2F2</color>
     <color name="light_skygray">#CED8F6</color>
     <color name="red">#F00</color>
+    <color name="MediumBlue">#0000CD</color>
+    <color name="AliceBlue">#F0F8FF</color>
+    <color name="lavender">#E6E6FA</color>
+    <color name="Aquamarine3">#66CDAA</color>
+    <color name="DarkSeaGreen2">#B4EEB4</color>
 
 </resources>

@@ -40,12 +40,8 @@ public class RepairPwdActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
         context = getApplicationContext();
-        repair_pwd_back.setOnClickListener(goback());
+        repair_pwd_back.setOnClickListener(v->finish());
         submit_pwd.setOnClickListener(repairPwd());
-    }
-
-    private View.OnClickListener goback() {
-        return view -> finish();
     }
 
     private View.OnClickListener repairPwd() {

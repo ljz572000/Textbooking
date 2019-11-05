@@ -2,6 +2,7 @@ package com.ljz.textbook_manager_service.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.UniqueElements;
 
@@ -32,4 +33,10 @@ public class User {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date birth;
     private Boolean isFemale;
+    public Integer getUserNo() {
+        return userNo;
+    }
+    public String getMail() {
+        return mail;
+    }
 }

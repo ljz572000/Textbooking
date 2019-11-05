@@ -63,13 +63,14 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         x.view().inject(this);
         context = getApplicationContext();
+
         ImageOptions imageOptions = new ImageOptions.Builder()
                 .setSize(DensityUtil.dip2px(-1000), DensityUtil.dip2px(-3000))
                 .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
                 .setLoadingDrawableId(R.mipmap.ic_launcher)
                 .setFailureDrawableId(R.mipmap.ic_launcher).build();
 
-        back.setOnClickListener(backToMain());
+        back.setOnClickListener(v->finish());
 
         TextBook textBook = getData();
 
@@ -169,11 +170,6 @@ public class DetailActivity extends AppCompatActivity {
             }
         };
     }
-
-    private View.OnClickListener backToMain() {
-        return view -> finish();
-    }
-
 
     private TextBook getData() {
         Intent intent = getIntent();

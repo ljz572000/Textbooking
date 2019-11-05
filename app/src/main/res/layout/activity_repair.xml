@@ -51,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/major"
         android:layout_marginTop="10dp"
+        android:inputType="textEmailAddress"
         android:hint="@string/mail" />
 
     <EditText
@@ -59,7 +60,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/mail"
         android:layout_marginTop="10dp"
-        android:hint="@string/birth" />
+        android:hint="@string/birth"
+        android:inputType="date"/>
 
     <Button
         android:id="@+id/submit"
@@ -71,6 +73,8 @@
         android:background="@color/bluesky"
         android:text="@string/submit"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="18sp"/>
+
+
 
 </RelativeLayout>

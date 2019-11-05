@@ -40,5 +40,12 @@ public interface UserRepo extends JpaRepository<User,Integer> {
             nativeQuery = true
     )
     void repairPwd(String user_pwd,Integer user_no);
+    @Transactional
+    @Modifying
+    @Query(
+            value = "update `user` set `money` = ?2 where `user_no` = ?1",
+            nativeQuery = true
+    )
+    void chargeMoney(Integer user_no,Double money);
     //update `user` set `user_password` = '5678' where `user_no` = 1;
 }

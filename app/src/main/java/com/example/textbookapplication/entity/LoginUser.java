@@ -89,8 +89,6 @@ public class LoginUser {
         editor.commit();
     }
 
-
-
     public static LoginUser getLoginUser(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences("User", Context.MODE_PRIVATE);
         final String userinfo = sharedPreferences.getString("User","");
@@ -104,7 +102,6 @@ public class LoginUser {
             String userPassword = jsonObject.getString("userPassword");
             String userIconPath = jsonObject.getString("userIconPath");
             String userName = jsonObject.getString("userName");
-
             Double money = jsonObject.getDouble("money");
             String address = jsonObject.getString("address");
             String major = jsonObject.getString("major");
@@ -151,6 +148,10 @@ public class LoginUser {
     private Date startTime;
     private Date birth;
     private Boolean isFemale;
+
+    public void setMoney(Double money) {
+        this.money = money;
+    }
 
     public Double getMoney() {
         return money;

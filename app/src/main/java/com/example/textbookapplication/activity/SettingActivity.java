@@ -31,7 +31,7 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-        settingBack.setOnClickListener(goback());
+        settingBack.setOnClickListener(view -> finish());
         quit.setOnClickListener(logout());
         about.setOnClickListener(appContext());
         repairPwd.setOnClickListener(goToRepairPwd());
@@ -44,9 +44,6 @@ public class SettingActivity extends AppCompatActivity {
             startActivity(aboutIntent);
             finish();
         };
-    }
-    private View.OnClickListener goback() {
-        return view -> finish();
     }
     private View.OnClickListener goToRepairPwd() {
         return view -> {

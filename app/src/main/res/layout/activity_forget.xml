@@ -16,13 +16,45 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:src="@drawable/ic_back" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/back_to_login"
+            android:text="@string/forget"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
     </RelativeLayout>
-    <TextView
+    <RelativeLayout
+        android:id="@+id/rl_account"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/forgot_pwd"
-        android:textSize="24sp"
-        android:textColor="@color/black"
-        />
+        android:layout_height="100dp"
+        android:background="@color/DarkSeaGreen2"
+        >
+        <EditText
+            android:id="@+id/forget_account"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/forget_id"
+            android:textSize="24sp"
+            android:textColor="@color/Aquamarine3"
+            />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/submit_forget"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/rl_account"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@color/bluesky"
+        android:text="@string/submit"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 </RelativeLayout>
