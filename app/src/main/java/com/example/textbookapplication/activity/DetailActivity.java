@@ -30,7 +30,6 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-@ContentView(R.layout.activity_detail)
 public class DetailActivity extends AppCompatActivity {
     @ViewInject(R.id.back_to_home)
     private ImageButton back;

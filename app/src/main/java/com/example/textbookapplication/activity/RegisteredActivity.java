@@ -20,7 +20,6 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-@ContentView(R.layout.activity_registered)
 public class RegisteredActivity extends AppCompatActivity {
     @ViewInject(R.id.back_to_login)
     private ImageButton back_to_login;
@@ -35,6 +34,7 @@ public class RegisteredActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_registered);
         x.view().inject(this);
         back_to_login.setOnClickListener(v->finish());
         submit_register.setOnClickListener(register());

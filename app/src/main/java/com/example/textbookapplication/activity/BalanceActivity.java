@@ -36,6 +36,7 @@ public class BalanceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_balance);
         x.view().inject(this);
         context = getApplicationContext();
         user = LoginUser.getLoginUser(context);
@@ -63,7 +64,7 @@ public class BalanceActivity extends AppCompatActivity {
                             x.http().post(params, new Callback.CommonCallback<String>() {
                                 @Override
                                 public void onSuccess(String result) {
-                                    updatePersonMess();
+                                    LoginUser.updatePersonMess(user,context);
                                     runOnUiThread(()->money_value.setText("当前余额："+values+"元"));
                                 }
                                 @Override
@@ -83,23 +84,5 @@ public class BalanceActivity extends AppCompatActivity {
                     });
             normalDialog.show();
         };
-    }
-
-    private void updatePersonMess(){
-//        https://www.lijinzhou.top:2020/login?userId=20160750
-        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/login");
-        params.addQueryStringParameter("userId", user.getUserId());
-        x.http().post(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                LoginUser loginUser = new LoginUser(result,context);
-            }
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {}
-            @Override
-            public void onCancelled(CancelledException cex) {}
-            @Override
-            public void onFinished() {}
-        });
     }
 }

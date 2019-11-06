@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-@ContentView(R.layout.activity_admin_main)
 public class AdminMainActivity extends AppCompatActivity {
     @ViewInject(R.id.manage)
     private RadioButton manage;
@@ -42,6 +41,7 @@ public class AdminMainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_admin_main);
         x.view().inject(this);
         manage.setOnClickListener(changeFragment());
         admin.setOnClickListener(changeFragment());

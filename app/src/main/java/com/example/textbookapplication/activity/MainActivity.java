@@ -39,7 +39,6 @@ import java.util.TimerTask;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-@ContentView(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
 
     //底部导航栏
@@ -60,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         x.view().inject(this);
         isLocalUser();
         home_radio.setOnClickListener(changeFragment());

@@ -13,7 +13,6 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-@ContentView(R.layout.activity_about)
 public class AboutActivity extends AppCompatActivity {
     @ViewInject(R.id.back_to_setting)
     private ImageButton back_to_setting;

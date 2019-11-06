@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -70,7 +73,7 @@ public class LoginUser {
             this.address = jsonObject.getString("address");
             this.major = jsonObject.getString("major");
             this.mail = jsonObject.getString("mail");
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             this.startTime = sdf.parse(jsonObject.getString("startTime"));
             this.birth = sdf.parse(jsonObject.getString("birth"));
             this.isFemale = jsonObject.getBoolean("isFemale");
@@ -106,7 +109,7 @@ public class LoginUser {
             String address = jsonObject.getString("address");
             String major = jsonObject.getString("major");
             String mail = jsonObject.getString("mail");
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date startTime = sdf.parse(jsonObject.getString("startTime"));
             Date birth = sdf.parse(jsonObject.getString("birth"));
             Boolean isFemale = jsonObject.getBoolean("isFemale");
@@ -117,6 +120,24 @@ public class LoginUser {
             e.printStackTrace();
         }
         return user;
+    }
+
+    public static void updatePersonMess(LoginUser user,Context context){
+//        https://www.lijinzhou.top:2020/login?userId=20160750
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/login");
+        params.addQueryStringParameter("userId", user.getUserId());
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                LoginUser loginUser = new LoginUser(result,context);
+            }
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {}
+            @Override
+            public void onCancelled(CancelledException cex) {}
+            @Override
+            public void onFinished() {}
+        });
     }
 
     public LoginUser(Integer userNo, String userId, Boolean isAdmin, String userPassword, String userIconPath, String userName, Double money, String address, String major, String mail, Date startTime, Date birth, Boolean isFemale) {

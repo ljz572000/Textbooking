@@ -23,5 +23,7 @@
     <color name="lavender">#E6E6FA</color>
     <color name="Aquamarine3">#66CDAA</color>
     <color name="DarkSeaGreen2">#B4EEB4</color>
+    <color name="Transparent">#00000000</color>
+    <color name="HalfTransparent">#e0000000</color>
 
 </resources>

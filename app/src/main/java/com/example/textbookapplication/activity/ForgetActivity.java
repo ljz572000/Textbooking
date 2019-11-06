@@ -19,7 +19,6 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-@ContentView(R.layout.activity_forget)
 public class ForgetActivity extends AppCompatActivity {
     @ViewInject(R.id.back_to_login)
     private ImageButton back_to_login;
@@ -31,6 +30,7 @@ public class ForgetActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_forget);
         x.view().inject(this);
         context = getApplicationContext();
         back_to_login.setOnClickListener(v->finish());

@@ -22,7 +22,6 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-@ContentView(R.layout.activity_repair_pwd)
 public class RepairPwdActivity extends AppCompatActivity {
     @ViewInject(R.id.repair_pwd_back)
     private ImageButton repair_pwd_back;
@@ -38,6 +37,7 @@ public class RepairPwdActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_repair_pwd);
         x.view().inject(this);
         context = getApplicationContext();
         repair_pwd_back.setOnClickListener(v->finish());

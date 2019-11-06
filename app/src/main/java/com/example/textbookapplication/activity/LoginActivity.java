@@ -31,7 +31,6 @@ import java.util.TimerTask;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-@ContentView(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity {
     // 登陆按钮
     @ViewInject(R.id.btnLogin)
@@ -54,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login);
         context = getApplicationContext();
         //获取控件
         x.view().inject(this);

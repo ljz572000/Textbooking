@@ -47,5 +47,17 @@ public interface UserRepo extends JpaRepository<User,Integer> {
             nativeQuery = true
     )
     void chargeMoney(Integer user_no,Double money);
+    @Transactional
+    @Modifying
+    @Query(
+            value = "update `user` set " +
+                    "`address` = ?2 ," +
+                    "`major` = ?3 ," +
+                    "`mail` = ?4 ," +
+                    "`birth` = ?5 " +
+                    "where `user_no` = ?1",
+            nativeQuery = true
+    )
+    void changeData(Integer user_no,String address,String major,String mail,String birth);
     //update `user` set `user_password` = '5678' where `user_no` = 1;
 }

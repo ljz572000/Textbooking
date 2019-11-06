@@ -22,7 +22,11 @@ public class TextbookManagerServiceApplicationTests {
     @Autowired
     UserRepo userRepository;
     @Test
-    public void sendMail(){
+    public void changeData(){
+//        userRepository.changeData(5,"上海电力学院","计算机科学与技术","2373861592@qq.com","1997-05-15 00:00:00");
+    }
+//    @Test
+//    public void sendMail(){
 //        String from = "ljz572000@foxmail.com";
 //        String to = "2373861592@qq.com";
 //        String subject = "修改密码";
@@ -56,7 +60,7 @@ public class TextbookManagerServiceApplicationTests {
 //        } catch (MessagingException e) {
 //            e.printStackTrace();
 //        }
-    }
+//    }
 
 
 

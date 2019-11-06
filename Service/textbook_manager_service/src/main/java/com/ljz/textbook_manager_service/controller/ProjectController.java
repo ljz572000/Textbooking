@@ -24,7 +24,18 @@ public class ProjectController {
 
     @Autowired
     UserRepo userRepository;
-
+    @PostMapping("/changeData")
+    @ResponseBody
+    protected String changeData(
+            @RequestParam(value = "userNo") Integer userNo,
+            @RequestParam(value = "address") String address,
+            @RequestParam(value = "major") String major,
+            @RequestParam(value = "mail") String mail,
+            @RequestParam(value = "birth") String birth
+    ){
+        userRepository.changeData(userNo,address,major,mail,birth);
+        return "success";
+    }
 
     @GetMapping("/allUsers")
     @ResponseBody
@@ -39,9 +50,6 @@ public class ProjectController {
         return userRepository.findByUserId(userId);
     }
 
-//        private String to = "2373861592@qq.com";
-//    private String subject = "修改密码";
-//    private String content = "您的密码已修改为xxxx";
     Mail mail = new Mail();
     @GetMapping("/sendMail")
     @ResponseBody
@@ -54,8 +62,8 @@ public class ProjectController {
         return "success";
     }
 
-@Autowired
-ResetCodeRepo resetCodeRepo;
+    @Autowired
+    ResetCodeRepo resetCodeRepo;
     @PostMapping("/goToResetPage")
     @ResponseBody
     private String goToResetPage(

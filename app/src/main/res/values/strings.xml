@@ -57,13 +57,16 @@
     <string name="address">输入地址</string>
     <string name="major">输入专业</string>
     <string name="mail">输入个人邮箱</string>
-    <string name="birth">输入生日</string>
+    <string name="birth">生日</string>
     <string name="balance">余额</string>
     <string name="order">订单列表</string>
     <string name="money">当前余额: xxx元</string>
     <string name="charge_value">请输入充值金额</string>
     <string name="forget_id">请输入账号</string>
     <string name="forget">忘记密码</string>
+    <string name="year">2019</string>
+    <string name="month">11</string>
+    <string name="day">6</string>
 
     <string name="statement">此项目为2019年大四android 应用开发 大作业  由上海电力大学李金洲、李玮光共同开发</string>
     <string name="code">源码地址： https://github.com/ljz572000/Textbooking</string>
