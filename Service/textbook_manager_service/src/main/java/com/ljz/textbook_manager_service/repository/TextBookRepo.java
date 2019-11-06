@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import javax.transaction.Transactional;
 
 
-public interface TextBookRepo extends JpaRepository<TextBook,Integer> {
+public interface TextBookRepo extends JpaRepository<TextBook, Integer> {
     @Query(
             value = "select * from textbook_manager.text_book ",
             countQuery = "select count(*) from textbook_manager.text_book",
@@ -24,5 +24,11 @@ public interface TextBookRepo extends JpaRepository<TextBook,Integer> {
     @Modifying
     @Query(value = "update `text_book` set `text_book`.`totalnum` = ?1 where `text_book`.`book_no`=?2",
             nativeQuery = true)
-    void UpdateTextBookNum(Integer updateNum,Integer bookNo);
+    void UpdateTextBookNum(Integer updateNum, Integer bookNo);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update `text_book` set `text_book`.`totalnum` = ?1 ,`book_price`=?2 where `text_book`.`book_no`=?3",
+            nativeQuery = true)
+    void ChangeTextBook(Integer updateNum,Double price,Integer bookNo);
 }

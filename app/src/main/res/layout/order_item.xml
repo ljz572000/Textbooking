@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/textbook_item_bg">
+    <RelativeLayout
+        android:id="@+id/item_top"
+        android:layout_width="match_parent"
+        android:layout_height="145dp"
+        android:layout_marginTop="3.5dp"
+        android:background="@color/white"
+        >
+        <ImageView
+            android:id="@+id/order_item_icon"
+            android:layout_width="91.27dp"
+            android:layout_height="130dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:src="#000000">
+        </ImageView>
+        <RelativeLayout
+            android:id="@+id/order_item_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_toRightOf="@+id/order_item_icon"
+            android:paddingBottom="12dp">
+            <TextView
+                android:id="@+id/order_textbook_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/textbook_name"
+                android:textColor="#323232"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/order_textbook_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/order_textbook_name"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/textbook_num" />
+            <TextView
+                android:id="@+id/order_book_values"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/order_textbook_num"
+                android:layout_marginTop="10dp"
+                android:text="@string/book_values"
+                android:textColor="@color/text_price_color"
+                android:textSize="24sp"/>
+
+        </RelativeLayout>
+        <ProgressBar
+            android:id="@+id/order_img_pb"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+</FrameLayout>

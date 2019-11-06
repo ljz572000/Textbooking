@@ -116,7 +116,6 @@ public class ProjectController {
             @RequestParam(value = "userPassword") String userPassword,
             @RequestParam(value = "userIconPath") String userIconPath,
             @RequestParam(value = "userName") String userName,
-            @RequestParam(value = "money") Double money,
             @RequestParam(value = "major") String major,
             @RequestParam(value = "address") String address,
             @RequestParam(value = "mail") String mail,
@@ -130,9 +129,9 @@ public class ProjectController {
                     userPassword,
                     userIconPath,
                     userName,
-                    money,major,address,mail, birth,isFemale
+                    0.0,major,address,mail, birth,isFemale
             );
-            return userRepository.findByUserId(userId).toString();
+            return "注册成功";
         }else {
             return "学号已经有人使用";
         }
@@ -182,6 +181,17 @@ public class ProjectController {
             textBookRepo.UpdateTextBookNum(textBook.getTotalnum()-buyNum,bookNo);
             return "success";
         }
+    }
+    @PostMapping("/ChangeTextBook")
+    @ResponseBody
+    private String ChangeTextBook(
+            @RequestParam(value = "changNum") Integer changNum,
+            @RequestParam(value = "price") Double price,
+            @RequestParam(value = "bookNo") Integer bookNo
+    )
+    {
+        textBookRepo.ChangeTextBook(changNum,price,bookNo);
+        return "success";
     }
 
     @Autowired

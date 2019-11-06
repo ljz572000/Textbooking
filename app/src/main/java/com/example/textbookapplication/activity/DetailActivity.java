@@ -53,7 +53,7 @@ public class DetailActivity extends AppCompatActivity {
     private ImageButton sub_num;
     @ViewInject(R.id.num)
     private TextView num;
-
+    private LoginUser user;
     private Context context;
 
     @Override
@@ -62,7 +62,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         x.view().inject(this);
         context = getApplicationContext();
-
+        user = LoginUser.getLoginUser(context);
         ImageOptions imageOptions = new ImageOptions.Builder()
                 .setSize(DensityUtil.dip2px(-1000), DensityUtil.dip2px(-3000))
                 .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
@@ -107,6 +107,7 @@ public class DetailActivity extends AppCompatActivity {
                                     sendMessage(content);
                                     buytextbook(bookNo, bookPrice, textNum);
                                     updateTextBookNum(bookNo, textNum);
+                                    updateUserMoney(bookPrice, textNum);
                                 }
                             });
                     normalDialog.setNegativeButton("关闭",
@@ -274,6 +275,25 @@ public class DetailActivity extends AppCompatActivity {
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {}
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {}
+            @Override
+            public void onCancelled(CancelledException cex) {}
+            @Override
+            public void onFinished() {}
+        });
+    }
+
+    private void updateUserMoney(Double book_price, Integer num){
+        Double book_values = book_price * num;
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/chargeMoney");
+        params.addQueryStringParameter("user_no", user.getUserNo());
+        params.addQueryStringParameter("money", user.getMoney()-book_values);
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                LoginUser.updatePersonMess(user,context);
+            }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {}
             @Override

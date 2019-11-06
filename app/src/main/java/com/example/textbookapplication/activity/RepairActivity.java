@@ -71,7 +71,6 @@ public class RepairActivity extends AppCompatActivity {
         mail.setText(user.getMail());
 
         ca.setTime(user.getBirth());
-
         edit_year.setText(""+ca.get(Calendar.YEAR));
         edit_month.setText(""+(ca.get(Calendar.MONTH)+1));
         edit_day.setText(""+ca.get(Calendar.DAY_OF_MONTH));

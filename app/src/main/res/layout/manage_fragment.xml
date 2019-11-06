@@ -22,4 +22,22 @@
             android:textColor="#000"
             android:textSize="24sp" />
     </RelativeLayout>
+
+    <com.example.textbookapplication.widget.pullToRefresh.PullToRefreshLayout
+        android:id="@+id/refresh_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="6.5dp"
+        android:layout_below="@+id/bar"
+        >
+        <include layout="@layout/refresh_head" />
+        <com.example.textbookapplication.widget.pullToRefresh.PullableListView
+            android:id="@+id/content_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3.5dp"
+            android:divider="@null"
+            />
+        <include layout="@layout/load_more" />
+    </com.example.textbookapplication.widget.pullToRefresh.PullToRefreshLayout>
 </RelativeLayout>

@@ -26,7 +26,9 @@
             android:layout_toRightOf="@id/back_to_login"
             android:text="@string/registered"
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:singleLine="true"
+            android:inputType="text"
+        />
     </RelativeLayout>
 
     <EditText
@@ -34,9 +36,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/bar"
-        android:layout_marginTop="20dp"
         android:hint="@string/register_id"
-        android:textSize="24sp" />
+        android:inputType="text"
+        android:singleLine="true" />
 
     <EditText
         android:id="@+id/register_pwd"
@@ -45,21 +47,202 @@
         android:layout_below="@id/register_id"
         android:layout_marginTop="10dp"
         android:hint="@string/register_pwd"
-        android:textSize="24sp" />
+        android:singleLine="true"
+        android:inputType="textPassword"
+        />
+
+    <EditText
+        android:id="@+id/register_pwd_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_pwd"
+        android:layout_marginTop="10dp"
+        android:hint="@string/register_pwd_2"
+        android:inputType="textPassword"
+        android:singleLine="true"
+        />
 
     <EditText
         android:id="@+id/register_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/register_pwd"
+        android:layout_below="@id/register_pwd_2"
         android:layout_marginTop="10dp"
+        android:singleLine="true"
+        android:inputType="text"
         android:hint="@string/register_username"
-        android:textSize="24sp" />
+       />
+    <EditText
+        android:id="@+id/major"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_username"
+        android:layout_marginTop="10dp"
+        android:hint="@string/major"
+        android:singleLine="true"
+        android:inputType="text"/>
+
+
+    <EditText
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/major"
+        android:layout_marginTop="10dp"
+        android:hint="@string/address"
+        android:singleLine="true"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/address"
+        android:layout_marginTop="10dp"
+        android:hint="@string/mail"
+        android:inputType="textEmailAddress"
+        android:singleLine="true"
+        />
+
+    <TextView
+        android:id="@+id/birth_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mail"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/birth"
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:id="@+id/birth"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mail"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+            <ImageButton
+                android:id="@+id/year_add"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/Transparent"
+                android:src="@drawable/ic_add"
+                />
+            <EditText
+                android:id="@+id/edit_year"
+                android:layout_below="@+id/year_add"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:singleLine="true"
+                android:inputType="number"
+                android:hint="@string/year"
+                android:gravity="center"
+                />
+            <ImageButton
+                android:id="@+id/year_sub"
+                android:layout_below="@+id/edit_year"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/Transparent"
+                android:src="@drawable/ic_sub"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+            <ImageButton
+                android:id="@+id/month_add"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/Transparent"
+                android:src="@drawable/ic_add"/>
+            <EditText
+                android:id="@+id/edit_month"
+                android:layout_below="@+id/month_add"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:singleLine="true"
+                android:inputType="number"
+                android:hint="@string/month"
+                android:gravity="center"
+                />
+            <ImageButton
+                android:id="@+id/month_sub"
+                android:layout_below="@+id/edit_month"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/Transparent"
+                android:src="@drawable/ic_sub"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+            <ImageButton
+                android:id="@+id/day_add"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/Transparent"
+                android:src="@drawable/ic_add"/>
+            <EditText
+                android:id="@+id/edit_day"
+                android:layout_below="@+id/day_add"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:singleLine="true"
+                android:inputType="number"
+                android:hint="@string/day"
+                android:gravity="center"
+                />
+            <ImageButton
+                android:id="@+id/day_sub"
+                android:layout_below="@+id/edit_day"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/Transparent"
+                android:src="@drawable/ic_sub"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/is_female_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/birth"
+        android:layout_marginStart="10dp"
+        android:text="@string/isfemale"
+        android:textColor="@color/black" />
+    <Switch
+        android:id="@+id/is_female"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/birth"
+        android:layout_height="wrap_content"
+        android:background="@color/Transparent"
+        />
+
     <Button
         android:id="@+id/submit_register"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/register_username"
+        android:layout_below="@id/is_female"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:background="@color/bluesky"

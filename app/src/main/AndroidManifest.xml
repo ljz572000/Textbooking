@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/campus_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Launcher">
-        <activity android:name=".activity.OrderActivity"></activity>
+        <activity android:name=".activity.AddTextBookActivity"></activity>
+        <activity android:name=".activity.OrderActivity" />
         <activity android:name=".activity.BalanceActivity" />
         <activity android:name=".activity.RepairActivity" />
         <activity android:name=".activity.RepairPwdActivity" />

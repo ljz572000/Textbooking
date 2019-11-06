@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         setupFragment();
     }
 
+    private static final String TAG = "MainActivity";
     private void isLocalUser(){
         SharedPreferences sharedPreferences = getSharedPreferences("User", Context.MODE_PRIVATE);
         final String userinfo = sharedPreferences.getString("User","");
@@ -93,11 +94,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         final String info = response.body().string();
+
                         if (response.isSuccessful()) {
                             //此处，先将响应体保存到内存中
                             if (!info.equals("")) {
                                 LoginUser user = new LoginUser(info,context);
-                                if (BCrypt.checkpw(userPassword,user.getUserPassword())){
+                                if (userPassword.equals(user.getUserPassword())){
                                     //如果是管理员前往管理员界面
                                     if (user.getAdmin()){
                                         Intent intent = new Intent(MainActivity.this, AdminMainActivity.class);

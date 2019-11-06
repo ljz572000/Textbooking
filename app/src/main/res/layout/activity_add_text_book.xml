@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.AddTextBookActivity">
+
+    <RelativeLayout
+        android:id="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/back_to_manage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:src="@drawable/ic_back" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_item_pic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bar"
+        android:background="@color/light_gray">
+
+        <ImageView
+            android:id="@+id/item_pic"
+            android:layout_width="280dp"
+            android:layout_height="400dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/black" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textbook_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_item_pic"
+        android:text="@string/textbook_name"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/textbook_price"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textbook_name"
+        android:hint="@string/textbook_price"
+        android:textSize="18sp"
+        android:inputType="numberDecimal"
+        android:gravity="center"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_changeTotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textbook_price"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/add_total_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/Transparent"
+            android:src="@drawable/ic_add" />
+
+        <EditText
+            android:id="@+id/total_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="@string/total_num"
+            android:inputType="number"
+            />
+
+        <ImageButton
+            android:id="@+id/sub_total_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/Transparent"
+            android:src="@drawable/ic_sub" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submit_change_totalNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_changeTotal"
+        android:layout_marginTop="10dp"
+        android:background="@color/bluesky"
+        android:text="@string/submit"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+</RelativeLayout>

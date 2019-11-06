@@ -57,7 +57,6 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void Init(){
-
         refresh_view.setOnRefreshListener(new MyListener());
         getFirst();
     }
@@ -76,7 +75,6 @@ public class HomeFragment extends BaseFragment {
                 .setLoadingDrawableId(R.mipmap.ic_launcher)
                 .setFailureDrawableId(R.mipmap.ic_launcher).build();
         page_count = 0;
-
         isloadmore = false;
         refresh_view.setOnRefreshListener(new MyListener());
         adapter = new TextbookAdapter(context,textBooks,imageOptions);
@@ -84,14 +82,11 @@ public class HomeFragment extends BaseFragment {
         textBooks.clear();
         textbookdata();
 
-        content_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(context, DetailActivity.class);
-                TextBook textBook = textBooks.get(i);
-                intent.putExtra("textbook_item",textBook.toString());
-                startActivity(intent);
-            }
+        content_view.setOnItemClickListener((adapterView, view, i, l) -> {
+            Intent intent = new Intent(context, DetailActivity.class);
+            TextBook textBook = textBooks.get(i);
+            intent.putExtra("textbook_item",textBook.toString());
+            startActivity(intent);
         });
     }
     private void getNext(){

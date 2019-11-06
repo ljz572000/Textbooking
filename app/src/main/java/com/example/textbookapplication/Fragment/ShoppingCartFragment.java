@@ -82,7 +82,7 @@ public class ShoppingCartFragment extends BaseFragment {
                         String address = userJson.getString("address");
                         String major = userJson.getString("major");
                         String mail = userJson.getString("mail");
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                         Date user_startTime = sdf.parse(userJson.getString("startTime"));
                         Date birth = sdf.parse(userJson.getString("birth"));
                         Boolean isFemale = userJson.getBoolean("isFemale");
