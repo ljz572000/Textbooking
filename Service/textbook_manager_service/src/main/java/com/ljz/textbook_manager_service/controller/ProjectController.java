@@ -221,7 +221,7 @@ public class ProjectController {
     @GetMapping("/DeleteMessage")
     @ResponseBody
     private String deleteMessage(
-            @RequestParam(value = "")Integer mess_no
+            @RequestParam(value = "mess_no")Integer mess_no
     ){
         if (messRepo.findByMessNo(mess_no) == null){
             return "false";

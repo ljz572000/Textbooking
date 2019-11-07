@@ -22,9 +22,12 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.example.textbookapplication.R;
 import com.example.textbookapplication.activity.DetailActivity;
+import com.example.textbookapplication.activity.OrderActivity;
 import com.example.textbookapplication.entity.LoginUser;
 import com.example.textbookapplication.entity.ShoppingCart;
 import com.example.textbookapplication.entity.TextBook;
+import com.example.textbookapplication.widget.pullToRefresh.PullToRefreshLayout;
+import com.example.textbookapplication.widget.pullToRefresh.PullableListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,38 +47,65 @@ import java.util.List;
 
 @ContentView(R.layout.shopping_cart_fragment)
 public class ShoppingCartFragment extends BaseFragment {
-    @ViewInject(R.id.list_view)
-    private ListView listView;
+    //    @ViewInject(R.id.list_view)
+//    private ListView listView;
+    @ViewInject(R.id.shopping_cart_refresh_view)
+    private PullToRefreshLayout refresh_view;
+    @ViewInject(R.id.shopping_cart_content_view)
+    private PullableListView content_view;
 
     private Context context;
-    private  ArrayList<ShoppingCart> shoppingCarts;
+    private ArrayList<ShoppingCart> shoppingCarts;
     private ShoppingListAdapter shoppingListAdapter;
     private Activity activity;
+    int page_count;
+    boolean isloadmore;
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
+        refresh_view.setOnRefreshListener(new MyListener());
         activity = getActivity();
+    }
+
+    private void getFirst() {
         shoppingCarts = new ArrayList<>();
-        shoppingListAdapter = new ShoppingListAdapter(context, shoppingCarts,activity);
-        listView.setAdapter(shoppingListAdapter);
+        page_count = 0;
+        isloadmore = false;
+        shoppingListAdapter = new ShoppingListAdapter(context, shoppingCarts, activity);
+        content_view.setAdapter(shoppingListAdapter);
+        shoppingCarts.clear();
         getShoppingCart();
     }
-    private void getShoppingCart(){
+
+    private void getNext() {
+        isloadmore=true;
+        getShoppingCart();
+    }
+
+    private void getShoppingCart() {
         //https://www.lijinzhou.top:2020/ShoppingCarts?pagecount=0&size=5&userNo=20160750
         RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/ShoppingCarts");
-        params.addQueryStringParameter("pagecount", 0);
+        params.addQueryStringParameter("pagecount", page_count);
         params.addQueryStringParameter("size", 30);
         params.addQueryStringParameter("user_no", LoginUser.getLoginUser(context).getUserNo());
-        x.http().get(params, new Callback.CommonCallback<String>(){
+        x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(result);
                     String content = jsonObject.getString("content");
+                    if (content.equals("[]")){
+                        if(isloadmore){
+                            refresh_view.loadmoreFinish(PullToRefreshLayout.FAIL);
+                        }else{
+                            refresh_view.loadmoreFinish(PullToRefreshLayout.FAIL);
+                        }
+                        activity.runOnUiThread(()-> Toast.makeText(context,"到底了",Toast.LENGTH_SHORT).show());
+                    }
                     JSONArray jsonArray = new JSONArray(content);
-                    for (int i = 0;i<jsonArray.length();i++){
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         jsonObject = jsonArray.getJSONObject(i);
                         Integer shoppingCartNo = jsonObject.getInt("shoppingCartNo");
                         JSONObject userJson = jsonObject.getJSONObject("user");
@@ -94,7 +124,7 @@ public class ShoppingCartFragment extends BaseFragment {
                         Date user_startTime = sdf.parse(userJson.getString("startTime"));
                         Date birth = sdf.parse(userJson.getString("birth"));
                         Boolean isFemale = userJson.getBoolean("isFemale");
-                        LoginUser user = new LoginUser(userNo,userId,isAdmin,userPassword,userIconPath,userName,money,address,major,mail,user_startTime,birth,isFemale);
+                        LoginUser user = new LoginUser(userNo, userId, isAdmin, userPassword, userIconPath, userName, money, address, major, mail, user_startTime, birth, isFemale);
 
 
                         JSONObject bookJson = jsonObject.getJSONObject("book");
@@ -104,47 +134,76 @@ public class ShoppingCartFragment extends BaseFragment {
                         String author = bookJson.getString("author");
                         Double bookPrice = bookJson.getDouble("bookPrice");
                         Integer totalnum = bookJson.getInt("totalnum");
-                        TextBook textBook = new TextBook(bookNo,bookName,bookPic,author,bookPrice,totalnum);
+                        TextBook textBook = new TextBook(bookNo, bookName, bookPic, author, bookPrice, totalnum);
 
                         Integer bookNum = jsonObject.getInt("bookNum");
                         Double bookValues = jsonObject.getDouble("bookValues");
                         String startTime = jsonObject.getString("startTime");
 
-                        ShoppingCart shoppingCart = new ShoppingCart(shoppingCartNo,user,textBook,bookNum,bookValues,startTime);
+                        ShoppingCart shoppingCart = new ShoppingCart(shoppingCartNo, user, textBook, bookNum, bookValues, startTime);
                         shoppingCarts.add(shoppingCart);
                     }
+                    page_count +=1;
                     shoppingListAdapter.notifyDataSetChanged();
+                    if(isloadmore){
+                        refresh_view.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                    }else{
+                        refresh_view.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
+
             @Override
-            public void onError(Throwable ex, boolean isOnCallback) {}
+            public void onError(Throwable ex, boolean isOnCallback) {
+            }
+
             @Override
-            public void onCancelled(CancelledException cex) {}
+            public void onCancelled(CancelledException cex) {
+            }
+
             @Override
-            public void onFinished() {}
+            public void onFinished() {
+            }
         });
     }
+
+    class MyListener implements PullToRefreshLayout.OnRefreshListener {
+        @Override
+        public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
+            // 下拉刷新操作
+            getFirst();
+        }
+
+        @Override
+        public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
+            // 加载操作
+            getNext();
+        }
+    }
+
 }
 
 class ShoppingListAdapter extends BaseAdapter {
-    public ShoppingListAdapter(Context context, ArrayList<ShoppingCart> shoppingCarts,Activity activity) {
+    public ShoppingListAdapter(Context context, ArrayList<ShoppingCart> shoppingCarts, Activity activity) {
         this.mInflater = LayoutInflater.from(context);
         this.shoppingCarts = shoppingCarts;
         this.context = context;
         this.activity = activity;
     }
+
     private Activity activity;
     private final LayoutInflater mInflater;
     private List<ShoppingCart> shoppingCarts;
     private ImageOptions imageOptions = new ImageOptions.Builder()
             .setLoadingDrawableId(R.mipmap.ic_launcher)
             .setFailureDrawableId(R.mipmap.ic_launcher).build();
-//    private static final String TAG = "ShoppingListAdapter";
+    //    private static final String TAG = "ShoppingListAdapter";
     private Context context;
+
     @Override
     public int getCount() {
         return shoppingCarts.size();
@@ -174,20 +233,20 @@ class ShoppingListAdapter extends BaseAdapter {
         ShoppingCart shoppingCart = getItem(i);
         x.image().bind(shoppingItemHolder.shoppingPic, shoppingCart.getBook().getBookPic(), imageOptions);
         shoppingItemHolder.textbook_name.setText(shoppingCart.getBook().getBookName());
-        shoppingItemHolder.textbook_num.setText("数量： "+shoppingCart.getBookNum());
-        shoppingItemHolder.book_values.setText("总价： "+shoppingCart.getBookValues());
+        shoppingItemHolder.textbook_num.setText("数量： " + shoppingCart.getBookNum());
+        shoppingItemHolder.book_values.setText("总价： " + shoppingCart.getBookValues());
         shoppingItemHolder.buy_now.setOnClickListener(view1 -> buynow(
                 shoppingCart.getBook().getBookName(),
                 shoppingCart.getBookNum(),
                 shoppingCart.getBook().getBookNo(),
-                shoppingCart.getBook().getBookPrice(),shoppingCart.getUser()
+                shoppingCart.getBook().getBookPrice(), shoppingCart.getUser()
         ));
-        shoppingItemHolder.delete_shoppingcart.setOnClickListener(v->
-            delete_shoppingcart( shoppingCart.getBook().getBookName(),shoppingCart.getBookNum(),shoppingCart.getShoppingCartNo()));
+        shoppingItemHolder.delete_shoppingcart.setOnClickListener(v ->
+                delete_shoppingcart(shoppingCart.getBook().getBookName(), shoppingCart.getBookNum(), shoppingCart.getShoppingCartNo()));
         return view;
     }
 
-    private void delete_shoppingcart(String bookName,Integer textNum,Integer shopping_cart_no){
+    private void delete_shoppingcart(String bookName, Integer textNum, Integer shopping_cart_no) {
         final AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(context);
         normalDialog.setTitle("是否删除");
@@ -196,7 +255,7 @@ class ShoppingListAdapter extends BaseAdapter {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String content = "已从购物车中删除" + textNum + "本" + bookName ;
+                        String content = "已从购物车中删除" + textNum + "本" + bookName;
                         sendMessage(content);
                         sendDeleteShoppingCart(shopping_cart_no);
                     }
@@ -210,7 +269,7 @@ class ShoppingListAdapter extends BaseAdapter {
         normalDialog.show();
     }
 
-    private void sendDeleteShoppingCart(Integer shopping_cart_no){
+    private void sendDeleteShoppingCart(Integer shopping_cart_no) {
         //https://localhost:8080/deleteShoppingCarts?shopping_cart_no=1
         RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/deleteShoppingCarts");
         params.addQueryStringParameter("shopping_cart_no", shopping_cart_no);
@@ -218,21 +277,27 @@ class ShoppingListAdapter extends BaseAdapter {
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                activity.runOnUiThread(()->Toast.makeText(context,result,Toast.LENGTH_SHORT).show());
+                activity.runOnUiThread(() -> Toast.makeText(context, result, Toast.LENGTH_SHORT).show());
             }
+
             @Override
-            public void onError(Throwable ex, boolean isOnCallback) {}
+            public void onError(Throwable ex, boolean isOnCallback) {
+            }
+
             @Override
-            public void onCancelled(CancelledException cex) {}
+            public void onCancelled(CancelledException cex) {
+            }
+
             @Override
-            public void onFinished() {}
+            public void onFinished() {
+            }
         });
     }
 
     private void buynow(String bookName,
                         Integer textNum,
                         Integer bookNo,
-                        Double bookPrice,LoginUser user){
+                        Double bookPrice, LoginUser user) {
         final AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(context);
         normalDialog.setTitle("立即购买");
@@ -241,11 +306,11 @@ class ShoppingListAdapter extends BaseAdapter {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String content = "已购买" + textNum + "本" + bookName ;
+                        String content = "已购买" + textNum + "本" + bookName;
                         sendMessage(content);
                         buytextbook(bookNo, bookPrice, textNum);
                         updateTextBookNum(bookNo, textNum);
-                        updateUserMoney(bookPrice, textNum,user);
+                        updateUserMoney(bookPrice, textNum, user);
                     }
                 });
         normalDialog.setNegativeButton("关闭",
@@ -268,15 +333,19 @@ class ShoppingListAdapter extends BaseAdapter {
             }
 
             @Override
-            public void onError(Throwable ex, boolean isOnCallback) {}
+            public void onError(Throwable ex, boolean isOnCallback) {
+            }
 
             @Override
-            public void onCancelled(CancelledException cex) {}
+            public void onCancelled(CancelledException cex) {
+            }
 
             @Override
-            public void onFinished() {}
+            public void onFinished() {
+            }
         });
     }
+
     private void buytextbook(Integer book_no, Double book_price, Integer num) {
         //https://www.lijinzhou.top:2020/AddOrders?book_no=1&book_num=1&book_values=100&user_no=20160750
         Double book_values = book_price * num;
@@ -303,6 +372,7 @@ class ShoppingListAdapter extends BaseAdapter {
             }
         });
     }
+
     private void updateTextBookNum(Integer book_no, Integer num) {
         //https://localhost:8080/UpdateTextBookNum?buyNum=10&bookNo=1
         RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/UpdateTextBookNum");
@@ -310,31 +380,45 @@ class ShoppingListAdapter extends BaseAdapter {
         params.addQueryStringParameter("bookNo", book_no);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
-            public void onSuccess(String result) {}
+            public void onSuccess(String result) {
+            }
+
             @Override
-            public void onError(Throwable ex, boolean isOnCallback) {}
+            public void onError(Throwable ex, boolean isOnCallback) {
+            }
+
             @Override
-            public void onCancelled(CancelledException cex) {}
+            public void onCancelled(CancelledException cex) {
+            }
+
             @Override
-            public void onFinished() {}
+            public void onFinished() {
+            }
         });
     }
-    private void updateUserMoney(Double book_price, Integer num,LoginUser user){
+
+    private void updateUserMoney(Double book_price, Integer num, LoginUser user) {
         Double book_values = book_price * num;
         RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/chargeMoney");
         params.addQueryStringParameter("user_no", user.getUserNo());
-        params.addQueryStringParameter("money", user.getMoney()-book_values);
+        params.addQueryStringParameter("money", user.getMoney() - book_values);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                LoginUser.updatePersonMess(user,context);
+                LoginUser.updatePersonMess(user, context);
             }
+
             @Override
-            public void onError(Throwable ex, boolean isOnCallback) {}
+            public void onError(Throwable ex, boolean isOnCallback) {
+            }
+
             @Override
-            public void onCancelled(CancelledException cex) {}
+            public void onCancelled(CancelledException cex) {
+            }
+
             @Override
-            public void onFinished() {}
+            public void onFinished() {
+            }
         });
     }
 
@@ -354,3 +438,5 @@ class ShoppingListAdapter extends BaseAdapter {
         private Button delete_shoppingcart;
     }
 }
+
+

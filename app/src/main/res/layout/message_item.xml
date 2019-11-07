@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"  android:background="@color/white">
-<!--    <ImageView-->
-<!--        android:id="@+id/mess_pic"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@drawable/ic_shopping_car"-->
-<!--        />-->
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp"  android:background="@color/white">
     <TextView
         android:id="@+id/mess_title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:text="购买消息"
         android:textColor="@color/black"
         />
+    <Button
+        android:id="@+id/delete_message"
+        android:textColor="@color/red"
+        android:text="@string/delete_shoppingcart"
+        android:background="@color/Transparent"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 <!--    android:layout_toRightOf="@+id/mess_pic"-->
     <TextView
         android:id="@+id/mess_content"

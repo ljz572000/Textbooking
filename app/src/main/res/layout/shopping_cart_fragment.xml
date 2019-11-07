@@ -23,10 +23,21 @@
             android:textColor="#000"
             android:textSize="24sp" />
     </RelativeLayout>
-
-    <ListView
-        android:id="@+id/list_view"
-        android:layout_below="@+id/bar"
+    <com.example.textbookapplication.widget.pullToRefresh.PullToRefreshLayout
+        android:id="@+id/shopping_cart_refresh_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="6.5dp"
+        android:layout_below="@+id/bar"
+        >
+        <include layout="@layout/refresh_head" />
+        <com.example.textbookapplication.widget.pullToRefresh.PullableListView
+            android:id="@+id/shopping_cart_content_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3.5dp"
+            android:divider="@null"
+            />
+        <include layout="@layout/load_more" />
+    </com.example.textbookapplication.widget.pullToRefresh.PullToRefreshLayout>
 </RelativeLayout>

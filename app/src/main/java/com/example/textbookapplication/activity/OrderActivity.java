@@ -90,7 +90,7 @@ public class OrderActivity extends AppCompatActivity {
                         if(isloadmore){
                             refresh_view.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                         }else{
-                            refresh_view.loadmoreFinish(PullToRefreshLayout.FAIL);
+                            refresh_view.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                         }
                         runOnUiThread(()-> Toast.makeText(context,"到底了",Toast.LENGTH_SHORT).show());
                     }
