@@ -66,6 +66,7 @@ public class ShoppingCartFragment extends BaseFragment {
         context = getContext();
         refresh_view.setOnRefreshListener(new MyListener());
         activity = getActivity();
+        getFirst();
     }
 
     private void getFirst() {
@@ -239,7 +240,7 @@ class ShoppingListAdapter extends BaseAdapter {
                 shoppingCart.getBook().getBookName(),
                 shoppingCart.getBookNum(),
                 shoppingCart.getBook().getBookNo(),
-                shoppingCart.getBook().getBookPrice(), shoppingCart.getUser()
+                shoppingCart.getBook().getBookPrice(), shoppingCart.getUser(),shoppingCart.getShoppingCartNo()
         ));
         shoppingItemHolder.delete_shoppingcart.setOnClickListener(v ->
                 delete_shoppingcart(shoppingCart.getBook().getBookName(), shoppingCart.getBookNum(), shoppingCart.getShoppingCartNo()));
@@ -297,7 +298,8 @@ class ShoppingListAdapter extends BaseAdapter {
     private void buynow(String bookName,
                         Integer textNum,
                         Integer bookNo,
-                        Double bookPrice, LoginUser user) {
+                        Double bookPrice,
+                        LoginUser user,Integer shopping_cart_no) {
         final AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(context);
         normalDialog.setTitle("立即购买");
@@ -311,6 +313,7 @@ class ShoppingListAdapter extends BaseAdapter {
                         buytextbook(bookNo, bookPrice, textNum);
                         updateTextBookNum(bookNo, textNum);
                         updateUserMoney(bookPrice, textNum, user);
+                        sendDeleteShoppingCart(shopping_cart_no);
                     }
                 });
         normalDialog.setNegativeButton("关闭",
