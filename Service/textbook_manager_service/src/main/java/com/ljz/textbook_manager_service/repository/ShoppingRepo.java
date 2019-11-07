@@ -28,5 +28,10 @@ public interface ShoppingRepo extends JpaRepository<ShoppingCart,Integer> {
     )
     void addShoppingCarts(Integer book_no,Integer book_num,Double book_values,Integer user_no);
 
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM `shopping_cart` WHERE `shopping_cart_no`=?1",nativeQuery = true)
+    void deleteShoppingCart(Integer shopping_cart_no);
+
 
 }

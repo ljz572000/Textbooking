@@ -242,6 +242,17 @@ public class ProjectController {
         return shoppingRepo.findShoppingCarts(PageRequest.of(pagecount,size),user_no);
     }
 
+    @GetMapping("/deleteShoppingCarts")
+    @ResponseBody
+    private String deleteShoppingCarts(
+            @RequestParam(value = "shopping_cart_no") Integer shopping_cart_no
+    ){
+        shoppingRepo.deleteShoppingCart(shopping_cart_no);
+        return "success";
+    }
+
+
+
     @GetMapping("/addShoppingCart")
     @ResponseBody
     private String addShoppingCart(

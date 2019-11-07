@@ -103,7 +103,7 @@ public class DetailActivity extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    String content = "已购买" + textNum + "本" + bookName + "加入购物车";
+                                    String content = "已购买" + textNum + "本" + bookName ;
                                     sendMessage(content);
                                     buytextbook(bookNo, bookPrice, textNum);
                                     updateTextBookNum(bookNo, textNum);

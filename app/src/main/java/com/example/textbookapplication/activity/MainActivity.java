@@ -105,11 +105,11 @@ public class MainActivity extends AppCompatActivity {
                                         Intent intent = new Intent(MainActivity.this, AdminMainActivity.class);
                                         startActivity(intent);
                                         finish();
-                                    } else {
+                                    }
+                                } else {
                                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                                     startActivity(intent);
                                     finish();
-                                    }
                                 }
                             }
                         }

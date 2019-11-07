@@ -36,6 +36,7 @@
 
     <string name="add_to_Shopping_Cart">加入购物车</string>
     <string name="Buy_now">立即购买</string>
+    <string name="delete_shoppingcart">删除</string>
     <string name="detail_buy">订购数量</string>
     <string name="detail_total">剩余数量</string>
     <string name="user_name">李玮光</string>
