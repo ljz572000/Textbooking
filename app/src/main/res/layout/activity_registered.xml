@@ -229,14 +229,28 @@
         android:layout_marginStart="10dp"
         android:text="@string/isfemale"
         android:textColor="@color/black" />
-    <Switch
+
+    <RadioGroup
         android:id="@+id/is_female"
-        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
-        android:layout_below="@id/birth"
         android:layout_height="wrap_content"
-        android:background="@color/Transparent"
-        />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/birth"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/btnMan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="男"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/btnWoman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="女"/>
+    </RadioGroup>
 
     <Button
         android:id="@+id/submit_register"
@@ -249,4 +263,5 @@
         android:text="@string/submit"
         android:textColor="@color/white"
         android:textSize="18sp" />
+
 </RelativeLayout>
