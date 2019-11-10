@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -61,8 +63,8 @@ public class RegisteredActivity extends AppCompatActivity {
     private ImageButton day_sub;
     @ViewInject(R.id.submit_register)
     private Button submit_register;
-    @ViewInject(R.id.is_female)
-    private Switch is_female;
+    @ViewInject(R.id.btnMan)
+    private RadioButton btnMan;
     private Calendar ca = Calendar.getInstance();
     private Context context;
     @Override
@@ -81,8 +83,8 @@ public class RegisteredActivity extends AppCompatActivity {
         month_sub.setOnClickListener(changeBirth());
         day_add.setOnClickListener(changeBirth());
         day_sub.setOnClickListener(changeBirth());
-
         back_to_login.setOnClickListener(v -> finish());
+
         submit_register.setOnClickListener(register());
     }
 
@@ -134,7 +136,6 @@ public class RegisteredActivity extends AppCompatActivity {
             }
         };
     }
-
     private View.OnClickListener register() {
         return v -> {
             if(check()){
@@ -150,7 +151,7 @@ public class RegisteredActivity extends AppCompatActivity {
                 params.addQueryStringParameter("birth",
                         edit_year.getText().toString()+"-"+edit_month.getText().toString()
                                 +"-"+edit_day.getText().toString());
-                params.addQueryStringParameter("isFemale", is_female.getText());
+                params.addQueryStringParameter("isFemale", !btnMan.isChecked());
                 x.http().post(params, new Callback.CommonCallback<String>() {
                     @Override
                     public void onSuccess(String result) {
