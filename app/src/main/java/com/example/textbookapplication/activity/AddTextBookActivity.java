@@ -42,6 +42,8 @@ public class AddTextBookActivity extends AppCompatActivity {
     private EditText total_num;
     @ViewInject(R.id.submit_change_totalNum)
     private Button submit_change_totalNum;
+    @ViewInject(R.id.godown)
+    private Button godown;
     private ImageOptions imageOptions = new ImageOptions.Builder()
             .setLoadingDrawableId(R.mipmap.ic_launcher)
             .setFailureDrawableId(R.mipmap.ic_launcher).build();
@@ -59,8 +61,8 @@ public class AddTextBookActivity extends AppCompatActivity {
                 textBook.getBookPic(), imageOptions
         );
         textbook_name.setText("书名：" + textBook.getBookName());
-        textbook_price.setText(""+ textBook.getBookPrice());
-        total_num.setText(""+textBook.getTotalnum());
+        textbook_price.setText("" + textBook.getBookPrice());
+        total_num.setText("" + textBook.getTotalnum());
         add_total_num.setOnClickListener(view -> {
             int totalnum = Integer.parseInt(total_num.getText().toString());
             totalnum++;
@@ -73,20 +75,37 @@ public class AddTextBookActivity extends AppCompatActivity {
         });
 
         submit_change_totalNum.setOnClickListener(
-               view -> {
-                   final AlertDialog.Builder normalDialog =
-                           new AlertDialog.Builder(AddTextBookActivity.this);
-                   normalDialog.setTitle("保存修改");
-                   normalDialog.setMessage("你确定要修改《" + textBook.getBookName() + "》");
-                   normalDialog.setPositiveButton("确定",
-                           (dialog, which) -> updateTextBookNum(textBook.getBookNo(),Integer.parseInt(total_num.getText().toString())));
-                   normalDialog.setNegativeButton("关闭",
-                           (dialog, which) -> {});
-                   normalDialog.show();
-               }
+                view -> {
+                    final AlertDialog.Builder normalDialog =
+                            new AlertDialog.Builder(AddTextBookActivity.this);
+                    normalDialog.setTitle("保存修改");
+                    normalDialog.setMessage("你确定要修改《" + textBook.getBookName() + "》");
+                    normalDialog.setPositiveButton("确定",
+                            (dialog, which) -> updateTextBookNum(textBook.getBookNo(), Integer.parseInt(total_num.getText().toString())));
+                    normalDialog.setNegativeButton("关闭",
+                            (dialog, which) -> {
+                            });
+                    normalDialog.show();
+                }
 
         );
+
+        godown.setOnClickListener(
+                view->{
+                    final AlertDialog.Builder normalDialog =
+                            new AlertDialog.Builder(AddTextBookActivity.this);
+                    normalDialog.setTitle("确认下架该图书");
+                    normalDialog.setMessage("书名《" + textBook.getBookName() + "》");
+                    normalDialog.setPositiveButton("确定",
+                            (dialog, which) -> updateTextBookNum(textBook.getBookNo(), 0));
+                    normalDialog.setNegativeButton("关闭",
+                            (dialog, which) -> {
+                            });
+                    normalDialog.show();
+                }
+        );
     }
+
     private void updateTextBookNum(Integer book_no, Integer num) {
         //https://www.lijinzhou.top:2020/ChangeTextBook?changNum=1000&price=100.0&bookNo=2
         RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/ChangeTextBook");
@@ -96,16 +115,23 @@ public class AddTextBookActivity extends AppCompatActivity {
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                runOnUiThread(()->Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show());
             }
+
             @Override
-            public void onError(Throwable ex, boolean isOnCallback) {}
+            public void onError(Throwable ex, boolean isOnCallback) {
+            }
+
             @Override
-            public void onCancelled(CancelledException cex) {}
+            public void onCancelled(CancelledException cex) {
+            }
+
             @Override
-            public void onFinished() {}
+            public void onFinished() {
+            }
         });
     }
+
     private TextBook getData() {
         Intent intent = getIntent();
         String textbook_item = intent.getStringExtra("manage_item");
@@ -119,7 +145,7 @@ public class AddTextBookActivity extends AppCompatActivity {
             Double bookPrice = jsonObject.getDouble("bookPrice");
             int totalnum = jsonObject.getInt("totalnum");
             String brief = jsonObject.getString("brief");
-            textBook = new TextBook(bookNo, bookName, bookPic, author, bookPrice, totalnum,brief);
+            textBook = new TextBook(bookNo, bookName, bookPic, author, bookPrice, totalnum, brief);
         } catch (JSONException e) {
             e.printStackTrace();
         }

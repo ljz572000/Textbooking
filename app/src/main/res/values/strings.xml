@@ -51,6 +51,7 @@
     <string name="newPwd">请输入新密码</string>
     <string name="newPwd2">请再次输入新密码</string>
     <string name="submit">提交</string>
+    <string name="godown">下架</string>
     <string name="register_id">请输入注册账号</string>
     <string name="register_pwd">请输入注册密码</string>
     <string name="register_username">请输入注册用户名</string>

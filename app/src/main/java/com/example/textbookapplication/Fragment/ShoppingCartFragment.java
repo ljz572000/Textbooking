@@ -233,13 +233,18 @@ class ShoppingListAdapter extends BaseAdapter {
         x.image().bind(shoppingItemHolder.shoppingPic, shoppingCart.getBook().getBookPic(), imageOptions);
         shoppingItemHolder.textbook_name.setText(shoppingCart.getBook().getBookName());
         shoppingItemHolder.textbook_num.setText("数量： " + shoppingCart.getBookNum());
-        shoppingItemHolder.book_values.setText("总价： " + shoppingCart.getBookValues());
-        shoppingItemHolder.buy_now.setOnClickListener(view1 -> buynow(
-                shoppingCart.getBook().getBookName(),
-                shoppingCart.getBookNum(),
-                shoppingCart.getBook().getBookNo(),
-                shoppingCart.getBook().getBookPrice(), shoppingCart.getUser(),shoppingCart.getShoppingCartNo()
-        ));
+        if(shoppingCart.getBook().getTotalnum()==0){
+            shoppingItemHolder.book_values.setText("该书已经下架");
+            shoppingItemHolder.buy_now.setText("");
+        }else{
+            shoppingItemHolder.book_values.setText("总价： " + shoppingCart.getBookValues());
+            shoppingItemHolder.buy_now.setOnClickListener(view1 -> buynow(
+                    shoppingCart.getBook().getBookName(),
+                    shoppingCart.getBookNum(),
+                    shoppingCart.getBook().getBookNo(),
+                    shoppingCart.getBook().getBookPrice(), shoppingCart.getUser(),shoppingCart.getShoppingCartNo()
+            ));
+        }
         shoppingItemHolder.delete_shoppingcart.setOnClickListener(v ->
                 delete_shoppingcart(shoppingCart.getBook().getBookName(), shoppingCart.getBookNum(), shoppingCart.getShoppingCartNo()));
         return view;

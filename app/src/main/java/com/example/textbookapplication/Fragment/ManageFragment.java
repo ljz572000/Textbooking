@@ -80,7 +80,7 @@ public class ManageFragment extends BaseFragment {
     }
 
     private void textBookData(){
-        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/Textbooks");
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/AllTextbooks");
         params.addQueryStringParameter("pagecount", page_count);
         params.addQueryStringParameter("size", size);
         x.http().get(params, new Callback.CommonCallback<String>(){
@@ -179,7 +179,11 @@ public class ManageFragment extends BaseFragment {
             );
             holder.textbook_name.setText(textBook.getBookName());
             holder.textbook_total_num.setText("剩余数量："+textBook.getTotalnum()+"");
-            holder.book_price.setText("单价："+textBook.getBookPrice()+"");
+            if(textBook.getTotalnum()==0){
+                holder.book_price.setText("该书已下架");
+            }else {
+                holder.book_price.setText("单价：" + textBook.getBookPrice() + "");
+            }
             return view;
         }
 
