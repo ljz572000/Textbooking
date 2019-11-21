@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Textbooking</string>
-    <string name="appName">教材管理系统</string>
+    <string name="appName">网上书店</string>
     <string name="edit_id">工号或学号</string>
     <string name="edit_Pwd">密码</string>
     <string name="sign_in">登录</string>
@@ -15,7 +15,7 @@
     <string name="main_message">消息</string>
     <string name="main_shoppingCart">购物车</string>
     <string name="main_me">我</string>
-    <string name="project_name">教材管理系统</string>
+    <string name="project_name">网上书店</string>
     <string name="pull_to_refresh">下拉刷新</string>
     <string name="release_to_refresh">释放立即刷新</string>
     <string name="refreshing">正在刷新...</string>
@@ -72,7 +72,7 @@
     <string name="isfemale">男/女</string>
     <string name="total_num">100</string>
 
-    <string name="statement">此项目为2019年大四android 应用开发 大作业  由上海电力大学李金洲、李玮光共同开发</string>
+    <string name="statement">此项目为2019年大四软件项目实践大作业  由上海电力大学李金洲、李玮光共同开发</string>
     <string name="code">源码地址： https://github.com/ljz572000/Textbooking</string>
 
 </resources>

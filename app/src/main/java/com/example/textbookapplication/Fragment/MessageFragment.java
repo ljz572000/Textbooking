@@ -77,7 +77,7 @@ public class MessageFragment extends BaseFragment {
 
     private void getMessData() {
         //https://www.lijinzhou.top:2020/Messages?pagecount=0&size=30&user_no=20160750
-        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/Messages");
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/Messages");
         params.addQueryStringParameter("pagecount", 0);
         params.addQueryStringParameter("size", 30);
         params.addQueryStringParameter("user_no", LoginUser.getLoginUser(context).getUserNo());
@@ -234,7 +234,7 @@ class MessListAdapter extends BaseAdapter {
     private void deleteMess(Integer messNo)
     {
         //https://www.lijinzhou.top:2020/DeleteMessage?mess_no=2
-        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/DeleteMessage");
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/DeleteMessage");
         params.addQueryStringParameter("mess_no", messNo);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override

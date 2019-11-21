@@ -47,8 +47,6 @@ import java.util.List;
 
 @ContentView(R.layout.shopping_cart_fragment)
 public class ShoppingCartFragment extends BaseFragment {
-    //    @ViewInject(R.id.list_view)
-//    private ListView listView;
     @ViewInject(R.id.shopping_cart_refresh_view)
     private PullToRefreshLayout refresh_view;
     @ViewInject(R.id.shopping_cart_content_view)
@@ -86,7 +84,7 @@ public class ShoppingCartFragment extends BaseFragment {
 
     private void getShoppingCart() {
         //https://www.lijinzhou.top:2020/ShoppingCarts?pagecount=0&size=5&userNo=20160750
-        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/ShoppingCarts");
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/ShoppingCarts");
         params.addQueryStringParameter("pagecount", page_count);
         params.addQueryStringParameter("size", 30);
         params.addQueryStringParameter("user_no", LoginUser.getLoginUser(context).getUserNo());
@@ -135,8 +133,8 @@ public class ShoppingCartFragment extends BaseFragment {
                         String author = bookJson.getString("author");
                         Double bookPrice = bookJson.getDouble("bookPrice");
                         Integer totalnum = bookJson.getInt("totalnum");
-                        TextBook textBook = new TextBook(bookNo, bookName, bookPic, author, bookPrice, totalnum);
-
+                        String brief = bookJson.getString("brief");
+                        TextBook textBook = new TextBook(bookNo,bookName,bookPic,author,bookPrice,totalnum,brief);
                         Integer bookNum = jsonObject.getInt("bookNum");
                         Double bookValues = jsonObject.getDouble("bookValues");
                         String startTime = jsonObject.getString("startTime");
@@ -272,7 +270,7 @@ class ShoppingListAdapter extends BaseAdapter {
 
     private void sendDeleteShoppingCart(Integer shopping_cart_no) {
         //https://localhost:8080/deleteShoppingCarts?shopping_cart_no=1
-        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/deleteShoppingCarts");
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/deleteShoppingCarts");
         params.addQueryStringParameter("shopping_cart_no", shopping_cart_no);
         params.addQueryStringParameter("user_no", LoginUser.getLoginUser(context).getUserNo());
         x.http().get(params, new Callback.CommonCallback<String>() {
@@ -326,7 +324,7 @@ class ShoppingListAdapter extends BaseAdapter {
     }
 
     private void sendMessage(String content) {
-        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/NewMessage");
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/NewMessage");
         params.addQueryStringParameter("content", content);
         params.addQueryStringParameter("user_no", LoginUser.getLoginUser(context).getUserNo());
         x.http().get(params, new Callback.CommonCallback<String>() {
@@ -352,7 +350,7 @@ class ShoppingListAdapter extends BaseAdapter {
     private void buytextbook(Integer book_no, Double book_price, Integer num) {
         //https://www.lijinzhou.top:2020/AddOrders?book_no=1&book_num=1&book_values=100&user_no=20160750
         Double book_values = book_price * num;
-        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/AddOrders");
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/AddOrders");
         params.addQueryStringParameter("book_no", book_no);
         params.addQueryStringParameter("book_num", num);
         params.addQueryStringParameter("book_values", book_values);
@@ -378,7 +376,7 @@ class ShoppingListAdapter extends BaseAdapter {
 
     private void updateTextBookNum(Integer book_no, Integer num) {
         //https://localhost:8080/UpdateTextBookNum?buyNum=10&bookNo=1
-        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/UpdateTextBookNum");
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/UpdateTextBookNum");
         params.addQueryStringParameter("buyNum", num);
         params.addQueryStringParameter("bookNo", book_no);
         x.http().get(params, new Callback.CommonCallback<String>() {
@@ -402,7 +400,7 @@ class ShoppingListAdapter extends BaseAdapter {
 
     private void updateUserMoney(Double book_price, Integer num, LoginUser user) {
         Double book_values = book_price * num;
-        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/chargeMoney");
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/chargeMoney");
         params.addQueryStringParameter("user_no", user.getUserNo());
         params.addQueryStringParameter("money", user.getMoney() - book_values);
         x.http().post(params, new Callback.CommonCallback<String>() {

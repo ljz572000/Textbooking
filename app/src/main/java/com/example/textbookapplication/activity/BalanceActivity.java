@@ -58,7 +58,7 @@ public class BalanceActivity extends AppCompatActivity {
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/chargeMoney");
+                            RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/chargeMoney");
                             params.addQueryStringParameter("user_no", user.getUserNo());
                             params.addQueryStringParameter("money", values);
                             x.http().post(params, new Callback.CommonCallback<String>() {

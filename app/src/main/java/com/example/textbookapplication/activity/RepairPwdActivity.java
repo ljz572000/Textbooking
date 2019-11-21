@@ -75,7 +75,7 @@ public class RepairPwdActivity extends AppCompatActivity {
 
     private void changePwd(Integer user_no, String user_pwd) {
         //https://www.lijinzhou.top:2020/repairPwd?user_no=1&user_pwd=1234
-        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/repairPwd");
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/repairPwd");
         params.addQueryStringParameter("user_no", user_no);
         params.addQueryStringParameter("user_pwd",BCrypt.hashpw(user_pwd, BCrypt.gensalt()));
         x.http().post(params, new Callback.CommonCallback<String>() {

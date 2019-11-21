@@ -148,7 +148,7 @@ public class RepairActivity extends AppCompatActivity {
             normalDialog.setMessage("您是否保存当前信息");
             normalDialog.setPositiveButton("确定",
                     (dialog, which) -> {
-                        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/changeData");
+                        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/changeData");
                         params.addQueryStringParameter("userNo", user.getUserNo());
                         params.addQueryStringParameter("address",address.getText().toString());
                         params.addQueryStringParameter("major", major.getText().toString());

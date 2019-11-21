@@ -47,8 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     // 创建等待框
     @ViewInject(R.id.loading)
     private ProgressBar loadingProgressBar;
-
-    private Context context = this;
+    private Context context;
     public static final String EXTRA_MESSAGE = "LoginMessage";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +68,9 @@ public class LoginActivity extends AppCompatActivity {
             btnLogin.setEnabled(false);//点了登录后不可以再点，避免用户乱点
             login(editId.getText().toString(),editPwd.getText().toString());
         });
-
         forgot_pwd.setOnClickListener(goToForgotPwd());
         registered.setOnClickListener(goRegistered());
     }
-
     private View.OnClickListener goRegistered(){
         return view ->{
             Intent intent = new Intent(LoginActivity.this, RegisteredActivity.class);
@@ -94,9 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         return false;
     }
-
     private void login(String userId, String userPassword){
-//        BCrypt.checkpw(password,admin.getPassword())
         Call call = Service.loginSerive(userId);
         call.enqueue(new Callback() {
             @Override
@@ -113,11 +108,11 @@ public class LoginActivity extends AppCompatActivity {
                         LoginUser user = new LoginUser(info, context);
                         if (BCrypt.checkpw(userPassword,user.getUserPassword())){
                             if (user.getAdmin()){
-                                Intent intent = new Intent(LoginActivity.this, AdminMainActivity.class);
+                                Intent intent = new Intent(context, AdminMainActivity.class);
                                 startActivity(intent);
                                 finish();
                             }else {
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                Intent intent = new Intent(context, MainActivity.class);
                                 intent.putExtra(EXTRA_MESSAGE, info);
                                 startActivity(intent);
                                 finish();
@@ -140,7 +135,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private boolean isExit=false;

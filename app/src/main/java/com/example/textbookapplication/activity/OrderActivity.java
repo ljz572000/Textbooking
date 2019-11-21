@@ -75,8 +75,7 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     private void orderData(){
-        //https://www.lijinzhou.top:2020/Orders?pagecount=0&size=5&user_no=5
-        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/Orders");
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/Orders");
         params.addQueryStringParameter("pagecount", page_count);
         params.addQueryStringParameter("size", 10);
         params.addQueryStringParameter("user_no", LoginUser.getLoginUser(context).getUserNo());
@@ -123,7 +122,8 @@ public class OrderActivity extends AppCompatActivity {
                         String author = bookJson.getString("author");
                         Double bookPrice = bookJson.getDouble("bookPrice");
                         Integer totalnum = bookJson.getInt("totalnum");
-                        TextBook textBook = new TextBook(bookNo,bookName,bookPic,author,bookPrice,totalnum);
+                        String brief = bookJson.getString("brief");
+                        TextBook textBook = new TextBook(bookNo,bookName,bookPic,author,bookPrice,totalnum,brief);
 
                         Integer bookNum = jsonObject.getInt("bookNum");
                         Double bookValues = jsonObject.getDouble("bookValues");

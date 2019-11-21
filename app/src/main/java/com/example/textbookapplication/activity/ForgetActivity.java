@@ -40,7 +40,7 @@ public class ForgetActivity extends AppCompatActivity {
     private void goReSetPwd(){
         String userId = forget_account.getText().toString();
         //https://www.lijinzhou.top:2020/goToResetPage?userId=20160750
-        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/goToResetPage");
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/goToResetPage");
         params.addQueryStringParameter("userId", userId);
         x.http().post(params, new Callback.CommonCallback<String>(){
             @Override

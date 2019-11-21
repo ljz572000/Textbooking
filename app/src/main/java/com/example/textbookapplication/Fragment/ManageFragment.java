@@ -80,7 +80,7 @@ public class ManageFragment extends BaseFragment {
     }
 
     private void textBookData(){
-        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/Textbooks");
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/Textbooks");
         params.addQueryStringParameter("pagecount", page_count);
         params.addQueryStringParameter("size", size);
         x.http().get(params, new Callback.CommonCallback<String>(){
@@ -106,7 +106,8 @@ public class ManageFragment extends BaseFragment {
                         String author = jsonObject.getString("author");
                         Double bookPrice= jsonObject.getDouble("bookPrice");
                         Integer totalnum = jsonObject.getInt("totalnum");
-                        TextBook textBook = new TextBook(bookNo,bookName,bookPic,author,bookPrice,totalnum);
+                        String brief = jsonObject.getString("brief");
+                        TextBook textBook = new TextBook(bookNo,bookName,bookPic,author,bookPrice,totalnum,brief);
                         textBooks.add(textBook);
                     }
                     page_count +=1;

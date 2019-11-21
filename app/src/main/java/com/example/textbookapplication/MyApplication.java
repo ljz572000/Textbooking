@@ -8,6 +8,6 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         x.Ext.init(this);
-        x.Ext.setDebug(BuildConfig.DEBUG);
+//        x.Ext.setDebug(BuildConfig.DEBUG);
     }
 }

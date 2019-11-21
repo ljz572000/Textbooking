@@ -139,7 +139,7 @@ public class RegisteredActivity extends AppCompatActivity {
     private View.OnClickListener register() {
         return v -> {
             if(check()){
-                RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/insertAUser");
+                RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/insertAUser");
                 params.addQueryStringParameter("userId", register_id.getText().toString());
                 params.addQueryStringParameter("isAdmin", false);
                 params.addQueryStringParameter("userPassword", BCrypt.hashpw(register_pwd.getText().toString(), BCrypt.gensalt()));

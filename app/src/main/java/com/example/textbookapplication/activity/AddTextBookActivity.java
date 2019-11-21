@@ -89,7 +89,7 @@ public class AddTextBookActivity extends AppCompatActivity {
     }
     private void updateTextBookNum(Integer book_no, Integer num) {
         //https://www.lijinzhou.top:2020/ChangeTextBook?changNum=1000&price=100.0&bookNo=2
-        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/ChangeTextBook");
+        RequestParams params = new RequestParams("https://www.lijinzhou.top:2020/api/ChangeTextBook");
         params.addQueryStringParameter("changNum", num);
         params.addQueryStringParameter("price", textbook_price.getText().toString());
         params.addQueryStringParameter("bookNo", book_no);
@@ -118,7 +118,8 @@ public class AddTextBookActivity extends AppCompatActivity {
             String author = jsonObject.getString("author");
             Double bookPrice = jsonObject.getDouble("bookPrice");
             int totalnum = jsonObject.getInt("totalnum");
-            textBook = new TextBook(bookNo, bookName, bookPic, author, bookPrice, totalnum);
+            String brief = jsonObject.getString("brief");
+            textBook = new TextBook(bookNo, bookName, bookPic, author, bookPrice, totalnum,brief);
         } catch (JSONException e) {
             e.printStackTrace();
         }
